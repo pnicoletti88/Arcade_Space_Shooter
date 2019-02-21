@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 8374717386294232492}
   - component: {fileID: 8374717386294232494}
   - component: {fileID: 8374717386294232493}
+  - component: {fileID: 1180374426133434651}
   m_Layer: 0
   m_Name: Enemy_0
   m_TagString: Untagged
@@ -484,7 +485,7 @@ Transform:
   m_GameObject: {fileID: 8374717386294232483}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -20, y: 10, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_Children:
   - {fileID: 8374717384661449582}
   - {fileID: 8374717385511448482}
@@ -522,3 +523,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f053df3eb38cb49ae3a930bfb4a034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1180374426133434651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374717386294232483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe6db8ebed454f40809969bd4991d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: -2.5
+  keep: 0
+  onScreen: 1
+  camWidth: 0
+  camHeight: 0
+  offScreenRight: 0
+  offScreenLeft: 0
+  offScreenUp: 0
+  offScreenDown: 0

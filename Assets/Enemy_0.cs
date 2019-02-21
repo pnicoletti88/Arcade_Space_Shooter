@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class Enemy_0 : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+   
+    [Header("Set in Inspector: Enemy")]
+
+
+    private BoundsCheck bound;
+
+    void Awake()
     {
-        
+        bound = GetComponent<BoundsCheck>();
     }
+  
 
     // Update is called once per frame
     void Update()
     {
         Move();
+        if (bound != null && bound.offScreenDown)
+        {
+            Destroy(gameObject);
+        }
         
     }
     public Vector3 position

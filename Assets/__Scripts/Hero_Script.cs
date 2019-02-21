@@ -10,21 +10,18 @@ public class Hero_Script : MonoBehaviour
     public float speed = 30;
     public float rollMult = -45;
     public float pitchMult = 30;
-    public float radius = 1f;
+    
 
     [Header("Set in Dynamically")]
     public float sheildLevel = 1;
-    public float camWidth;
-    public float camHeight;
+    
 
 
     void Awake()
     {
         if (S == null)
         {
-            S = this;
-            camHeight = Camera.main.orthographicSize;
-            camWidth = camHeight * Camera.main.aspect;
+            S = this; //sets up singleton so that only 1 hero can be created.
         }
         else
         {
@@ -51,26 +48,5 @@ public class Hero_Script : MonoBehaviour
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
     }
 
-    void LateUpdate()
-    {
-        Vector3 pos = transform.position;
-        if (pos.x > camWidth - radius)
-        {
-            pos.x = camWidth - radius;
-        }else if(pos.x < -camWidth + radius)
-        {
-            pos.x = -camWidth + radius;
-        }
-
-        if (pos.y > camHeight - radius)
-        {
-            pos.y = camHeight - radius;
-        }
-        else if (pos.y < -camHeight + radius)
-        {
-            pos.y = -camHeight + radius;
-        }
-
-        transform.position = pos;
-    }
+    
 }
