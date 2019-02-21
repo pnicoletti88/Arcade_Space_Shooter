@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_0_Movement : MonoBehaviour
+public class Enemy_1_Move : MonoBehaviour
 {
+    public bool flag;
     // Start is called before the first frame update
     void Start()
     {
+        flag = (Random.Range(0, 2) == 0);
 
     }
 
@@ -14,6 +16,7 @@ public class Enemy_0_Movement : MonoBehaviour
     void Update()
     {
         Move();
+        
 
     }
     public Vector3 position
@@ -31,6 +34,14 @@ public class Enemy_0_Movement : MonoBehaviour
     public void Move()
     {
         Vector3 temporaryPosition = position;
+        if (flag)
+        {
+            temporaryPosition.x -= 10f * Time.deltaTime;
+        }
+        else
+        {
+            temporaryPosition.x += 10f * Time.deltaTime;
+        }
         temporaryPosition.y -= 10f * Time.deltaTime;
         position = temporaryPosition;
     }

@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_0_Movement : MonoBehaviour
+public class Enemy_2_Movement : MonoBehaviour
 {
+    public float speed;
+    public float timeCounter = 0;
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
-    // Update is called once per frame
+ 
     void Update()
     {
         Move();
-
+        timeCounter += Time.deltaTime;
     }
     public Vector3 position
     {
@@ -30,8 +32,10 @@ public class Enemy_0_Movement : MonoBehaviour
 
     public void Move()
     {
+        
         Vector3 temporaryPosition = position;
-        temporaryPosition.y -= 10f * Time.deltaTime;
+        temporaryPosition.x += speed * (float)System.Math.Cos(timeCounter);
+        temporaryPosition.y += -speed * (float)System.Math.Sin(timeCounter);
         position = temporaryPosition;
     }
 }
