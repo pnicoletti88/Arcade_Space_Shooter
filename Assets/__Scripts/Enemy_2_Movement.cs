@@ -44,7 +44,7 @@ public class Enemy_2_Movement : MonoBehaviour
         
         Vector3 temporaryPosition = position;
         temporaryPosition.x += Random.Range(0,2)*speed * (float)System.Math.Cos(timeCounter);
-        temporaryPosition.y += -Random.Range(0, 2)*speed * (float)System.Math.Sin(timeCounter);
+        temporaryPosition.y += -(float)System.Math.Abs(Random.Range(0, 2) * speed * (float)System.Math.Sin(timeCounter));
         position = temporaryPosition;
     }
 }

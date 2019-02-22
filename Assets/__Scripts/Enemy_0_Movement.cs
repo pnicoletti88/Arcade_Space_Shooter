@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_0 : MonoBehaviour
+public class Enemy_0_Movement : MonoBehaviour
 {
 
     [Header("Set in Inspector: Enemy")]

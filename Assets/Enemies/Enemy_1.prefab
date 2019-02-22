@@ -211,7 +211,7 @@ Transform:
   m_GameObject: {fileID: 5623438300949276108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.714767, y: 6.9420547, z: -1.0477155}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_Children:
   - {fileID: 5623438300800342014}
   - {fileID: 5623438302087959050}
@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe6db8ebed454f40809969bd4991d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1
-  keep: 1
+  radius: -2.5
+  keep: 0
   onScreen: 1
   camWidth: 0
   camHeight: 0
@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5be2e6bb3a97d0448ce260ef48a459a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flag: 0
 --- !u!1 &5623438301060762282
 GameObject:
   m_ObjectHideFlags: 0
