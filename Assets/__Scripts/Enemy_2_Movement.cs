@@ -11,12 +11,21 @@ public class Enemy_2_Movement : MonoBehaviour
     {
         
     }
+    private BoundsCheck bound;
 
- 
+    void Awake()
+    {
+        bound = GetComponent<BoundsCheck>();
+    }
+
     void Update()
     {
         Move();
         timeCounter += Time.deltaTime;
+        if (bound != null && bound.offScreenDown)
+        {
+            Destroy(gameObject);
+        }
     }
     public Vector3 position
     {

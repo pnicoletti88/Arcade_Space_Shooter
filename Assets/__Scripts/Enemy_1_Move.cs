@@ -11,12 +11,21 @@ public class Enemy_1_Move : MonoBehaviour
         flag = (Random.Range(0, 2) == 0);
 
     }
+    private BoundsCheck bound;
+
+    void Awake()
+    {
+        bound = GetComponent<BoundsCheck>();
+    }
 
     // Update is called once per frame
     void Update()
     {
         Move();
-        
+        if (bound != null && bound.offScreenDown)
+        {
+            Destroy(gameObject);
+        }
 
     }
     public Vector3 position
