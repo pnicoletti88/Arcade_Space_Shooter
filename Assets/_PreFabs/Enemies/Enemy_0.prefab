@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: -2.5
-  keep: 0
+  keepOnScreen: 0
   onScreen: 1
   camWidth: 0
   camHeight: 0

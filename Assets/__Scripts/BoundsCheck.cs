@@ -6,7 +6,7 @@ public class BoundsCheck : MonoBehaviour
 {
     [Header("Set in Inspector")]
     public float radius = 1f;
-    public bool keep = true;
+    public bool keepOnScreen = true;
 
     [Header("Set in Dynamically")]
     public bool onScreen = true;
@@ -22,12 +22,14 @@ public class BoundsCheck : MonoBehaviour
         camWidth = camHeight * Camera.main.aspect;
     }
 
+    //Why is this a late update?
     void LateUpdate()
     {
         Vector3 pos = transform.position;
         onScreen = true;
         offScreenRight = offScreenLeft = offScreenDown = offScreenUp = false;
 
+        //first if-else block determines off screen right or left
         if (pos.x > camWidth - radius)
         {
             pos.x = camWidth - radius;
@@ -41,6 +43,7 @@ public class BoundsCheck : MonoBehaviour
             offScreenLeft = true;
         }
 
+        //second else-if block determines off screen top or bottom
         if (pos.y > camHeight - radius)
         {
             pos.y = camHeight - radius;
@@ -53,17 +56,21 @@ public class BoundsCheck : MonoBehaviour
             onScreen = false;
             offScreenDown = true;
         }
-        if (keep && !onScreen)
+        
+        //this will transform the position of an object to put it back on screen
+        if (keepOnScreen && !onScreen)
         {
             transform.position = pos;
             onScreen = true;
             offScreenRight = offScreenLeft = offScreenDown = offScreenUp = false;
         }
     }
+
     void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
         Vector3 boundSize = new Vector3(camWidth * 2, camHeight * 2, 0.1f);
         Gizmos.DrawWireCube(Vector3.zero, boundSize);
-    }
+    }
+
 }
