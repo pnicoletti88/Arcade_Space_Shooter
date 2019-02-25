@@ -32,7 +32,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     protected void Update()
     {
         Move();
-        if (_bound != null && _bound.offScreenDown)
+        if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
             Destroy(gameObject);
         }

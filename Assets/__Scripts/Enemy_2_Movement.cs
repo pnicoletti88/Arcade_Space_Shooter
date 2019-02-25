@@ -12,7 +12,7 @@ public class Enemy_2_Movement : Enemy_Parent
     {
         Move();
         timeCounter += Time.deltaTime;
-        if (_bound != null && _bound.offScreenDown)
+        if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
             Destroy(gameObject);
         }

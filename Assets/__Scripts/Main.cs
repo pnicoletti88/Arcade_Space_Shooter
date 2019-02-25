@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
-    static public Main scriptReference; //What is the point of this? Singleton has not been set up.
+    static public Main scriptReference;
     [Header("Set in Inspector")]
     public GameObject[] preFabEnemies = new GameObject[3];
     public float enemySpawnRate = 1;
@@ -15,7 +15,14 @@ public class Main : MonoBehaviour
 
     void Awake()
     {
-        scriptReference = this;
+        if (scriptReference == null)
+        {
+            scriptReference = this; //sets up singleton so that only 1 main script can be created.
+        }
+        else
+        {
+            Debug.LogError("Attempted Creation of Second Main Script");
+        }
         boundM = GetComponent<BoundsCheck>();
         Invoke("SpawnEnemy", 1f / enemySpawnRate);
     }
@@ -36,6 +43,11 @@ public class Main : MonoBehaviour
         float xMinimum = -boundM.camWidth + enemyPad;
         float xMaximum = boundM.camWidth - enemyPad;
         
+        if(randEnemy == 2) // due to the sinusoidal pattern of enemy 2, shortening the horizontal bounds helps ensure more enemies reach the bottom before destruction.
+        {
+            xMinimum = xMinimum / 2;
+            xMaximum = xMaximum / 2;
+        }
 
         startPos.x = Random.Range(xMinimum, xMaximum);
         startPos.y = boundM.camHeight + enemyPad;
