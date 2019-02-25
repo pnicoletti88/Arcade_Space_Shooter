@@ -22,7 +22,6 @@ public class BoundsCheck : MonoBehaviour
         camWidth = camHeight * Camera.main.aspect;
     }
 
-    //Why is this a late update?
     void LateUpdate()
     {
         Vector3 pos = transform.position;
@@ -57,7 +56,7 @@ public class BoundsCheck : MonoBehaviour
             offScreenDown = true;
         }
         
-        //this will transform the position of an object to put it back on screen
+        //this will transform the position of an object to put it back on screen, if desired.
         if (keepOnScreen && !onScreen)
         {
             transform.position = pos;

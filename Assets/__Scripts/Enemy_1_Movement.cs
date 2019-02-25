@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_1_Move : Enemy_Parent
+public class Enemy_1_Movement : Enemy_Parent
 {
-    public bool directionFlag; //why is this public?
+    private bool _directionFlag;
     
     void Start()
     {
-        directionFlag = (Random.Range(0, 2) == 0);
+        _directionFlag = (Random.Range(0, 2) == 0);
     }
 
     protected override void Move()
     {
         Vector3 temporaryPosition = position;
-        if (directionFlag)
+        if (_directionFlag)
         {
             temporaryPosition.x -= 10f * Time.deltaTime;
         }
