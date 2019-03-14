@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +10,9 @@ public class Main : MonoBehaviour
     public float enemySpawnRate = 1;
     public float enemyPadding = 1.5f;
 
-    private BoundsCheck boundM;
+    private bool _spawnEnemies = true;
+    private BoundsCheck _boundM;
+    private List<GameObject> _allEnemiesList = new List<GameObject>();
 
     void Awake()
     {
@@ -23,7 +24,7 @@ public class Main : MonoBehaviour
         {
             Debug.LogError("Attempted Creation of Second Main Script");
         }
-        boundM = GetComponent<BoundsCheck>();
+        _boundM = GetComponent<BoundsCheck>();
         Invoke("SpawnEnemy", 1f / enemySpawnRate);
     }
 
@@ -40,8 +41,8 @@ public class Main : MonoBehaviour
         }
 
         Vector3 startPos = Vector3.zero;
-        float xMinimum = -boundM.camWidth + enemyPad;
-        float xMaximum = boundM.camWidth - enemyPad;
+        float xMinimum = -_boundM.camWidth + enemyPad;
+        float xMaximum = _boundM.camWidth - enemyPad;
         
         if(randEnemy == 2) // due to the sinusoidal pattern of enemy 2, shortening the horizontal bounds helps ensure more enemies reach the bottom before destruction.
         {
@@ -50,10 +51,19 @@ public class Main : MonoBehaviour
         }
 
         startPos.x = Random.Range(xMinimum, xMaximum);
-        startPos.y = boundM.camHeight + enemyPad;
+        startPos.y = _boundM.camHeight + enemyPad;
         spawned.transform.position = startPos;
-        
-        Invoke("SpawnEnemy", 1f / enemySpawnRate);
+
+        _allEnemiesList.Add(spawned);
+
+        if (_spawnEnemies)
+        {
+            Invoke("SpawnEnemy", 1f / enemySpawnRate);
+        }
+        else
+        {
+            DeleteAllEnemies();
+        }
     }
     //function invokes restart with the given delay time
     public void DelayedRestart(float delay)
@@ -64,5 +74,20 @@ public class Main : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene("_Scene_0");
+    }
+
+    public void RemoveEnemyList(GameObject enemyToDelete)
+    {
+        _allEnemiesList.Remove(enemyToDelete);
+    }
+
+    public void DeleteAllEnemies()
+    {
+        _spawnEnemies = false;
+        foreach(GameObject item in _allEnemiesList)
+        {
+            Destroy(item);
+        }
+        _allEnemiesList = new List<GameObject>(); //C# garbage collection will remove of old list
     }
 }
