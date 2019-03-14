@@ -55,4 +55,14 @@ public class Main : MonoBehaviour
         
         Invoke("SpawnEnemy", 1f / enemySpawnRate);
     }
+    //function invokes restart with the given delay time
+    public void DelayedRestart(float delay)
+    {
+        Invoke("Restart", delay);
+    }
+    //function loads the scene after DelayedRestart is called
+    public void Restart()
+    {
+        SceneManager.LoadScene("_Scene_0");
+    }
 }

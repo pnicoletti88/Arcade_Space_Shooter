@@ -10,11 +10,13 @@ public class Hero_Script : MonoBehaviour
     public float speed = 30;
     public float rollMult = -45;
     public float pitchMult = 30;
-    
+    public float gameRestartDelay = 2f;
 
     [Header("Set in Dynamically")]
-    public float sheildLevel = 1;
-    
+    [SerializeField]
+    private float _shieldLevel = 4;
+
+    private GameObject lastTriggerGo = null;
 
 
     void Awake()
@@ -48,5 +50,48 @@ public class Hero_Script : MonoBehaviour
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
     }
 
-    
+    //checks for collision between hero and enemies
+    private void OnTriggerEnter(Collider other)
+    {
+        Transform rootT = other.gameObject.transform.root;
+        GameObject go = rootT.gameObject;
+
+        if (go == lastTriggerGo)
+        {
+            return;
+        }
+        //sets the last triggered game object to the "other" gameobject
+        lastTriggerGo = go;
+        //decreases shield level upon trigger with an enemy
+        //destroys enemy
+        if (go.tag == "Enemy")
+        {
+            shieldLevel--;
+            Destroy(go);
+        }
+        else
+        {
+            print("Triggered by non-enemy: " + go.name);
+        }
+    }
+
+    //shield level property allows _shieldLevel to be set as private and is only accessed through get and set
+    public float shieldLevel
+    {
+        get
+        {
+            return (_shieldLevel);
+        }
+        set
+        {
+            //sets shield level to minimum of the current value and 4
+            _shieldLevel = Mathf.Min(value, 4);
+            //destroys ship and restarts game when no shields remain on the hero
+            if (value < 0)
+            {
+                Destroy(this.gameObject);
+                Main.scriptReference.DelayedRestart(gameRestartDelay);
+            }
+        }
+    }
 }

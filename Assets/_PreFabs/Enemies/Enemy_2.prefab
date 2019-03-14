@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8640747246058491126}
   - component: {fileID: 9051081458015764344}
   - component: {fileID: 370674246750449133}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,9 +104,9 @@ GameObject:
   - component: {fileID: 9088500912025682604}
   - component: {fileID: 6634028109437657341}
   - component: {fileID: 244375624739944191}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy_2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 613731114481825487}
   - component: {fileID: 1269176456352247619}
   - component: {fileID: 1570661487721229685}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 1177805221217045527}
   - component: {fileID: 456122170795424094}
   - component: {fileID: 5748618375528501935}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 3293639680297799294}
   - component: {fileID: 2886322281518973362}
   - component: {fileID: 2222335826465297650}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 3460388385538978639}
   - component: {fileID: 3472316862424908987}
   - component: {fileID: 1356528161786980467}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 4531084816403630719}
   - component: {fileID: 3522832811512812252}
   - component: {fileID: 5634201467695430569}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 5304767478201392992}
   - component: {fileID: 7353140543018315759}
   - component: {fileID: 4146459836865310990}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
