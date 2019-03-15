@@ -90,7 +90,7 @@ public class Hero_Script : MonoBehaviour
             //destroys ship and restarts game when no shields remain on the hero
             if (value < 0)
             {
-                Main.scriptReference.DeleteAllEnemies();
+                Main.scriptReference.spawnEnemies = false;
                 Destroy(this.gameObject);
                 Main.scriptReference.DelayedRestart(gameRestartDelay);
             }

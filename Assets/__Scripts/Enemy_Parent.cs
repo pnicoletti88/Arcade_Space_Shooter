@@ -11,16 +11,16 @@ public abstract class Enemy_Parent : MonoBehaviour
 
     protected BoundsCheck _bound;
 
-
+    //property to get and set the position of the enemy objects
     public Vector3 position
     {
         get
         {
-            return (this.transform.position);
+            return (transform.position);
         }
         set
         {
-            this.transform.position = value;
+            transform.position = value;
         }
     }
 
@@ -29,9 +29,9 @@ public abstract class Enemy_Parent : MonoBehaviour
         _bound = GetComponent<BoundsCheck>();
     }
 
-    protected void Update()
+    public virtual void Update()
     {
-        Move();
+        Move(); //calls move which is defined in the child class
         if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
             Destroy(gameObject);

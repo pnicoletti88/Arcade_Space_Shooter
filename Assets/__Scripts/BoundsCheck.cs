@@ -16,12 +16,14 @@ public class BoundsCheck : MonoBehaviour
     [HideInInspector]
     public bool offScreenRight, offScreenLeft, offScreenUp, offScreenDown;
 
+    //determine cam width and height - used for bounds
     void Awake()
     {
         camHeight = Camera.main.orthographicSize;
         camWidth = camHeight * Camera.main.aspect;
     }
 
+    //late update used as it will check if something is out of bounds after it moves - avoid race conditions
     void LateUpdate()
     {
         Vector3 pos = transform.position;
@@ -65,6 +67,8 @@ public class BoundsCheck : MonoBehaviour
         }
     }
 
+
+    //function given by prof to draw wire cube in gizmos
     void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
