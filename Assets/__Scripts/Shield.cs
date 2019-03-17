@@ -23,7 +23,7 @@ public class Shield : MonoBehaviour
     void Update()
     {
         //set current level to the shield level of the hero
-        int currLevel = Mathf.FloorToInt(Hero_Script.S.shieldLevel);
+        int currLevel = Mathf.FloorToInt(Hero_Script.heroScriptReference.shieldLevel);
         if (levelShown != currLevel)
         {
             //ensure that the level of shield shown is equal to the current shield level

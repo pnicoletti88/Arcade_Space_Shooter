@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class Main : MonoBehaviour
 {
     static public Main scriptReference; //Singleton
@@ -11,11 +12,15 @@ public class Main : MonoBehaviour
     public float enemySpawnRate = 1;
     public float enemyPadding = 1.5f;
 
+    public WeaponDefinition[] weaponDefn;
+
     public bool spawnEnemies { get; set; } = true; //auto property used
 
     private BoundsCheck _boundM;
-    private List<GameObject> _allEnemiesList = new List<GameObject>();
 
+    //list of all active enemies - will be needed for more complex weapons so it was set up now to avoid large refactor later
+    private List<GameObject> _allEnemiesList = new List<GameObject>();
+    static private Dictionary<WeaponType, WeaponDefinition> _weaponDictionary = new Dictionary<WeaponType, WeaponDefinition>();
 
 
     void Awake()
@@ -30,6 +35,11 @@ public class Main : MonoBehaviour
         }
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds chech component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
+
+        foreach (WeaponDefinition def in weaponDefn)
+        {
+            _weaponDictionary.Add(def.type, def);
+        }
     }
 
  
@@ -69,8 +79,7 @@ public class Main : MonoBehaviour
         }
         else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
         {
-            _allEnemiesList.Remove(spawned);
-            Destroy(spawned);
+            DestroyEnemy(spawned);
         }
     }
     //function invokes restart with the given delay time
@@ -81,13 +90,22 @@ public class Main : MonoBehaviour
     //function loads the scene after DelayedRestart is called
     public void Restart()
     {
-        SceneManager.LoadScene("_Scene_0");
+        SceneManager.LoadScene("Main_Scene");
     }
 
-    //removes a single enemy from the enemy list (gets called from Hero_Script when enemies are going to be destroyed
-    public void RemoveEnemyList(GameObject enemyToDelete)
+
+    //needs to be coded at some point to do actual function - just gives last Enemy for now
+    //used by the homing missile function - PLEASE IGNORE FOR NOW :)
+    public GameObject getClosestsEnemy()
     {
-        _allEnemiesList.Remove(enemyToDelete);
+        if (_allEnemiesList.Count == 0)
+        {
+            return null;
+        }
+        else
+        {
+            return _allEnemiesList[_allEnemiesList.Count - 1];
+        }
     }
 
     //this function deletes all enemies and resets the enemy list - used to remove all enemies from screen
@@ -100,5 +118,20 @@ public class Main : MonoBehaviour
         _allEnemiesList = new List<GameObject>(); //C# garbage collection will remove of old list from memory
     }
 
-    
+    static public WeaponDefinition GetWeaponDefinition(WeaponType weaponIn)
+    {
+        if (_weaponDictionary.ContainsKey(weaponIn))
+        {
+            return _weaponDictionary[weaponIn];
+        }
+        return new WeaponDefinition();
+    }
+
+    //this method will be used to destroy individual enemies...DO NOT destroy enemy without using this method!
+    //Destroys and removes enemies from the list
+    public void DestroyEnemy(GameObject enemyToDestroy)
+    {
+        _allEnemiesList.Remove(enemyToDestroy);
+        Destroy(enemyToDestroy);
+    }
 }

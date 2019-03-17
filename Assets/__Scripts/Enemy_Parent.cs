@@ -10,6 +10,7 @@ public abstract class Enemy_Parent : MonoBehaviour
 
 
     protected BoundsCheck _bound;
+    protected float _health = 0; //set in child class
 
     //property to get and set the position of the enemy objects
     public Vector3 position
@@ -34,11 +35,29 @@ public abstract class Enemy_Parent : MonoBehaviour
         Move(); //calls move which is defined in the child class
         if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
-            Destroy(gameObject);
+            Main.scriptReference.DestroyEnemy(gameObject);
         }
 
     }
 
     //since this is different for all classes it will be implemented by them
     protected abstract void Move();
+
+    void OnCollisionEnter(Collision coll)
+    {
+        GameObject otherColl = coll.gameObject;
+        if(otherColl.tag == "ProjectileHero")
+        {
+            if (_bound.onScreen)
+            {
+                Projectile p = otherColl.GetComponent<Projectile>();
+                _health -= Main.GetWeaponDefinition(p.type).damage;
+                if (_health <= 0)
+                {
+                    Main.scriptReference.DestroyEnemy(gameObject);
+                }
+            }
+            Destroy(otherColl);
+        }
+    }
 }

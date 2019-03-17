@@ -9,6 +9,7 @@ public class Enemy_1_Movement : Enemy_Parent
     void Start()
     {
         //randomly set direction
+        _health = 1;
         if(Random.Range(0, 2) == 0)
         {
             _directionFlag = -1;

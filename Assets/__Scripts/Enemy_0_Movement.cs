@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Enemy_0_Movement : Enemy_Parent
 {
+    void Start()
+    {
+        _health = 1;
+    }
+
     protected override void Move()
     {
         Vector3 temporaryPosition = position;

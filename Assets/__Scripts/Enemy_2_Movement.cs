@@ -11,6 +11,7 @@ public class Enemy_2_Movement : Enemy_Parent
     void Start()
     {
         _slide = Random.Range(15, 20); //this determines the amplitude of sine wave
+        _health = 1;
     }
 
     //keyword new to hide update of parent class
@@ -21,7 +22,7 @@ public class Enemy_2_Movement : Enemy_Parent
         //destroys object if it is off the screen
         if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
-            Destroy(gameObject);
+            Main.scriptReference.DestroyEnemy(gameObject);
         }
     }
     

@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class Hero_Script : MonoBehaviour
 {
-    public static Hero_Script S;
+    public static Hero_Script heroScriptReference;
 
     [Header("Set in Inspector")]
     public float speed = 30;
     public float rollMult = -45;
     public float pitchMult = 30;
     public float gameRestartDelay = 2f;
+    public GameObject projectilePreFab;
+    public float projectileSpeed = 40f;
 
     [Header("Set in Dynamically")]
     [SerializeField]
     private float _shieldLevel = 4;
+
+    public delegate void fireWeapons();
+    public fireWeapons fireWeaponsDelegate;
 
     private GameObject lastTriggerGo = null;
 
 
     void Awake()
     {
-        if (S == null)
+        if (heroScriptReference == null)
         {
-            S = this; //sets up singleton so that only 1 hero can be created.
+            heroScriptReference = this; //sets up singleton so that only 1 hero can be created.
         }
         else
         {
@@ -48,7 +53,13 @@ public class Hero_Script : MonoBehaviour
 
         //handles ship tilt
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
+
+        if (Input.GetAxis("Jump") == 1 && fireWeaponsDelegate != null)
+        {
+            fireWeaponsDelegate();
+        }
     }
+
 
     //checks for collision between hero and enemies
     private void OnTriggerEnter(Collider other)
@@ -67,8 +78,7 @@ public class Hero_Script : MonoBehaviour
         if (go.tag == "Enemy")
         {
             shieldLevel--;
-            Main.scriptReference.RemoveEnemyList(go);
-            Destroy(go);
+            Main.scriptReference.DestroyEnemy(go);
         }
         else
         {
