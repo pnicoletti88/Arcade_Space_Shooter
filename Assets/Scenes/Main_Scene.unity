@@ -265,12 +265,6 @@ MonoBehaviour:
     damage: 15
     speed: 40
     delayBetweenShots: 0.3
-  - type: 3
-    projectilePreFab: {fileID: 8617277995487422669, guid: 8b87f6a7df6873c41bf0eeb740eb3777,
-      type: 3}
-    damage: 15
-    speed: 40
-    delayBetweenShots: 0.3
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

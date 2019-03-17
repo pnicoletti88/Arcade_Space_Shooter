@@ -25,6 +25,8 @@ public class Main : MonoBehaviour
 
     void Awake()
     {
+        _weaponDictionary = new Dictionary<WeaponType, WeaponDefinition>();
+        _allEnemiesList = new List<GameObject>();
         if (scriptReference == null)
         {
             scriptReference = this; //sets up singleton so that only 1 main script can be created.
