@@ -6,7 +6,7 @@ public class Enemy_0_Movement : Enemy_Parent
 {
     void Start()
     {
-        _health = 1;
+        _health = 50;
     }
 
     protected override void Move()
