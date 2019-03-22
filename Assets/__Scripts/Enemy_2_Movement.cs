@@ -11,7 +11,7 @@ public class Enemy_2_Movement : Enemy_Parent
     void Start()
     {
         _slide = Random.Range(15, 20); //this determines the amplitude of sine wave
-        _health = 200;
+        _health = 150;
     }
 
     //keyword new to hide update of parent class

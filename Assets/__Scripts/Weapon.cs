@@ -53,6 +53,15 @@ public class Weapon : MonoBehaviour
             rootGo.GetComponent<Hero_Script>().fireWeaponsDelegate += Fire;
         }
     }
+    void Update()
+    {
+        if(Input.GetKeyDown("c"))
+        {
+            if(type == WeaponType.single) { type = WeaponType.triple; }
+            else if (type == WeaponType.triple) { type = WeaponType.single; }
+        }
+        
+    }
 
     public WeaponType type
     {
