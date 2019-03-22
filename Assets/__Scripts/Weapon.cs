@@ -55,6 +55,7 @@ public class Weapon : MonoBehaviour
     }
     void Update()
     {
+        //Switch weapon when the key 'c' is clicked
         if(Input.GetKeyDown("c"))
         {
             if(type == WeaponType.single) { type = WeaponType.triple; }

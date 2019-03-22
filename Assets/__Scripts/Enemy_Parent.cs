@@ -54,10 +54,28 @@ public abstract class Enemy_Parent : MonoBehaviour
                 _health -= Main.GetWeaponDefinition(p.type).damage;
                 if (_health <= 0)
                 {
+                    UpdateScore(gameObject);                  
                     Main.scriptReference.DestroyEnemy(gameObject);
                 }
             }
             Destroy(otherColl);
+        }
+    }
+    void UpdateScore(GameObject gA)
+    {
+        switch(gA.tag)
+        {
+            case "Enemy0":
+                Main.scriptReference.AddScore(5);
+                break;
+            case "Enemy1":
+                Main.scriptReference.AddScore(10);
+                break;
+            case "Enemy2":
+                Main.scriptReference.AddScore(15);
+                break;
+            default:
+                break;
         }
     }
 }

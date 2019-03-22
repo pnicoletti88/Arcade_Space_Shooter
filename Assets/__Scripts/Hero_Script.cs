@@ -75,7 +75,7 @@ public class Hero_Script : MonoBehaviour
         lastTriggerGo = go;
         //decreases shield level upon trigger with an enemy
         //destroys enemy
-        if (go.tag == "Enemy")
+        if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2")
         {
             shieldLevel--;
             Main.scriptReference.DestroyEnemy(go);
@@ -100,6 +100,13 @@ public class Hero_Script : MonoBehaviour
             //destroys ship and restarts game when no shields remain on the hero
             if (value < 0)
             {
+                //Saves highscore 
+                if(Main.scriptReference.highscore < Main.scriptReference.score)
+                {
+                    print("I tried to update the score");
+                    Main.scriptReference.highscore = Main.scriptReference.score;
+                    Main.scriptReference.SavePlayerProgress();
+                }
                 Main.scriptReference.spawnEnemies = false;
                 Destroy(this.gameObject);
                 Main.scriptReference.DelayedRestart(gameRestartDelay);

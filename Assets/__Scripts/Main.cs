@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
 public class Main : MonoBehaviour
 {
+
     static public Main scriptReference; //Singleton
 
     [Header("Set in Inspector")]
@@ -17,6 +19,15 @@ public class Main : MonoBehaviour
     public bool spawnEnemies { get; set; } = true; //auto property used
 
     private BoundsCheck _boundM;
+
+    //Score 
+    public Text scoreText;
+    public int score;
+
+    //HighScore
+    public Text highscoreText;
+    public int highscore;
+
 
     //list of all active enemies - will be needed for more complex weapons so it was set up now to avoid large refactor later
     private List<GameObject> _allEnemiesList = new List<GameObject>();
@@ -43,8 +54,47 @@ public class Main : MonoBehaviour
             _weaponDictionary.Add(def.type, def);
         }
     }
+    //Load HighScore
+    private int LoadPlayerProgress()
+    {
+        if (PlayerPrefs.HasKey("highestScore"))
+        {
+            return PlayerPrefs.GetInt("highestScore");
+        }
+        else
+        {
+            
+            return 0;
+        }
+    }
+    //Load Scoreboard
+    void Start()
+    {
+        score = 0;
+        highscore = LoadPlayerProgress();
+        UpdateScore();
+        UpdateHighScore();
+    }
+    public void AddScore(int newScoreValue)
+    {
+        score += newScoreValue;
+        UpdateScore();
+    }
+    void UpdateHighScore()
+    {
+        highscoreText.text = "HighScore: " + highscore;
+    }
+    void UpdateScore()
+    {
+        scoreText.text = "Score: " + score;
+    }
+    public void SavePlayerProgress()
+    {
+        PlayerPrefs.SetInt("highestScore", highscore);
+        PlayerPrefs.Save();
+    }
 
- 
+
     public void SpawnEnemy()
     {
         int randEnemy = Random.Range(0, preFabEnemies.Length); //randomly find which enemy to generate

@@ -27,4 +27,6 @@ public class Enemy_1_Movement : Enemy_Parent
         temporaryPosition.y -= 10f * Time.deltaTime;
         position = temporaryPosition; //update position
     }
+
+
 }
