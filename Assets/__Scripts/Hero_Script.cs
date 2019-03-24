@@ -21,7 +21,7 @@ public class Hero_Script : MonoBehaviour
     public delegate void fireWeapons(); //creates delegate type
     public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
 
-    private GameObject lastTriggerGo = null;
+    private GameObject _lastTriggerGo = null;
 
 
     void Awake()
@@ -67,12 +67,12 @@ public class Hero_Script : MonoBehaviour
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
 
-        if (go == lastTriggerGo)
+        if (go == _lastTriggerGo)
         {
             return;
         }
         //sets the last triggered game object to the "other" gameobject
-        lastTriggerGo = go;
+        _lastTriggerGo = go;
         //decreases shield level upon trigger with an enemy
         //destroys enemy
         if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2")

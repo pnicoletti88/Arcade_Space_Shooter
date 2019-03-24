@@ -43,8 +43,9 @@ public abstract class Enemy_Parent : MonoBehaviour
     //since this is different for all classes it will be implemented by them
     protected abstract void Move();
 
+    //this function damages the enemy when they collide with a projectile.
     void OnCollisionEnter(Collision coll)
-    {
+    { 
         GameObject otherColl = coll.gameObject;
         if(otherColl.tag == "ProjectileHero")
         {

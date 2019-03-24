@@ -34,12 +34,12 @@ public class Weapon : MonoBehaviour
     public GameObject collar;
     public float lastShotTime; // Time last shot was fired 
 
-    private Renderer collarRend; //render of the weapon - will allow for colour switching later on
+    private Renderer _collarRend; //render of the weapon - will allow for colour switching later on
 
     void Start()
     {
         collar = transform.Find("Collar").gameObject;
-        collarRend = collar.GetComponent<Renderer>(); //this will be used for colour changing to gun (phase 3)
+        _collarRend = collar.GetComponent<Renderer>(); //this will be used for colour changing to gun (phase 3)
 
         SetType(_type); //calls the set type function to initialize the nessesary parameters
 
