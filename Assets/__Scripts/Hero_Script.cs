@@ -18,8 +18,8 @@ public class Hero_Script : MonoBehaviour
     [SerializeField]
     private float _shieldLevel = 4;
 
-    public delegate void fireWeapons();
-    public fireWeapons fireWeaponsDelegate;
+    public delegate void fireWeapons(); //creates delegate type
+    public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
 
     private GameObject lastTriggerGo = null;
 
@@ -54,9 +54,9 @@ public class Hero_Script : MonoBehaviour
         //handles ship tilt
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
-        if (Input.GetAxis("Jump") == 1 && fireWeaponsDelegate != null)
+        if (Input.GetAxis("Jump") == 1 && fireWeaponsDelegate != null) //fires on space bar - delegate cannot be null
         {
-            fireWeaponsDelegate();
+            fireWeaponsDelegate(); //will fire the weapon
         }
     }
 
@@ -78,7 +78,7 @@ public class Hero_Script : MonoBehaviour
         if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2")
         {
             shieldLevel--;
-            Main.scriptReference.DestroyEnemy(go);
+            Main.scriptReference.DestroyEnemy(go); //destroy enemy function used as it removes the enemy from the list in main
         }
         else
         {
@@ -101,15 +101,14 @@ public class Hero_Script : MonoBehaviour
             if (value < 0)
             {
                 //Saves highscore 
-                if(Main.scriptReference.highscore < Main.scriptReference.score)
+                if(Score.scoreControllerReference.highscore < Score.scoreControllerReference.score)
                 {
-                    print("I tried to update the score");
-                    Main.scriptReference.highscore = Main.scriptReference.score;
-                    Main.scriptReference.SavePlayerProgress();
+                    Score.scoreControllerReference.highscore = Score.scoreControllerReference.score;
+                    Score.scoreControllerReference.SavePlayerProgress();
                 }
-                Main.scriptReference.spawnEnemies = false;
-                Destroy(this.gameObject);
-                Main.scriptReference.DelayedRestart(gameRestartDelay);
+                Main.scriptReference.spawnEnemies = false; //stops enemy spawning when ship is destroyed
+                Destroy(this.gameObject); //destroy the ship
+                Main.scriptReference.DelayedRestart(gameRestartDelay); //restart game
             }
         }
     }

@@ -20,14 +20,6 @@ public class Main : MonoBehaviour
 
     private BoundsCheck _boundM;
 
-    //Score 
-    public Text scoreText;
-    public int score;
-
-    //HighScore
-    public Text highscoreText;
-    public int highscore;
-
 
     //list of all active enemies - will be needed for more complex weapons so it was set up now to avoid large refactor later
     private List<GameObject> _allEnemiesList = new List<GameObject>();
@@ -36,8 +28,8 @@ public class Main : MonoBehaviour
 
     void Awake()
     {
-        _weaponDictionary = new Dictionary<WeaponType, WeaponDefinition>();
-        _allEnemiesList = new List<GameObject>();
+        _weaponDictionary = new Dictionary<WeaponType, WeaponDefinition>(); //reset dictionary on awake
+        _allEnemiesList = new List<GameObject>(); //reset list of enemies on awake
         if (scriptReference == null)
         {
             scriptReference = this; //sets up singleton so that only 1 main script can be created.
@@ -49,49 +41,11 @@ public class Main : MonoBehaviour
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds chech component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
 
+        //adds the weapon definitions into the dictionary so they can be easily looked up later
         foreach (WeaponDefinition def in weaponDefn)
         {
-            _weaponDictionary.Add(def.type, def);
+            _weaponDictionary.Add(def.type, def); //adds the definition for the weapons into the dictionary for easy look up later
         }
-    }
-    //Load HighScore
-    private int LoadPlayerProgress()
-    {
-        if (PlayerPrefs.HasKey("highestScore"))
-        {
-            return PlayerPrefs.GetInt("highestScore");
-        }
-        else
-        {
-            
-            return 0;
-        }
-    }
-    //Load Scoreboard
-    void Start()
-    {
-        score = 0;
-        highscore = LoadPlayerProgress();
-        UpdateScore();
-        UpdateHighScore();
-    }
-    public void AddScore(int newScoreValue)
-    {
-        score += newScoreValue;
-        UpdateScore();
-    }
-    void UpdateHighScore()
-    {
-        highscoreText.text = "HighScore: " + highscore;
-    }
-    void UpdateScore()
-    {
-        scoreText.text = "Score: " + score;
-    }
-    public void SavePlayerProgress()
-    {
-        PlayerPrefs.SetInt("highestScore", highscore);
-        PlayerPrefs.Save();
     }
 
 
@@ -170,17 +124,18 @@ public class Main : MonoBehaviour
         _allEnemiesList = new List<GameObject>(); //C# garbage collection will remove of old list from memory
     }
 
+    //looks up weapon in dictionary
     static public WeaponDefinition GetWeaponDefinition(WeaponType weaponIn)
     {
         if (_weaponDictionary.ContainsKey(weaponIn))
         {
             return _weaponDictionary[weaponIn];
         }
-        return new WeaponDefinition();
+        return new WeaponDefinition(); //returns new weapon if weapon cannot be found
     }
 
     //this method will be used to destroy individual enemies...DO NOT destroy enemy without using this method!
-    //Destroys and removes enemies from the list
+    //Destroys and removes enemies from the list of enemies
     public void DestroyEnemy(GameObject enemyToDestroy)
     {
         _allEnemiesList.Remove(enemyToDestroy);

@@ -66,13 +66,13 @@ public abstract class Enemy_Parent : MonoBehaviour
         switch(gA.tag)
         {
             case "Enemy0":
-                Main.scriptReference.AddScore(5);
+                Score.scoreControllerReference.AddScore(5);
                 break;
             case "Enemy1":
-                Main.scriptReference.AddScore(10);
+                Score.scoreControllerReference.AddScore(10);
                 break;
             case "Enemy2":
-                Main.scriptReference.AddScore(15);
+                Score.scoreControllerReference.AddScore(15);
                 break;
             default:
                 break;

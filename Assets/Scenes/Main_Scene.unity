@@ -332,10 +332,6 @@ MonoBehaviour:
     damage: 15
     speed: 40
     delayBetweenShots: 0.3
-  scoreText: {fileID: 1693983485}
-  score: 0
-  highscoreText: {fileID: 548084219}
-  highscore: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -425,6 +421,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3833c893c7ae1f46b4ed8a0f387d2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 1693983485}
+  score: 0
+  highscoreText: {fileID: 548084219}
+  highscore: 0
 --- !u!1 &548084217
 GameObject:
   m_ObjectHideFlags: 0

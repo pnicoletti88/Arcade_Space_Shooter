@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public Rigidbody rigid;
+    public Rigidbody rigidBodyProjectile;
     protected BoundsCheck _bounds;
+
+
     protected WeaponType _type;
     public WeaponType type
     {
         get {return _type; }
-        set { SetType(value); }
+        set { SetType(value); } //auto-property could be used but this has been done as more functionality will be added later
     }
 
     // Start is called before the first frame update
     protected void Awake()
     {
-        rigid = GetComponent<Rigidbody>();
+        rigidBodyProjectile = GetComponent<Rigidbody>();
     }
 
     protected virtual void Start()
@@ -27,12 +29,14 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        //destroy game object if it is not on screen
         if (!_bounds.onScreen)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); 
         }
     }
 
+    //changes the weapon type
     public void SetType(WeaponType eWeapon)
     {
         _type = eWeapon;
