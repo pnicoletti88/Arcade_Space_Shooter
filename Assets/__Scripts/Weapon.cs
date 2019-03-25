@@ -117,10 +117,10 @@ public class Weapon : MonoBehaviour
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
                 p = MakeProjectile();
-                p.transform.rotation = Quaternion.AngleAxis(10, Vector3.back);
+                p.transform.rotation = Quaternion.AngleAxis(30, Vector3.back);
                 p.rigidBodyProjectile.velocity = p.transform.rotation * vel; //changes the velocity vector to rotate projectile
                 p = MakeProjectile();
-                p.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
+                p.transform.rotation = Quaternion.AngleAxis(-30, Vector3.back);
                 p.rigidBodyProjectile.velocity = p.transform.rotation * vel;
                 break;
 
