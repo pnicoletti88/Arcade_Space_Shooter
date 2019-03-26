@@ -14,6 +14,8 @@ public class Main : MonoBehaviour
     public float enemySpawnRate = 1;
     public float enemyPadding = 1.5f;
 
+    public GameObject particleExplosion;
+
     public WeaponDefinition[] weaponDefn;
 
     public bool spawnEnemies { get; set; } = true; //auto property used
@@ -139,6 +141,8 @@ public class Main : MonoBehaviour
     public void DestroyEnemy(GameObject enemyToDestroy)
     {
         _allEnemiesList.Remove(enemyToDestroy);
+        GameObject explos = Instantiate(particleExplosion);
+        explos.transform.position = enemyToDestroy.transform.position;
         Destroy(enemyToDestroy);
     }
 }

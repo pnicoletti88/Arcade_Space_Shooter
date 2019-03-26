@@ -411,6 +411,8 @@ MonoBehaviour:
   - {fileID: 2541452477685604455, guid: d5c898caa7bf4aa4e85aff3278c486d8, type: 3}
   enemySpawnRate: 0.5
   enemyPadding: 1
+  particleExplosion: {fileID: 4394925886506474579, guid: 302dd7321e6fe64438dab2dee7008bbc,
+    type: 3}
   weaponDefn:
   - type: 1
     projectilePreFab: {fileID: 6592021164037511616, guid: 125c28061a5b5d84f98877c75f68c723,
