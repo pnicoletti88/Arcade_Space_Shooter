@@ -10,7 +10,8 @@ public enum WeaponType
     none,
     single,
     triple,
-    homing
+    homing,
+    plasmaThrower
 }
 
 [System.Serializable]//this allows the system to serialize this class (convert it to a byte array and pass it easily)
@@ -35,6 +36,7 @@ public class Weapon : MonoBehaviour
     public float lastShotTime; // Time last shot was fired 
 
     private Renderer _collarRend; //render of the weapon - will allow for colour switching later on
+    private ParticleSystem.EmissionModule _plasmaThrowerParticles;
 
     void Start()
     {
@@ -48,12 +50,9 @@ public class Weapon : MonoBehaviour
             GameObject go = new GameObject("_ProjectileAnchor"); //making new game object
             PROJECTILE_ANCHOR = go.transform;
         }
-
-        GameObject rootGo = transform.root.gameObject;
-        if (rootGo.GetComponent<Hero_Script>() != null)
-        {
-            rootGo.GetComponent<Hero_Script>().fireWeaponsDelegate += Fire; //assigning fire the the function delegate
-        }
+        GameObject plasmaThrower = transform.Find("Plasma Thrower").gameObject.transform.Find("Plasma Thrower Particle System").gameObject;
+        _plasmaThrowerParticles = plasmaThrower.GetComponent<ParticleSystem>().emission;
+        _plasmaThrowerParticles.enabled = false;//stops particles from being emitted
     }
 
     void Update()
@@ -62,9 +61,14 @@ public class Weapon : MonoBehaviour
         if(Input.GetKeyDown("c"))
         {
             if(type == WeaponType.single) { type = WeaponType.triple; }
-            else if (type == WeaponType.triple) { type = WeaponType.single; }
+            else { type = WeaponType.single; }
         }
-        
+        if (Input.GetKeyDown("x"))
+        {
+            if (type != WeaponType.plasmaThrower) { type = WeaponType.plasmaThrower; }
+            else { type = WeaponType.homing; }
+        }
+
     }
 
     //property for the weapon type
@@ -84,6 +88,19 @@ public class Weapon : MonoBehaviour
         else
         {
             this.gameObject.SetActive(true); //show gun if there is a weapon enabled
+        }
+
+        GameObject rootGo = transform.root.gameObject;
+        if (rootGo.GetComponent<Hero_Script>() != null && wt != WeaponType.plasmaThrower)
+        {
+            _plasmaThrowerParticles.enabled = false;//incase of switch while space is being held
+            rootGo.GetComponent<Hero_Script>().fireWeaponsDelegate = Fire; //assigning fire the the function delegate
+            rootGo.GetComponent<Hero_Script>().stopWeaponsFire = null;
+        }
+        else
+        {
+            rootGo.GetComponent<Hero_Script>().fireWeaponsDelegate = FirePlasmaThrower;
+            rootGo.GetComponent<Hero_Script>().stopWeaponsFire = StopPlasmaThrower;
         }
 
         def = Main.GetWeaponDefinition(_type);
@@ -130,6 +147,16 @@ public class Weapon : MonoBehaviour
                 p.rigidBodyProjectile.velocity = vel;
                 break;
         }
+    }
+
+    public void FirePlasmaThrower()
+    {
+        _plasmaThrowerParticles.enabled = true;
+    }
+
+    public void StopPlasmaThrower()
+    {
+        _plasmaThrowerParticles.enabled = false;
     }
     
     //this function creates a projectiles - returns a reference to script attached to the projectile

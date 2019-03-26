@@ -20,6 +20,7 @@ public class Hero_Script : MonoBehaviour
 
     public delegate void fireWeapons(); //creates delegate type
     public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
+    public fireWeapons stopWeaponsFire; //this is triggered on space bar up - stops flame thrower
 
     private GameObject _lastTriggerGo = null;
 
@@ -56,7 +57,17 @@ public class Hero_Script : MonoBehaviour
 
         if (Input.GetAxis("Jump") == 1 && fireWeaponsDelegate != null) //fires on space bar - delegate cannot be null
         {
-            fireWeaponsDelegate(); //will fire the weapon
+            if (fireWeaponsDelegate != null)
+            {
+                fireWeaponsDelegate(); //will fire the weapon
+            }
+        }
+        if (Input.GetKeyUp("space"))
+        {
+            if (stopWeaponsFire != null)
+            {
+                stopWeaponsFire();
+            }
         }
     }
 

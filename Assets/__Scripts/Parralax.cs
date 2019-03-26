@@ -18,7 +18,8 @@ public class Parralax : MonoBehaviour
     void Start()
     {
         _panelHeight = panels[0].transform.localScale.y;
-        _panelDepth = panels[0].transform.localScale.z;
+        _panelDepth = panels[0].transform.position.z;
+        //_panelDepth = 10;
 
         // sets height and depth of the star panels
         panels[0].transform.position = new Vector3(0, 0, _panelDepth);

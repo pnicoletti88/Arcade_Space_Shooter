@@ -44,8 +44,17 @@ public abstract class Enemy_Parent : MonoBehaviour
     protected abstract void Move();
 
     //this function damages the enemy when they collide with a projectile.
+    void OnParticleCollision(GameObject otherColl)
+    {
+        if (otherColl.tag == "ProjectileHero")
+        {
+            _health -= Main.GetWeaponDefinition(WeaponType.plasmaThrower).damage * Time.deltaTime;//damage is per second
+            CheckHealth();
+        }
+
+    }
     void OnCollisionEnter(Collision coll)
-    { 
+    {
         GameObject otherColl = coll.gameObject;
         if(otherColl.tag == "ProjectileHero")
         {
@@ -53,15 +62,21 @@ public abstract class Enemy_Parent : MonoBehaviour
             {
                 Projectile p = otherColl.GetComponent<Projectile>();
                 _health -= Main.GetWeaponDefinition(p.type).damage;
-                if (_health <= 0)
-                {
-                    UpdateScore(gameObject);                  
-                    Main.scriptReference.DestroyEnemy(gameObject);
-                }
+                CheckHealth();
             }
             Destroy(otherColl);
         }
     }
+
+    void CheckHealth()
+    {
+        if (_health <= 0)
+        {
+            UpdateScore(gameObject);
+            Main.scriptReference.DestroyEnemy(gameObject);
+        }
+    }
+
     void UpdateScore(GameObject gA)
     {
         switch(gA.tag)
