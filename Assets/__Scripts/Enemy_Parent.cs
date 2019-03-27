@@ -55,8 +55,10 @@ public abstract class Enemy_Parent : MonoBehaviour
     private List<ObjectColourPairs> _allGameObjectsInObject;
     private float _colourChangeTime = 0;//holds time that object got damaged
     private float _onFireTime = 0;//holds time that object got set on fire
+    private float _onFireColourLastChageTime = 0;
     private float _timeToRemainColourChange = 0.15f;
-    private float _timeToRemainOnFire = 1.0f;
+    private float _timeToRemainOnFire = 1.5f;
+    private bool _higherColourFireCycleCounter = true;
 
     protected BoundsCheck _bound;
     protected float _health = 0; //set in child class
@@ -89,16 +91,38 @@ public abstract class Enemy_Parent : MonoBehaviour
         {
             Main.scriptReference.DestroyEnemy(gameObject);
         }
+
         if (_onFireTime != 0)
         {
             if((Time.time - _onFireTime) > _timeToRemainOnFire)
             {
-
+                ChangeColour(true);
+                _onFireTime = 0;
+            }
+            else
+            {
+                _health -= Main.GetWeaponDefinition(WeaponType.plasmaThrower).damage * Time.deltaTime; //damage the enemy while it is on fire,  damage is per second
+                CheckHealth();
+                if ((Time.time - _onFireColourLastChageTime) > 0.1f)
+                {
+                    if (_higherColourFireCycleCounter)
+                    {
+                        ChangeColour(false, -15, 20, 20, true);
+                    }
+                    else
+                    {
+                        ChangeColour(false, 15, -20, -20, true);
+                    }
+                    _higherColourFireCycleCounter = !_higherColourFireCycleCounter;
+                    _onFireColourLastChageTime = Time.time;
+                }
             }
         }
+
         else if (_colourChangeTime != 0 && (Time.time - _colourChangeTime) > _timeToRemainColourChange)
         {
             ChangeColour(true);
+            _colourChangeTime = 0;
         }
 
     }
@@ -111,9 +135,12 @@ public abstract class Enemy_Parent : MonoBehaviour
     {
         if (otherColl.tag == "ProjectileHero")
         {
-            _health -= Main.GetWeaponDefinition(WeaponType.plasmaThrower).damage * Time.deltaTime;//damage is per second
-            CheckHealth();
-            //ChangeColour(false, 75, -75, -75);
+           
+            if (_onFireTime == 0)
+            {
+                ChangeColour(false, 50, -75, -75, false);
+            }
+            _onFireTime = Time.time;
         }
         
     }
@@ -124,7 +151,9 @@ public abstract class Enemy_Parent : MonoBehaviour
         GameObject otherColl = coll.gameObject;
         if(otherColl.tag == "ProjectileHero")
         {
-            ChangeColour(false, 50, -75, -75);
+            ChangeColour(false, 50, -75, -75,false);
+            _colourChangeTime = Time.time;
+
             if (_bound.onScreen)
             {
                 Projectile p = otherColl.GetComponent<Projectile>();
@@ -165,20 +194,29 @@ public abstract class Enemy_Parent : MonoBehaviour
     }
 
     //use to show the enemy taking damage or being on plasma fire
-    void ChangeColour(bool reset, float changeInR=0, float changeInG=0, float changeInB=0)
+    void ChangeColour(bool reset, float changeInR=0, float changeInG=0, float changeInB=0, bool useCurrentColor=false)
     {
         foreach(ObjectColourPairs pair in _allGameObjectsInObject)
         {
             if (pair.ContainsRenderer())//checks to see if object can have colour changed
             {
-                Color col = pair.GetColor();
+                Color col;
+                if (useCurrentColor)
+                {
+                    col = pair.GetGameObject().GetComponent<Renderer>().material.color; //gets the current colour
+                }
+                else
+                {
+                    col = pair.GetColor();
+                }
 
                 //changes colour if equal
                 if (reset)
                 {
                     //resets colour if not equal
+                    
                     pair.GetGameObject().GetComponent<Renderer>().material.color = pair.GetColor();
-                    _colourChangeTime = 0;
+                    
 
                 }
                 else
@@ -220,7 +258,7 @@ public abstract class Enemy_Parent : MonoBehaviour
 
 
                     pair.GetGameObject().GetComponent<Renderer>().material.color = newCol;
-                    _colourChangeTime = Time.time;
+                    
                 }
             }
         }
