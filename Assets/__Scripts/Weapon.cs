@@ -43,6 +43,10 @@ public class Weapon : MonoBehaviour
         collar = transform.Find("Collar").gameObject;
         _collarRend = collar.GetComponent<Renderer>(); //this will be used for colour changing to gun (phase 3)
 
+        GameObject plasmaThrower = transform.Find("Plasma Thrower").gameObject.transform.Find("Plasma Thrower Particle System").gameObject;
+        _plasmaThrowerParticles = plasmaThrower.GetComponent<ParticleSystem>().emission;
+        _plasmaThrowerParticles.enabled = false;//stops particles from being emitted
+
         SetType(_type); //calls the set type function to initialize the nessesary parameters
 
         if (PROJECTILE_ANCHOR == null) //creates the parent for the projectiles
@@ -50,9 +54,7 @@ public class Weapon : MonoBehaviour
             GameObject go = new GameObject("_ProjectileAnchor"); //making new game object
             PROJECTILE_ANCHOR = go.transform;
         }
-        GameObject plasmaThrower = transform.Find("Plasma Thrower").gameObject.transform.Find("Plasma Thrower Particle System").gameObject;
-        _plasmaThrowerParticles = plasmaThrower.GetComponent<ParticleSystem>().emission;
-        _plasmaThrowerParticles.enabled = false;//stops particles from being emitted
+        
     }
 
     void Update()

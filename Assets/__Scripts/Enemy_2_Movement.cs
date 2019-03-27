@@ -18,12 +18,7 @@ public class Enemy_2_Movement : Enemy_Parent
     public override void Update()
     {
         _timeCounter += 4*Time.deltaTime; //time counter used for sin wave movement pattern
-        Move();
-        //destroys object if it is off the screen
-        if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
-        {
-            Main.scriptReference.DestroyEnemy(gameObject);
-        }
+        base.Update();
     }
     
     //handles movement of the enemy
