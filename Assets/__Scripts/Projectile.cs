@@ -15,6 +15,12 @@ public class Projectile : MonoBehaviour
         set { SetType(value); } //auto-property could be used but this has been done as more functionality will be added later
     }
 
+    //to properly destroy projectile - needs to be done for missil (go up to parent and destroy that so everything dies)
+    public static void DestroyProjectile(Projectile p)
+    {
+
+    }
+
     // Start is called before the first frame update
     protected void Awake()
     {

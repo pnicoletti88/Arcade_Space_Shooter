@@ -148,6 +148,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     //function for collision with a projectile
     void OnCollisionEnter(Collision coll)
     {
+        Debug.Log("in");
         GameObject otherColl = coll.gameObject;
         if(otherColl.tag == "ProjectileHero")
         {
@@ -156,8 +157,10 @@ public abstract class Enemy_Parent : MonoBehaviour
 
             if (_bound.onScreen)
             {
+
                 Projectile p = otherColl.GetComponent<Projectile>();
                 _health -= Main.GetWeaponDefinition(p.type).damage; //update health
+                Debug.Log(Main.GetWeaponDefinition(p.type).damage);
                 CheckHealth();
             }
             Destroy(otherColl);
