@@ -8,7 +8,7 @@ public class Parralax : MonoBehaviour
     [Header("Set in Inspector")]
     public GameObject player;
     public GameObject[] panels;
-    public float scrollingSpeed = -30f;
+    public float scrollingSpeed = -35f;
     public float motionMult = 0.25f;
 
     private float _panelHeight;
@@ -18,7 +18,7 @@ public class Parralax : MonoBehaviour
     void Start()
     {
         _panelHeight = panels[0].transform.localScale.y;
-        _panelDepth = panels[0].transform.localScale.z;
+        _panelDepth = panels[0].transform.position.z;
 
         // sets height and depth of the star panels
         panels[0].transform.position = new Vector3(0, 0, _panelDepth);

@@ -22,7 +22,7 @@ public class Enemy_2_Movement : Enemy_Parent
         //destroys object if it is off the screen
         if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
-            Main.scriptReference.DestroyEnemy(gameObject);
+            Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
     }
     

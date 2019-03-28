@@ -35,7 +35,7 @@ public abstract class Enemy_Parent : MonoBehaviour
         Move(); //calls move which is defined in the child class
         if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
-            Main.scriptReference.DestroyEnemy(gameObject);
+            Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
 
     }
@@ -52,11 +52,11 @@ public abstract class Enemy_Parent : MonoBehaviour
             if (_bound.onScreen)
             {
                 Projectile p = otherColl.GetComponent<Projectile>();
-                _health -= Main.GetWeaponDefinition(p.type).damage;
+                _health -= Main_MainScene.GetWeaponDefinition(p.type).damage;
                 if (_health <= 0)
                 {
                     UpdateScore(gameObject);                  
-                    Main.scriptReference.DestroyEnemy(gameObject);
+                    Main_MainScene.scriptReference.DestroyEnemy(gameObject);
                 }
             }
             Destroy(otherColl);

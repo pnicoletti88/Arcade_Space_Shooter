@@ -4,10 +4,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class Main : MonoBehaviour
+public class Main_MainScene : MonoBehaviour
 {
 
-    static public Main scriptReference; //Singleton
+    static public Main_MainScene scriptReference; //Singleton
 
     [Header("Set in Inspector")]
     public GameObject[] preFabEnemies = new GameObject[3];
@@ -36,7 +36,7 @@ public class Main : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Attempted Creation of Second Main Script");
+            Debug.LogError("Attempted Creation of Second Main Script (Main Scene)");
         }
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds chech component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
@@ -96,7 +96,7 @@ public class Main : MonoBehaviour
     //function loads the scene after DelayedRestart is called
     public void Restart()
     {
-        SceneManager.LoadScene("Main_Scene");
+        SceneManager.LoadScene("Title_Screen");
     }
 
 

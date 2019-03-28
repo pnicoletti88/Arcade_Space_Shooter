@@ -78,7 +78,7 @@ public class Hero_Script : MonoBehaviour
         if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2")
         {
             shieldLevel--;
-            Main.scriptReference.DestroyEnemy(go); //destroy enemy function used as it removes the enemy from the list in main
+            Main_MainScene.scriptReference.DestroyEnemy(go); //destroy enemy function used as it removes the enemy from the list in main
         }
         else
         {
@@ -106,9 +106,9 @@ public class Hero_Script : MonoBehaviour
                     Score.scoreControllerReference.highscore = Score.scoreControllerReference.score;
                     Score.scoreControllerReference.SavePlayerProgress();
                 }
-                Main.scriptReference.spawnEnemies = false; //stops enemy spawning when ship is destroyed
+                Main_MainScene.scriptReference.spawnEnemies = false; //stops enemy spawning when ship is destroyed
                 Destroy(this.gameObject); //destroy the ship
-                Main.scriptReference.DelayedRestart(gameRestartDelay); //restart game
+                Main_MainScene.scriptReference.DelayedRestart(gameRestartDelay); //restart game
             }
         }
     }

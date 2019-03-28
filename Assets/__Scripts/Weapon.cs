@@ -86,7 +86,7 @@ public class Weapon : MonoBehaviour
             this.gameObject.SetActive(true); //show gun if there is a weapon enabled
         }
 
-        def = Main.GetWeaponDefinition(_type);
+        def = Main_MainScene.GetWeaponDefinition(_type);
         lastShotTime = 0; //this means that weapon will be ready to fire right when it is switched to
     }
 
