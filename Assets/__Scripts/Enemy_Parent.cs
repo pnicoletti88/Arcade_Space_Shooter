@@ -89,7 +89,7 @@ public abstract class Enemy_Parent : MonoBehaviour
         Move(); //calls move which is defined in the child class
         if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
-            Main.scriptReference.DestroyEnemy(gameObject);
+            Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
 
         if (_onFireTime != 0)
@@ -101,7 +101,7 @@ public abstract class Enemy_Parent : MonoBehaviour
             }
             else
             {
-                _health -= Main.GetWeaponDefinition(WeaponType.plasmaThrower).damage * Time.deltaTime; //damage the enemy while it is on fire,  damage is per second
+                _health -= Main_MainScene.GetWeaponDefinition(WeaponType.plasmaThrower).damage * Time.deltaTime; //damage the enemy while it is on fire,  damage is per second
                 CheckHealth();
                 if ((Time.time - _onFireColourLastChageTime) > 0.1f)
                 {
@@ -159,8 +159,8 @@ public abstract class Enemy_Parent : MonoBehaviour
             {
 
                 Projectile p = otherColl.GetComponent<Projectile>();
-                _health -= Main.GetWeaponDefinition(p.type).damage; //update health
-                Debug.Log(Main.GetWeaponDefinition(p.type).damage);
+                _health -= Main_MainScene.GetWeaponDefinition(p.type).damage; //update health
+                Debug.Log(Main_MainScene.GetWeaponDefinition(p.type).damage);
                 CheckHealth();
             }
             Destroy(otherColl);
@@ -173,7 +173,7 @@ public abstract class Enemy_Parent : MonoBehaviour
         if (_health <= 0)
         {
             UpdateScore(gameObject);
-            Main.scriptReference.DestroyEnemy(gameObject);
+            Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
     }
 

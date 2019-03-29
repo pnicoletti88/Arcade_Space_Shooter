@@ -19,7 +19,7 @@ public class HomingProjectile : Projectile
 
     protected override void Start()
     {
-        _targetEnemy = Main.scriptReference.getClosestsEnemy();
+        _targetEnemy = Main_MainScene.scriptReference.getClosestsEnemy();
         _bounds = GetComponent<BoundsCheck>();
     }
 
@@ -33,7 +33,7 @@ public class HomingProjectile : Projectile
         //first make sure that there is an enemy to target - if not find one
         if (_targetEnemy == null)
         {
-            _targetEnemy = Main.scriptReference.getClosestsEnemy();
+            _targetEnemy = Main_MainScene.scriptReference.getClosestsEnemy();
             //note after getting target missile will not target it until next frame
             //this is done to keep frame rate high as getting a target and then aiming at it are both slow operations
         }
