@@ -26,9 +26,9 @@ public class LoadScene : MonoBehaviour
     
     IEnumerator LoadYourAsyncScene()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main_Scene");
-        //// Wait until the asynchronous scene fully loads, but alos give minimum 1 second wait time to allow for animations.
+        //// Wait until the asynchronous scene fully loads, but alos give minimum 3 second wait time to allow for animations.
         
         while (!asyncLoad.isDone)
         {
