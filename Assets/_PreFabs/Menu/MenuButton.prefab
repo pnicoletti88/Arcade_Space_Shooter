@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7004269227536563533}
   - component: {fileID: 7004269227536563534}
   - component: {fileID: 8638861784847947513}
+  - component: {fileID: 1351711256162605322}
   - component: {fileID: 8658967654019131771}
   m_Layer: 5
   m_Name: MenuButton
@@ -100,6 +101,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1351711256162605322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7004269227536563520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9afe4f9c5927a4ab0474bae0530794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuButtonController: {fileID: 0}
+  disableOnce: 1
 --- !u!114 &8658967654019131771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,4 +129,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuButtonController: {fileID: 0}
   animator: {fileID: 8638861784847947513}
+  animatorFunctions: {fileID: 0}
   thisIndex: 0

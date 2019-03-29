@@ -6,6 +6,7 @@ public class MenuButton : MonoBehaviour
 {
     [SerializeField]  public MenuButtonController menuButtonController;
     [SerializeField]  public Animator animator;
+    [SerializeField]  public AnimatorFunctions animatorFunctions;
     [SerializeField]  public int thisIndex;
 
 
