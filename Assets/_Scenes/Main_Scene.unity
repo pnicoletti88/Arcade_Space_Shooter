@@ -6056,7 +6056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1edbeff7b11d1684d93312cffaac8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 6
+  _type: 5
   def:
     type: 0
     projectilePreFab: {fileID: 0}
