@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class LoadScene : MonoBehaviour
 {
     [SerializeField] public MenuButtonController menuButtonController;
-    private AssetBundle myLoadedAssetBundle;
+    private AssetBundle _myLoadedAssetBundle;
+
 
     void Start()
     {
         //LoadedAssetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/_Scenes");
+ 
     }
 
     void Update()
@@ -20,6 +22,11 @@ public class LoadScene : MonoBehaviour
         {
             // Use a coroutine to load the Scene in the background, Asynchronous load is used to prevent hiccups and allow animations to fully run.
             StartCoroutine(LoadYourAsyncScene());
+        }
+        if (Input.GetAxis("Submit") == 1 && menuButtonController.index == 1)
+        {
+            Debug.Log("opa");
+            Application.Quit();
         }
     }
 

@@ -16,6 +16,8 @@ public class BoundsCheck : MonoBehaviour
     [HideInInspector]
     public bool offScreenRight, offScreenLeft, offScreenUp, offScreenDown;
 
+    public bool boundsCheckActive = true;
+
     //determine cam width and height - used for bounds
     void Awake()
     {
@@ -26,44 +28,47 @@ public class BoundsCheck : MonoBehaviour
     //late update used as it will check if something is out of bounds after it moves - avoid race conditions
     void LateUpdate()
     {
-        Vector3 pos = transform.position;
-        onScreen = true;
-        offScreenRight = offScreenLeft = offScreenDown = offScreenUp = false;
-
-        //first if-else block determines off screen right or left
-        if (pos.x > camWidth - radius)
+        if (boundsCheckActive)
         {
-            pos.x = camWidth - radius;
-            onScreen = false;
-            offScreenRight = true;
-        }
-        else if (pos.x < -camWidth + radius)
-        {
-            pos.x = -camWidth + radius;
-            onScreen = false;
-            offScreenLeft = true;
-        }
-
-        //second else-if block determines off screen top or bottom
-        if (pos.y > camHeight - radius)
-        {
-            pos.y = camHeight - radius;
-            onScreen = false;
-            offScreenUp = true;
-        }
-        else if (pos.y < -camHeight + radius)
-        {
-            pos.y = -camHeight + radius;
-            onScreen = false;
-            offScreenDown = true;
-        }
-        
-        //this will transform the position of an object to put it back on screen, if desired.
-        if (keepOnScreen && !onScreen)
-        {
-            transform.position = pos;
+            Vector3 pos = transform.position;
             onScreen = true;
             offScreenRight = offScreenLeft = offScreenDown = offScreenUp = false;
+
+            //first if-else block determines off screen right or left
+            if (pos.x > camWidth - radius)
+            {
+                pos.x = camWidth - radius;
+                onScreen = false;
+                offScreenRight = true;
+            }
+            else if (pos.x < -camWidth + radius)
+            {
+                pos.x = -camWidth + radius;
+                onScreen = false;
+                offScreenLeft = true;
+            }
+
+            //second else-if block determines off screen top or bottom
+            if (pos.y > camHeight - radius)
+            {
+                pos.y = camHeight - radius;
+                onScreen = false;
+                offScreenUp = true;
+            }
+            else if (pos.y < -camHeight + radius)
+            {
+                pos.y = -camHeight + radius;
+                onScreen = false;
+                offScreenDown = true;
+            }
+
+            //this will transform the position of an object to put it back on screen, if desired.
+            if (keepOnScreen && !onScreen)
+            {
+                transform.position = pos;
+                onScreen = true;
+                offScreenRight = offScreenLeft = offScreenDown = offScreenUp = false;
+            }
         }
     }
 

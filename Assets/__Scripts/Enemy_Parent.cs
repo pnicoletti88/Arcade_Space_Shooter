@@ -59,6 +59,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     private float _timeToRemainColourChange = 0.15f;
     private float _timeToRemainOnFire = 1.5f;
     private bool _higherColourFireCycleCounter = true;
+    private float _healthDamageOnNextUpdate = 0;
 
     protected BoundsCheck _bound;
     protected float _health = 0; //set in child class
@@ -82,6 +83,9 @@ public abstract class Enemy_Parent : MonoBehaviour
         _bound = GetComponent<BoundsCheck>();
         _allGameObjectsInObject = new List<ObjectColourPairs>();
         getAllChildren(this.gameObject.transform);
+        _onFireColourLastChageTime = 0;
+        _onFireTime = 0;
+        _colourChangeTime = 0;
     }
 
     public virtual void Update()
@@ -91,6 +95,9 @@ public abstract class Enemy_Parent : MonoBehaviour
         {
             Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
+
+        _health -= _healthDamageOnNextUpdate;
+        _healthDamageOnNextUpdate = 0;
 
         if (_onFireTime != 0)
         {
@@ -148,22 +155,32 @@ public abstract class Enemy_Parent : MonoBehaviour
     //function for collision with a projectile
     void OnCollisionEnter(Collision coll)
     {
-        Debug.Log("in");
+        
         GameObject otherColl = coll.gameObject;
-        if(otherColl.tag == "ProjectileHero")
+        
+        if (otherColl.tag == "ProjectileHero")
         {
+            Projectile p = otherColl.GetComponent<Projectile>();
+            Destroy(otherColl);
             ChangeColour(false, 50, -75, -75,false);
             _colourChangeTime = Time.time;
 
             if (_bound.onScreen)
             {
-
-                Projectile p = otherColl.GetComponent<Projectile>();
-                _health -= Main_MainScene.GetWeaponDefinition(p.type).damage; //update health
-                Debug.Log(Main_MainScene.GetWeaponDefinition(p.type).damage);
+                Debug.Log(otherColl.name);
+                if (otherColl.name == "Missile(Clone)")
+                {
+                    //missile collides many time with the enemy when it hits due to how it moves
+                    //in order to deal with this it deals its damage during the next update (as this is after the spur of collisions)
+                    //to the user this is not noticeable due to the speed of the frameRate
+                    _healthDamageOnNextUpdate = Main_MainScene.GetWeaponDefinition(p.type).damage;
+                }
+                else
+                {
+                    _health -= Main_MainScene.GetWeaponDefinition(p.type).damage; //update health
+                }
                 CheckHealth();
-            }
-            Destroy(otherColl);
+            }    
         }
     }
 

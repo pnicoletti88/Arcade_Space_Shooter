@@ -23,7 +23,7 @@ public class Hero_Script : MonoBehaviour
     public fireWeapons stopWeaponsFire; //this is triggered on space bar up - stops flame thrower
 
     private GameObject _lastTriggerGo = null;
-
+    private float _startTime = 0;
 
     void Awake()
     {
@@ -37,36 +37,52 @@ public class Hero_Script : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        _startTime = Time.time;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        //these method used input based on the user defined axis and return a value between 1- and 1 depending on which direction is push
-        //starts at 0 and builds to 1 the longer you hold it
-        float xAxis = Input.GetAxis("Horizontal");
-        float yAxis = Input.GetAxis("Vertical");
-
-        //handles moving
-        Vector3 pos = transform.position;
-        pos.x += xAxis * speed * Time.deltaTime;
-        pos.y += yAxis * speed * Time.deltaTime;
-        transform.position = pos;
-
-        //handles ship tilt
-        transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
-
-        if (Input.GetAxis("Jump") == 1 && fireWeaponsDelegate != null) //fires on space bar - delegate cannot be null
+        if ((Time.time - _startTime) <= 2.0f)
         {
-            if (fireWeaponsDelegate != null)
-            {
-                fireWeaponsDelegate(); //will fire the weapon
-            }
+
+            float change = 50f / 5f * (2.0f - (Time.time - _startTime)) * Time.deltaTime;
+            Vector3 pos = transform.position;
+            pos.y += change;
+            transform.position = pos;
         }
-        if (Input.GetKeyUp("space"))
+        else
         {
-            if (stopWeaponsFire != null)
+            //these method used input based on the user defined axis and return a value between 1- and 1 depending on which direction is push
+            //starts at 0 and builds to 1 the longer you hold it
+            GetComponent<BoundsCheck>().boundsCheckActive = true;
+            float xAxis = Input.GetAxis("Horizontal");
+            float yAxis = Input.GetAxis("Vertical");
+
+            //handles moving
+            Vector3 pos = transform.position;
+            pos.x += xAxis * speed * Time.deltaTime;
+            pos.y += yAxis * speed * Time.deltaTime;
+            transform.position = pos;
+
+            //handles ship tilt
+            transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
+
+            if (Input.GetAxis("Jump") == 1 && fireWeaponsDelegate != null) //fires on space bar - delegate cannot be null
             {
-                stopWeaponsFire();
+                if (fireWeaponsDelegate != null)
+                {
+                    fireWeaponsDelegate(); //will fire the weapon
+                }
+            }
+            if (Input.GetKeyUp("space"))
+            {
+                if (stopWeaponsFire != null)
+                {
+                    stopWeaponsFire();
+                }
             }
         }
     }

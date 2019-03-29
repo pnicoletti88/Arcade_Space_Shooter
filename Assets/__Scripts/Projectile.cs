@@ -16,9 +16,9 @@ public class Projectile : MonoBehaviour
     }
 
     //to properly destroy projectile - needs to be done for missil (go up to parent and destroy that so everything dies)
-    public static void DestroyProjectile(Projectile p)
+    public void DestroyProjectile()
     {
-
+        Destroy(gameObject);
     }
 
     // Start is called before the first frame update
