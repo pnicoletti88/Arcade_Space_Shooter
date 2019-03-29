@@ -60,10 +60,12 @@ public abstract class Enemy_Parent : MonoBehaviour
     private float _timeToRemainOnFire = 1.5f;
     private bool _higherColourFireCycleCounter = true;
     private float _healthDamageOnNextUpdate = 0;
+    private float _frozenTime = 0;
+    private float _timeToRemainFrozen = 2.5f;
 
     protected BoundsCheck _bound;
     protected float _health = 0; //set in child class
-
+    protected float _speedFactor = 1f;
 
     //property to get and set the position of the enemy objects
     public Vector3 position
@@ -96,8 +98,12 @@ public abstract class Enemy_Parent : MonoBehaviour
             Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
 
-        _health -= _healthDamageOnNextUpdate;
-        _healthDamageOnNextUpdate = 0;
+        if (_health != 0)
+        {
+            _health -= _healthDamageOnNextUpdate;
+            _healthDamageOnNextUpdate = 0;
+            CheckHealth();
+        }
 
         if (_onFireTime != 0)
         {
@@ -126,6 +132,21 @@ public abstract class Enemy_Parent : MonoBehaviour
             }
         }
 
+        if (_frozenTime != 0)
+        {
+            if ((Time.time - _frozenTime) > _timeToRemainFrozen)
+            {
+                _frozenTime = 0;
+                _speedFactor = 1f;
+                ChangeColour(true);
+            }
+            else
+            {
+                _health -= Main_MainScene.GetWeaponDefinition(WeaponType.freezeGun).damage * Time.deltaTime; //damage the enemy while it is on fire,  damage is per second
+                CheckHealth();
+            }
+        }
+
         else if (_colourChangeTime != 0 && (Time.time - _colourChangeTime) > _timeToRemainColourChange)
         {
             ChangeColour(true);
@@ -142,11 +163,27 @@ public abstract class Enemy_Parent : MonoBehaviour
     {
         if (otherColl.tag == "ProjectileHero")
         {
-            if (_onFireTime == 0)
+            if (otherColl.name == "Plasma Thrower Particle System")
             {
-                ChangeColour(false, 50, -75, -75, false);
+                if (_onFireTime == 0)
+                {
+                    ChangeColour(false, 50, -75, -75, false);
+                }
+                _onFireTime = Time.time;
             }
-            _onFireTime = Time.time;
+            else if(otherColl.name == "FreezeGun(Clone)")
+            {
+                if (_frozenTime == 0)
+                {
+                    ChangeColour(false, -75, -75, 50, false);
+                    _speedFactor = 0.2f;
+                }
+                _frozenTime = Time.time;
+            }
+            else if(otherColl.name == "Big Explosion(Clone)")
+            {
+                Destroy(gameObject);
+            }
         }
         
     }

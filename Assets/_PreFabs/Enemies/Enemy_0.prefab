@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 8374717386294232494}
   - component: {fileID: 5252783070140678245}
   - component: {fileID: 1180374426133434651}
+  - component: {fileID: 6566356952755203625}
   m_Layer: 9
   m_Name: Enemy_0
   m_TagString: Enemy0
@@ -544,3 +545,17 @@ MonoBehaviour:
   offScreenLeft: 0
   offScreenUp: 0
   offScreenDown: 0
+  boundsCheckActive: 1
+--- !u!65 &6566356952755203625
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374717386294232483}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 20}
+  m_Center: {x: 0, y: 0, z: 0}

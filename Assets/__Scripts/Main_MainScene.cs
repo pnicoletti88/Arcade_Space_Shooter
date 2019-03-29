@@ -112,7 +112,7 @@ public class Main_MainScene : MonoBehaviour
         }
         else
         {
-            return _allEnemiesList[_allEnemiesList.Count - 1];
+            return _allEnemiesList[0];
         }
     }
 

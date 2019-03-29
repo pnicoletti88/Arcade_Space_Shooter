@@ -12,7 +12,7 @@ public class Enemy_0_Movement : Enemy_Parent
     protected override void Move()
     {
         Vector3 temporaryPosition = position;
-        temporaryPosition.y -= 10f * Time.deltaTime;
+        temporaryPosition.y -= 10f * Time.deltaTime * _speedFactor;
         position = temporaryPosition;
     }
 }

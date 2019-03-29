@@ -25,8 +25,8 @@ public class Enemy_2_Movement : Enemy_Parent
     protected override void Move()
     {
         Vector3 temporaryPosition = position;
-        temporaryPosition.y -= 10f * Time.deltaTime;
-        temporaryPosition.x -= _slide * (float)System.Math.Sin(_timeCounter) * Time.deltaTime; //sine function to control x position
+        temporaryPosition.y -= 10f * Time.deltaTime * _speedFactor;
+        temporaryPosition.x -= _slide * (float)System.Math.Sin(_timeCounter) * Time.deltaTime * _speedFactor; //sine function to control x position
         position = temporaryPosition; //update the position 
     }
 }

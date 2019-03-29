@@ -11,7 +11,9 @@ public enum WeaponType
     single,
     triple,
     homing,
-    plasmaThrower
+    plasmaThrower,
+    freezeGun,
+    moab
 }
 
 [System.Serializable]//this allows the system to serialize this class (convert it to a byte array and pass it easily)
@@ -70,6 +72,11 @@ public class Weapon : MonoBehaviour
             if (type != WeaponType.plasmaThrower) { type = WeaponType.plasmaThrower; }
             else { type = WeaponType.homing; }
         }
+        if (Input.GetKeyDown("z"))
+        {
+            if (type != WeaponType.freezeGun) { type = WeaponType.freezeGun; }
+            else { type = WeaponType.moab; }
+        }
 
     }
 
@@ -127,7 +134,9 @@ public class Weapon : MonoBehaviour
 
         switch (type)
         {
-            case WeaponType.single: //creates the projectile and fires it forward
+            case WeaponType.single:
+            case WeaponType.moab:
+            case WeaponType.freezeGun://creates the projectile and fires it forward
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
                 break;
@@ -148,6 +157,7 @@ public class Weapon : MonoBehaviour
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
                 break;
+
         }
     }
 

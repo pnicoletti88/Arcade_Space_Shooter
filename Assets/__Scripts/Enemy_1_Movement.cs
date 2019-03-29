@@ -23,8 +23,8 @@ public class Enemy_1_Movement : Enemy_Parent
     protected override void Move()
     {
         Vector3 temporaryPosition = position;
-        temporaryPosition.x += 10f * Time.deltaTime * _directionFlag; //direction flag is either positive or negative
-        temporaryPosition.y -= 10f * Time.deltaTime;
+        temporaryPosition.x += 10f * Time.deltaTime * _directionFlag * _speedFactor; //direction flag is either positive or negative
+        temporaryPosition.y -= 10f * Time.deltaTime * _speedFactor;
         position = temporaryPosition; //update position
     }
 
