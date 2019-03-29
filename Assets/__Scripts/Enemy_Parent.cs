@@ -131,7 +131,7 @@ public abstract class Enemy_Parent : MonoBehaviour
             ChangeColour(true);
             _colourChangeTime = 0;
         }
-
+       
     }
 
     //since this is different for all classes it will be implemented by them

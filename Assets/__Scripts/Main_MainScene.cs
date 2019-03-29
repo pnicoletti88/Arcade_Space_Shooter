@@ -11,20 +11,25 @@ public class Main_MainScene : MonoBehaviour
 
     [Header("Set in Inspector")]
     public GameObject[] preFabEnemies = new GameObject[3];
-    public float enemySpawnRate = 1;
+    public GameObject[] preFabPickUps = new GameObject[3];
+    public float enemySpawnRate = 1f;
+    public int pickUpSpawnRate = 9;
     public float enemyPadding = 1.5f;
 
     public GameObject particleExplosion;
 
+    public GameObject pickUpAnimation;
+
     public WeaponDefinition[] weaponDefn;
 
     public bool spawnEnemies { get; set; } = true; //auto property used
-
+    public bool spawnPickUps { get; set; } = true;
     private BoundsCheck _boundM;
 
 
     //list of all active enemies - will be needed for more complex weapons so it was set up now to avoid large refactor later
     private List<GameObject> _allEnemiesList = new List<GameObject>();
+    private List<GameObject> _allPickUpList = new List<GameObject>();
     static private Dictionary<WeaponType, WeaponDefinition> _weaponDictionary = new Dictionary<WeaponType, WeaponDefinition>();
 
 
@@ -42,7 +47,7 @@ public class Main_MainScene : MonoBehaviour
         }
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds chech component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
-
+        Invoke("SpawnPickUps", pickUpSpawnRate);
         //adds the weapon definitions into the dictionary so they can be easily looked up later
         foreach (WeaponDefinition def in weaponDefn)
         {
@@ -50,6 +55,35 @@ public class Main_MainScene : MonoBehaviour
         }
     }
 
+    public void SpawnPickUps()
+    {
+        int randPickUp = Random.Range(0, preFabPickUps.Length);
+        GameObject toSpawn = Instantiate<GameObject>(preFabPickUps[randPickUp]);
+        float pickUpPad = 1f;
+        if (toSpawn.GetComponent<BoundsCheck>() != null)
+        {
+            pickUpPad = Mathf.Abs(toSpawn.GetComponent<BoundsCheck>().radius); //factors in the radius of the pickup for bounds check
+        }
+        Vector3 startPos = Vector3.zero;
+        float xMinimum = -_boundM.camWidth + pickUpPad;
+        float xMaximum = _boundM.camWidth - pickUpPad;
+
+        //set the pickup to start somewhere just above the left of the screen
+        startPos.x = Random.Range(xMinimum, xMaximum);
+        startPos.y = _boundM.camHeight + pickUpPad;
+        toSpawn.transform.position = startPos;
+        toSpawn.transform.position = startPos;
+        _allPickUpList.Add(toSpawn);
+        //this stop enemies from spawning
+        if (spawnPickUps)
+        {
+            Invoke("SpawnPickUps", pickUpSpawnRate); //invokes the function to run again
+        }
+        else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
+        {
+            DestroyPickup(toSpawn);
+        }
+    }
 
     public void SpawnEnemy()
     {
@@ -144,5 +178,12 @@ public class Main_MainScene : MonoBehaviour
         GameObject explos = Instantiate(particleExplosion);
         explos.transform.position = enemyToDestroy.transform.position;
         Destroy(enemyToDestroy);
+    }
+    public void DestroyPickup(GameObject pickUpToDestroy)
+    {
+        _allPickUpList.Remove(pickUpToDestroy);
+        GameObject explos = Instantiate(particleExplosion);
+        explos.transform.position = pickUpToDestroy.transform.position;
+        Destroy(pickUpToDestroy);
     }
 }
