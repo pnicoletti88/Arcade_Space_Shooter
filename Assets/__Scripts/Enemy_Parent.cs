@@ -142,7 +142,6 @@ public abstract class Enemy_Parent : MonoBehaviour
     {
         if (otherColl.tag == "ProjectileHero")
         {
-           
             if (_onFireTime == 0)
             {
                 ChangeColour(false, 50, -75, -75, false);
