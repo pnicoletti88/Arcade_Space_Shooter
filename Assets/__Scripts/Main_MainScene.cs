@@ -13,7 +13,6 @@ public class Main_MainScene : MonoBehaviour
     public GameObject[] preFabEnemies = new GameObject[3];
     public GameObject[] preFabPickUps = new GameObject[3];
     public float enemySpawnRate = 1f;
-    public int pickUpSpawnRate = 9;
     public float enemyPadding = 1.5f;
 
     public GameObject particleExplosion;
@@ -47,7 +46,7 @@ public class Main_MainScene : MonoBehaviour
         }
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds chech component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
-        Invoke("SpawnPickUps", pickUpSpawnRate);
+        Invoke("SpawnPickUps", 10);
         //adds the weapon definitions into the dictionary so they can be easily looked up later
         foreach (WeaponDefinition def in weaponDefn)
         {
@@ -77,7 +76,7 @@ public class Main_MainScene : MonoBehaviour
         //this stop enemies from spawning
         if (spawnPickUps)
         {
-            Invoke("SpawnPickUps", pickUpSpawnRate); //invokes the function to run again
+            Invoke("SpawnPickUps", 10); //invokes the function to run again
         }
         else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
         {

@@ -36,13 +36,7 @@ public abstract class PowerUp_Parent : MonoBehaviour
     //Mechanic for implementing what happens when the hero collects the pickup
     void OnTriggerEnter(Collider otherColl)
     {
-        Transform rootT = otherColl.gameObject.transform.root;
-        GameObject tmp = rootT.gameObject;
-        if (tmp.tag == "Hero")
-        {
-            PowerUp();
-            Main_MainScene.scriptReference.DestroyPickup(gameObject);
-        }
+        print(otherColl.gameObject.name);
 
     }
     protected abstract void PowerUp();
