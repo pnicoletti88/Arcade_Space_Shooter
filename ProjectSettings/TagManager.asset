@@ -13,6 +13,7 @@ TagManager:
   - Enemy0
   - Enemy1
   - Enemy2
+  - PowerUp_Homing
   layers:
   - Default
   - TransparentFX

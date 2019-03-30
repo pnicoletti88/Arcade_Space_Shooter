@@ -134,6 +134,7 @@ public class Hero_Script : MonoBehaviour
                     Score.scoreControllerReference.SavePlayerProgress();
                 }
                 Main_MainScene.scriptReference.spawnEnemies = false; //stops enemy spawning when ship is destroyed
+                Main_MainScene.scriptReference.spawnPickUps = false;
                 Destroy(this.gameObject); //destroy the ship
                 Main_MainScene.scriptReference.DelayedRestart(gameRestartDelay); //restart game
             }

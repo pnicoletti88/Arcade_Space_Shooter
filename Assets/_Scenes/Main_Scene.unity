@@ -410,10 +410,14 @@ MonoBehaviour:
   - {fileID: 8374717386294232483, guid: 0a250d7bab5087148bf789780bdf3c0b, type: 3}
   - {fileID: 5623438300949276108, guid: 4a91d07bbdbdf7843ae5601a7d252829, type: 3}
   - {fileID: 2541452477685604455, guid: d5c898caa7bf4aa4e85aff3278c486d8, type: 3}
+  preFabPickUps:
+  - {fileID: 4701867375740498622, guid: e4184f2b936d8784a8ddd45e2adccc91, type: 3}
   enemySpawnRate: 1
+  pickUpSpawnRate: 2
   enemyPadding: 1.5
   particleExplosion: {fileID: 4394925886506474579, guid: 302dd7321e6fe64438dab2dee7008bbc,
     type: 3}
+  pickUpAnimation: {fileID: 0}
   weaponDefn:
   - type: 1
     projectilePreFab: {fileID: 6592021164037511616, guid: 125c28061a5b5d84f98877c75f68c723,

@@ -5077,7 +5077,7 @@ GameObject:
   - component: {fileID: 404287088881811097}
   - component: {fileID: 8062340959346677527}
   m_Layer: 10
-  m_Name: Missle
+  m_Name: Missile
   m_TagString: ProjectileHero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5139,6 +5139,7 @@ MonoBehaviour:
   offScreenLeft: 0
   offScreenUp: 0
   offScreenDown: 0
+  boundsCheckActive: 1
 --- !u!114 &8062340959346677527
 MonoBehaviour:
   m_ObjectHideFlags: 0
