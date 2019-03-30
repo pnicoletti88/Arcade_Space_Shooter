@@ -14,6 +14,7 @@ public class Main_MainScene : MonoBehaviour
     public GameObject[] preFabPickUps = new GameObject[3];
     public float enemySpawnRate = 1f;
     public float enemyPadding = 1.5f;
+    public int level = 1; //level field
 
     public GameObject particleExplosion;
 
@@ -24,6 +25,7 @@ public class Main_MainScene : MonoBehaviour
     public bool spawnEnemies { get; set; } = true; //auto property used
     public bool spawnPickUps { get; set; } = true;
     private BoundsCheck _boundM;
+    private Level _level;
 
 
     //list of all active enemies - will be needed for more complex weapons so it was set up now to avoid large refactor later
@@ -45,6 +47,7 @@ public class Main_MainScene : MonoBehaviour
             Debug.LogError("Attempted Creation of Second Main Script");
         }
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds chech component
+        _level = GetComponent<Level>(); //gets the level component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
         Invoke("SpawnPickUps", 10);
         //adds the weapon definitions into the dictionary so they can be easily looked up later
@@ -59,6 +62,7 @@ public class Main_MainScene : MonoBehaviour
         int randPickUp = Random.Range(0, preFabPickUps.Length);
         GameObject toSpawn = Instantiate<GameObject>(preFabPickUps[randPickUp]);
         float pickUpPad = 1f;
+
         if (toSpawn.GetComponent<BoundsCheck>() != null)
         {
             pickUpPad = Mathf.Abs(toSpawn.GetComponent<BoundsCheck>().radius); //factors in the radius of the pickup for bounds check
@@ -86,8 +90,12 @@ public class Main_MainScene : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        int randEnemy = Random.Range(0, preFabEnemies.Length); //randomly find which enemy to generate
+        //int randEnemy = Random.Range(0, preFabEnemies.Length); //randomly find which enemy to generate
+        int randEnemy = Random.Range(0, _level.randRange); //random find which enemy to generate within the range specified by level class
         GameObject spawned = Instantiate<GameObject>(preFabEnemies[randEnemy]);
+
+        enemySpawnRate = Level.eSpawnRate; //update spawn rate to match level class
+        level = _level.level; //update level to match current level
 
         float enemyPad = enemyPadding;
         if(spawned.GetComponent<BoundsCheck>() != null)
