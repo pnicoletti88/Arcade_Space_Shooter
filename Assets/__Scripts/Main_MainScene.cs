@@ -22,10 +22,28 @@ public class Main_MainScene : MonoBehaviour
 
     public WeaponDefinition[] weaponDefn;
 
-    public bool spawnEnemies { get; set; } = true; //auto property used
-    public bool spawnPickUps { get; set; } = true;
+    private bool _spawnEnemies = true; 
+    public bool spawnPickUps { get; set; } = true; //auto property used
     private BoundsCheck _boundM;
     private Level _level;
+
+    public bool spawnEnemies
+    {
+        get { return _spawnEnemies; }
+        set
+        {
+            _spawnEnemies = value;
+            if (!_spawnEnemies)
+            {
+                CancelInvoke("SpawnEnemy");
+            }
+            else if (_spawnEnemies && !IsInvoking("SpawnEnemy"))
+            {
+                Invoke("SpawnEnemy", 1f);
+            }
+        }
+    }
+
 
 
     //list of all active enemies - will be needed for more complex weapons so it was set up now to avoid large refactor later
@@ -122,7 +140,7 @@ public class Main_MainScene : MonoBehaviour
         _allEnemiesList.Add(spawned);
 
         //this stop enemies from spawning
-        if (spawnEnemies)
+        if (_spawnEnemies)
         {
             Invoke("SpawnEnemy", 1f / enemySpawnRate); //invokes the function to run again
         }
@@ -162,7 +180,8 @@ public class Main_MainScene : MonoBehaviour
     {
         foreach(GameObject item in _allEnemiesList)
         {
-            Destroy(item);
+            Enemy_Parent.UpdateScore(item);
+            DestroyEnemy(item,false);
         }
         _allEnemiesList = new List<GameObject>(); //C# garbage collection will remove of old list from memory
     }
@@ -179,15 +198,20 @@ public class Main_MainScene : MonoBehaviour
 
     //this method will be used to destroy individual enemies...DO NOT destroy enemy without using this method!
     //Destroys and removes enemies from the list of enemies
-    public void DestroyEnemy(GameObject enemyToDestroy)
+    public void DestroyEnemy(GameObject enemyToDestroy, bool removeFromList = true)
     {
-        _allEnemiesList.Remove(enemyToDestroy);
+        if (removeFromList)
+        {  
+            _allEnemiesList.Remove(enemyToDestroy);
+        }
         GameObject explos = Instantiate(particleExplosion);
         explos.transform.position = enemyToDestroy.transform.position;
         Destroy(enemyToDestroy);
     }
+
     public void DestroyPickup(GameObject pickUpToDestroy)
     {
+       
         _allPickUpList.Remove(pickUpToDestroy);
         GameObject explos = Instantiate(particleExplosion);
         explos.transform.position = pickUpToDestroy.transform.position;

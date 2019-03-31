@@ -23,6 +23,9 @@ public class Level : MonoBehaviour
         {
             Debug.LogError("Attempted Creation of Second Level Script");
         }
+        eSpawnRate = 1f;
+        level = 1;
+        randRange = 1;
         _score = GetComponent<Score>();
         UpdateLevel(1);
     }

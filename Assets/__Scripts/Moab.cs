@@ -21,23 +21,29 @@ public class Moab : Projectile
         GameObject boom = Instantiate(explosion);
         boom.transform.position = transform.position;
         _boomCount++;
-        if (_boomCount >= 5)
-        {
-            Destroy(gameObject);
-        }
     }
     
+    void DestroyRemainingEnemy()
+    {
+        Main_MainScene.scriptReference.DeleteAllEnemies();
+        Main_MainScene.scriptReference.spawnEnemies = true;
+        Destroy(gameObject);
+    }
 
     // Update is called once per frame
     protected override void Update()
     {
+
         if (Time.time - _startTime > 1.5f && _boomCount == 0) 
         {
+            Main_MainScene.scriptReference.spawnEnemies = false;
             makeBoom();
             Invoke("makeBoom", 0.03f);
             Invoke("makeBoom", 0.06f);
             Invoke("makeBoom", 0.09f);
             Invoke("makeBoom", 0.12f);
+            Invoke("DestroyRemainingEnemy", 0.2f);
+            gameObject.SetActive(false);
 
         }
         base.Update();

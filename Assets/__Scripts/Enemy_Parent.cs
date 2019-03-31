@@ -158,6 +158,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     //since this is different for all classes it will be implemented by them
     protected abstract void Move();
 
+
     //this function damages the enemy when they collide with a projectile.
     void OnParticleCollision(GameObject otherColl)
     {
@@ -179,10 +180,12 @@ public abstract class Enemy_Parent : MonoBehaviour
                     _speedFactor = 0.2f;
                 }
                 _frozenTime = Time.time;
+                Destroy(otherColl);
             }
             else if(otherColl.name == "Big Explosion(Clone)")
             {
-                Destroy(gameObject);
+                _health = 0;
+                CheckHealth();
             }
         }
         
@@ -231,7 +234,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     }
 
     //updates the user score according to the type of enemy
-    void UpdateScore(GameObject gA)
+    public static void UpdateScore(GameObject gA)
     {
         switch(gA.tag)
         {
