@@ -17,6 +17,7 @@ public class Hero_Script : MonoBehaviour
     [Header("Set in Dynamically")]
     [SerializeField]
     private float _shieldLevel = 4;
+
     public delegate void fireWeapons(); //creates delegate type
     public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
     public fireWeapons stopWeaponsFire; //this is triggered on space bar up - stops flame thrower
@@ -25,13 +26,10 @@ public class Hero_Script : MonoBehaviour
     private float _startTime = 0;
     private Weapon _weapon;
 
-    
-
-
     void Awake()
     {
         if (heroScriptReference == null)
-	{
+        {
             heroScriptReference = this; //sets up singleton so that only 1 hero can be created.
         }
         else
@@ -116,6 +114,7 @@ public class Hero_Script : MonoBehaviour
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
 
+
         print(other.tag);
         if (other.tag == "ProjectileEnemy")
         {
@@ -123,6 +122,7 @@ public class Hero_Script : MonoBehaviour
             shieldLevel--;
             return;
         }
+
 
         if (go == _lastTriggerGo)
         {
@@ -132,17 +132,14 @@ public class Hero_Script : MonoBehaviour
         _lastTriggerGo = go;
         //decreases shield level upon trigger with an enemy
         //destroys enemy
-        
+
         if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2" || go.tag == "Enemy4")
         {
             shieldLevel--;
             Main_MainScene.scriptReference.DestroyEnemy(go); //destroy enemy function used as it removes the enemy from the list in main
         }
-        
+
     }
-
-
-
 
 
 
@@ -161,7 +158,7 @@ public class Hero_Script : MonoBehaviour
             if (value < 0)
             {
                 //Saves highscore 
-                if(Score.scoreControllerReference.highscore < Score.scoreControllerReference.score)
+                if (Score.scoreControllerReference.highscore < Score.scoreControllerReference.score)
                 {
                     Score.scoreControllerReference.highscore = Score.scoreControllerReference.score;
                     Score.scoreControllerReference.SavePlayerProgress();
