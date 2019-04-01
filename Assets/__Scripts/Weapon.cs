@@ -4,6 +4,7 @@ using UnityEngine;
 
 //can be seen and used by any class
 
+
 //this is an enum of the differen types of weapons
 public enum WeaponType
 {
@@ -29,6 +30,7 @@ public class WeaponDefinition
 
 public class Weapon : MonoBehaviour
 {
+    
     static public Transform PROJECTILE_ANCHOR;
     [Header("Set Dynamically")]
     [SerializeField]//this forces unity to serialize private fields (can still be set in inspector but field is private)

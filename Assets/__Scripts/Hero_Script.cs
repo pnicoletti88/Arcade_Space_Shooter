@@ -44,6 +44,17 @@ public class Hero_Script : MonoBehaviour
         _weapon = GetComponentInChildren<Weapon>();
 
     }
+    private void PowerUp(WeaponType wT, float T, GameObject pU)
+    {
+        _weapon.type = wT;
+        Invoke("PowerDown", T);
+        Main_MainScene.scriptReference.DestroyPickup(pU);
+    }
+    private void PowerDown()
+    {
+        _weapon.type = WeaponType.single;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -58,6 +69,7 @@ public class Hero_Script : MonoBehaviour
         }
         else
         {
+            /*
             //Switch weapon when the key 'c' is clicked
             if (Input.GetKeyDown("c"))
             {
@@ -74,6 +86,8 @@ public class Hero_Script : MonoBehaviour
                 if (_weapon.type != WeaponType.freezeGun) { _weapon.type = WeaponType.freezeGun; }
                 else { _weapon.type = WeaponType.moab; }
             }
+            */
+
 
             //these method used input based on the user defined axis and return a value between 1- and 1 depending on which direction is push
             //starts at 0 and builds to 1 the longer you hold it
@@ -116,6 +130,27 @@ public class Hero_Script : MonoBehaviour
 
 
         print(other.tag);
+        print(rootT.tag);
+        if(other.tag == "homing")
+        {
+            PowerUp(WeaponType.homing, 5, other.gameObject);
+        }
+        if (other.tag == "triple")
+        {
+            PowerUp(WeaponType.triple, 10, other.gameObject);
+        }
+        if (other.tag == "plasmaThrower")
+        {
+            PowerUp(WeaponType.plasmaThrower, 10, other.gameObject);
+        }
+        if (other.tag == "freezeGun")
+        {
+            PowerUp(WeaponType.freezeGun, 10, other.gameObject);
+        }
+        if (other.tag == "moab")
+        {
+            PowerUp(WeaponType.moab, 5, other.gameObject);
+        }
         if (other.tag == "ProjectileEnemy")
         {
             Destroy(other.gameObject);

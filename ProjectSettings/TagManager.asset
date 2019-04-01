@@ -13,8 +13,12 @@ TagManager:
   - Enemy0
   - Enemy1
   - Enemy2
-  - PowerUp_Homing
   - Enemy4
+  - triple
+  - homing
+  - plasmaThrower
+  - freezeGun
+  - moab
   layers:
   - Default
   - TransparentFX

@@ -77,9 +77,13 @@ public class Main_MainScene : MonoBehaviour
 
     public void SpawnPickUps()
     {
+        string[] pickUps = { "triple", "homing", "plasmaThrower", "freezeGun", "moab" };
+        int loadRand = Random.Range(0, pickUps.Length);
         int randPickUp = Random.Range(0, preFabPickUps.Length);
-        GameObject toSpawn = Instantiate<GameObject>(preFabPickUps[randPickUp]);
+        GameObject toSpawn = Instantiate<GameObject>(preFabPickUps[randPickUp]); ;
+        toSpawn.gameObject.tag = pickUps[loadRand];
         float pickUpPad = 1f;
+        
 
         if (toSpawn.GetComponent<BoundsCheck>() != null)
         {
@@ -213,7 +217,7 @@ public class Main_MainScene : MonoBehaviour
     {
        
         _allPickUpList.Remove(pickUpToDestroy);
-        GameObject explos = Instantiate(particleExplosion);
+        GameObject explos = Instantiate(pickUpAnimation);
         explos.transform.position = pickUpToDestroy.transform.position;
         Destroy(pickUpToDestroy);
     }
