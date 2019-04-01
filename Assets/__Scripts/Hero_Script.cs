@@ -1,23 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Hero_Script : MonoBehaviour
-{
-    public static Hero_Script heroScriptReference;
-
-    [Header("Set in Inspector")]
-    public float speed = 30;
-    public float rollMult = -45;
-    public float pitchMult = 30;
-    public float gameRestartDelay = 2f;
-    public GameObject projectilePreFab;
-    public float projectileSpeed = 40f;
-
-    [Header("Set in Dynamically")]
-    [SerializeField]
-    private float _shieldLevel = 4;
-
+﻿
     public delegate void fireWeapons(); //creates delegate type
     public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
     public fireWeapons stopWeaponsFire; //this is triggered on space bar up - stops flame thrower
@@ -26,10 +7,13 @@ public class Hero_Script : MonoBehaviour
     private float _startTime = 0;
     private Weapon _weapon;
 
+    
+
+
     void Awake()
     {
         if (heroScriptReference == null)
-        {
+	{
             heroScriptReference = this; //sets up singleton so that only 1 hero can be created.
         }
         else
@@ -122,7 +106,6 @@ public class Hero_Script : MonoBehaviour
             return;
         }
 
-
         if (go == _lastTriggerGo)
         {
             return;
@@ -139,6 +122,9 @@ public class Hero_Script : MonoBehaviour
         }
         
     }
+
+
+
 
 
 

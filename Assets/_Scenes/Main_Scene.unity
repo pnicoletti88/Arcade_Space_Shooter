@@ -820,7 +820,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806119024}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1292,7 +1292,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325244937}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -6165,7 +6165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1edbeff7b11d1684d93312cffaac8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 5
+  _type: 0
   def:
     type: 0
     projectilePreFab: {fileID: 0}
