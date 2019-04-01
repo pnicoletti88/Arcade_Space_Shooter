@@ -25,6 +25,9 @@ public class Hero_Script : MonoBehaviour
     private GameObject _lastTriggerGo = null;
     private float _startTime = 0;
 
+    public Dictionary<WeaponType, bool> activeWeapons;
+
+
     void Awake()
     {
         if (heroScriptReference == null)
@@ -93,7 +96,12 @@ public class Hero_Script : MonoBehaviour
     {
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
-
+        print(go.tag);
+        if (go.tag == "PowerUp_Homing")
+        {
+            PowerUp(WeaponType.homing, true);
+            Invoke("PowerUp(WeaponType.homing, false)", 20);
+        }
         if (go == _lastTriggerGo)
         {
             return;
@@ -111,6 +119,11 @@ public class Hero_Script : MonoBehaviour
         {
             print("Triggered by non-enemy: " + go.name);
         }
+    }
+
+    private void PowerUp(WeaponType wT, bool b)
+    {
+        activeWeapons.Add(wT, b);
     }
 
     //shield level property allows _shieldLevel to be set as private and is only accessed through get and set

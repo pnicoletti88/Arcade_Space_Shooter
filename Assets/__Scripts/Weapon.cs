@@ -40,6 +40,9 @@ public class Weapon : MonoBehaviour
     private Renderer _collarRend; //render of the weapon - will allow for colour switching later on
     private ParticleSystem.EmissionModule _plasmaThrowerParticles;
 
+
+
+
     void Start()
     {
         collar = transform.Find("Collar").gameObject;
@@ -62,7 +65,7 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         //Switch weapon when the key 'c' is clicked
-        if(Input.GetKeyDown("c"))
+        if(Input.GetKeyDown("c") )
         {
             if(type == WeaponType.single) { type = WeaponType.triple; }
             else { type = WeaponType.single; }

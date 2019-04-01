@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class PowerUp_Parent : MonoBehaviour
 {
     //Stack will be used for referencing current powerups
-    public Stack<WeaponType> activeWeapons;
+    
     protected private BoundsCheck _bound;
     //Check bounds for moving powerups
     protected void Awake()
@@ -17,7 +17,7 @@ public abstract class PowerUp_Parent : MonoBehaviour
     {
         if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
-            Main_MainScene.scriptReference.DestroyEnemy(gameObject);
+            Main_MainScene.scriptReference.DestroyPickup(gameObject);
         }
         Move();
     }
@@ -33,12 +33,7 @@ public abstract class PowerUp_Parent : MonoBehaviour
             transform.position = value;
         }
     }
-    //Mechanic for implementing what happens when the hero collects the pickup
-    void OnTriggerEnter(Collider otherColl)
-    {
-        print(otherColl.gameObject.name);
-
-    }
-    protected abstract void PowerUp();
+    
+   
     protected abstract void Move();
 }

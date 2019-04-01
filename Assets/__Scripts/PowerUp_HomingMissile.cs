@@ -11,8 +11,5 @@ public class PowerUp_HomingMissile : PowerUp_Parent
         position = temporaryPosition; //update position
     }
 
-    protected override void PowerUp()
-    {
-        activeWeapons.Push(WeaponType.homing);
-    }
+  
 }
