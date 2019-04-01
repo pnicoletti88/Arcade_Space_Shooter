@@ -17,6 +17,7 @@ public class Hero_Script : MonoBehaviour
     [Header("Set in Dynamically")]
     [SerializeField]
     private float _shieldLevel = 4;
+
     public delegate void fireWeapons(); //creates delegate type
     public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
     public fireWeapons stopWeaponsFire; //this is triggered on space bar up - stops flame thrower
@@ -25,13 +26,13 @@ public class Hero_Script : MonoBehaviour
     private float _startTime = 0;
     private Weapon _weapon;
 
-    
+    public Dictionary<WeaponType, bool> activeWeapons;
 
 
     void Awake()
     {
         if (heroScriptReference == null)
-	{
+        {
             heroScriptReference = this; //sets up singleton so that only 1 hero can be created.
         }
         else
@@ -115,6 +116,7 @@ public class Hero_Script : MonoBehaviour
     {
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
+<<<<<<< HEAD
 
         print(other.tag);
         if (other.tag == "ProjectileEnemy")
@@ -124,6 +126,15 @@ public class Hero_Script : MonoBehaviour
             return;
         }
 
+
+=======
+        print(go.tag);
+        if (go.tag == "PowerUp_Homing")
+        {
+            PowerUp(WeaponType.homing, true);
+            Invoke("PowerUp(WeaponType.homing, false)", 20);
+        }
+>>>>>>> PowerUps
         if (go == _lastTriggerGo)
         {
             return;
@@ -141,10 +152,14 @@ public class Hero_Script : MonoBehaviour
         
     }
 
+<<<<<<< HEAD
 
-
-
-
+=======
+    private void PowerUp(WeaponType wT, bool b)
+    {
+        activeWeapons.Add(wT, b);
+    }
+>>>>>>> PowerUps
 
     //shield level property allows _shieldLevel to be set as private and is only accessed through get and set
     public float shieldLevel
