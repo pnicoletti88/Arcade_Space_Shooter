@@ -15,6 +15,7 @@ TagManager:
   - Enemy2
   - PowerUp_Homing
   - Enemy4
+  - EnemyBoss
   layers:
   - Default
   - TransparentFX
