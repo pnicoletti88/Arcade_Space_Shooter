@@ -9,9 +9,10 @@ public class Level : MonoBehaviour
     public Text levelText;
     public int level = 1;
     public int randRange = 1;
-    static public float eSpawnRate = 1f;
+    static public float eSpawnRate = 0.5f;
     private Score _score;
     public bool rot = false;
+    public bool boss = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -38,8 +39,8 @@ public class Level : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_score.score % 20 >= 0 && _score.score % 20 < 20) {
-            UpdateLevel(_score.score / 20+1);
+        if (_score.score % 25 >= 0 && _score.score % 25 < 25) {
+            UpdateLevel(_score.score / 25+1);
           }
 
     }
@@ -54,9 +55,18 @@ public class Level : MonoBehaviour
     }
         else if (newLevel >= 5)
         {
-            level = newLevel;
-            randRange = 4;
-            eSpawnRate = eSpawnRate*1.001f;
+            if (newLevel % 5 == 0)
+            {
+                boss = true;
+                level = newLevel;
+                eSpawnRate = 1f;
+            }
+            else
+            {
+                level = newLevel;
+                randRange = 4;
+                eSpawnRate = eSpawnRate * 1.001f;
+            }
         }
         levelText.text = "Level: " + newLevel;
     }

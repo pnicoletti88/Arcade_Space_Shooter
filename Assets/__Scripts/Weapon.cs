@@ -108,6 +108,10 @@ public class Weapon : MonoBehaviour
         {
             rootGo.GetComponent<Enemy_4_Movement>().fireWeaponsDelegate = Fire;
         }
+        else if (rootGo.GetComponent<Enemy_Boss_Movement>() != null)
+        {
+            rootGo.GetComponent<Enemy_Boss_Movement>().fireWeaponsDelegate = Fire;
+        }
 
         def = Main_MainScene.GetWeaponDefinition(_type);
         lastShotTime = 0; //this means that weapon will be ready to fire right when it is switched to

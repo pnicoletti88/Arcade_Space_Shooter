@@ -10,9 +10,9 @@ public class Main_MainScene : MonoBehaviour
     static public Main_MainScene scriptReference; //Singleton
 
     [Header("Set in Inspector")]
-    public GameObject[] preFabEnemies = new GameObject[3];
+    public GameObject[] preFabEnemies = new GameObject[4];
     public GameObject[] preFabPickUps = new GameObject[3];
-    public float enemySpawnRate = 1f;
+    public float enemySpawnRate = 0.5f;
     public float enemyPadding = 1.5f;
     public int level = 1; //level field
 
@@ -115,7 +115,16 @@ public class Main_MainScene : MonoBehaviour
         //int randEnemy = Random.Range(0, preFabEnemies.Length); //randomly find which enemy to generate
         //int randEnemy = Random.Range(0, _level.randRange); //random find which enemy to generate within the range specified by level class
         int randEnemy = 3;
-        GameObject spawned = Instantiate<GameObject>(preFabEnemies[randEnemy]);
+        bool boss = _level.boss;
+        GameObject spawned;
+        if (boss)
+        {
+
+            spawned = Instantiate<GameObject>(preFabEnemies[4]);
+        }
+        else
+            spawned = Instantiate<GameObject>(preFabEnemies[randEnemy]);
+
 
         enemySpawnRate = Level.eSpawnRate; //update spawn rate to match level class
         level = _level.level; //update level to match current level
@@ -139,6 +148,9 @@ public class Main_MainScene : MonoBehaviour
         //set the enemy to start somewhere just above the top of the screen
         startPos.x = Random.Range(xMinimum, xMaximum);
         startPos.y = _boundM.camHeight + enemyPad;
+
+        if (boss)
+            startPos.x = 10;
         spawned.transform.position = startPos;
 
         //adds the enemy into the list of all enemies
@@ -147,6 +159,8 @@ public class Main_MainScene : MonoBehaviour
         //this stop enemies from spawning
         if (_spawnEnemies)
         {
+            if (boss)
+                _spawnEnemies = false;
             Invoke("SpawnEnemy", 1f / enemySpawnRate); //invokes the function to run again
         }
         else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
