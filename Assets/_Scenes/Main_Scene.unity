@@ -517,7 +517,7 @@ MonoBehaviour:
   - type: 3
     projectilePreFab: {fileID: 1785650694238834535, guid: b4a022cb990b1a64aaa99a9cc124c1b3,
       type: 3}
-    damage: 50
+    damage: 75
     speed: 40
     delayBetweenShots: 1
   - type: 4
@@ -6168,7 +6168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1edbeff7b11d1684d93312cffaac8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 5
+  _type: 3
   def:
     type: 0
     projectilePreFab: {fileID: 0}

@@ -113,8 +113,8 @@ public class Main_MainScene : MonoBehaviour
     public void SpawnEnemy()
     {
         //int randEnemy = Random.Range(0, preFabEnemies.Length); //randomly find which enemy to generate
-        //int randEnemy = Random.Range(0, _level.randRange); //random find which enemy to generate within the range specified by level class
-        int randEnemy = 3;
+        int randEnemy = Random.Range(0, _level.randRange); //random find which enemy to generate within the range specified by level class
+        
         bool boss = _level.boss;
         GameObject spawned;
         if (boss)
@@ -150,7 +150,9 @@ public class Main_MainScene : MonoBehaviour
         startPos.y = _boundM.camHeight + enemyPad;
 
         if (boss)
+        {
             startPos.x = 10;
+        }
         spawned.transform.position = startPos;
 
         //adds the enemy into the list of all enemies
@@ -160,7 +162,9 @@ public class Main_MainScene : MonoBehaviour
         if (_spawnEnemies)
         {
             if (boss)
+            {
                 _spawnEnemies = false;
+            }
             Invoke("SpawnEnemy", 1f / enemySpawnRate); //invokes the function to run again
         }
         else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
