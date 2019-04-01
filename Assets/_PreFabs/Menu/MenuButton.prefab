@@ -114,7 +114,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuButtonController: {fileID: 0}
-  disableOnce: 1
 --- !u!114 &8658967654019131771
 MonoBehaviour:
   m_ObjectHideFlags: 0

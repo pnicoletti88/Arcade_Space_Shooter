@@ -157,7 +157,7 @@ public class Main_MainScene : MonoBehaviour
     //function loads the scene after DelayedRestart is called
     public void Restart()
     {
-        SceneManager.LoadScene("Title_Screen");
+        SceneManager.LoadScene("Death_Screen");
     }
 
 

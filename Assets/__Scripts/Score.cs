@@ -9,6 +9,8 @@ public class Score : MonoBehaviour
 {
     public static Score scoreControllerReference = null;
 
+    public bool isDeath;
+
 
     //Score 
     public Text scoreText;
@@ -21,14 +23,28 @@ public class Score : MonoBehaviour
     //Load HighScore
     private int LoadPlayerProgress()
     {
-        if (PlayerPrefs.HasKey("highestScore"))
+        if (!isDeath)
         {
-            return PlayerPrefs.GetInt("highestScore");
+            if (PlayerPrefs.HasKey("highestScore"))
+            {
+                return PlayerPrefs.GetInt("highestScore");
+            }
+            else
+            {
+
+                return 0;
+            }
         }
         else
         {
-
-            return 0;
+            if (PlayerPrefs.HasKey("currScore"))
+            {
+                return PlayerPrefs.GetInt("currScore");
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 
@@ -48,10 +64,20 @@ public class Score : MonoBehaviour
     //Load Scoreboard
     void Start()
     {
-        score = 0;
-        highscore = LoadPlayerProgress();
-        UpdateScore();
-        UpdateHighScore();
+        
+        if (!isDeath)
+        {
+            score = 0;
+            PlayerPrefs.SetInt("currScore", score);
+            UpdateScore();
+            highscore = LoadPlayerProgress();
+            UpdateHighScore();
+        }
+        else
+        {
+            score = LoadPlayerProgress();
+            UpdateScore();
+        }
     }
     public void AddScore(int newScoreValue)
     {
@@ -60,15 +86,23 @@ public class Score : MonoBehaviour
     }
     void UpdateHighScore()
     {
-        highscoreText.text = "HighScore: " + highscore;
+        highscoreText.text = "highscore: " + highscore;
     }
     void UpdateScore()
     {
-        scoreText.text = "Score: " + score;
+        if (!isDeath)
+        {
+            scoreText.text = "score: " + score;
+        }
+        else
+        {
+            scoreText.text = "final score " + score;
+        }
     }
     public void SavePlayerProgress()
     {
         PlayerPrefs.SetInt("highestScore", highscore);
+        PlayerPrefs.SetInt("currScore", score);
         PlayerPrefs.Save();
     }
 

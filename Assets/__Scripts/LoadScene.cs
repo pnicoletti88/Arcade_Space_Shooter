@@ -23,10 +23,9 @@ public class LoadScene : MonoBehaviour
             // Use a coroutine to load the Scene in the background, Asynchronous load is used to prevent hiccups and allow animations to fully run.
             StartCoroutine(LoadYourAsyncScene());
         }
-        if (Input.GetAxis("Submit") == 1 && menuButtonController.index == 1)
+        if (Input.GetAxis("Submit") == 1 && menuButtonController.index == 3)
         {
-            Debug.Log("opa");
-            Application.Quit();
+            HandleClickPost();
         }
     }
 
@@ -43,5 +42,24 @@ public class LoadScene : MonoBehaviour
             yield return null;
         }
     }
-    
+
+    private const string _TWITTER_ADDRESS = "http://twitter.com/intent/tweet";
+    private const string _TWEET_LANGUAGE = "en";
+
+    void HandleClickPost()
+    {
+        string tweet;
+        if (PlayerPrefs.HasKey("currScore"))
+        {
+            tweet = "My Final Score is: " + PlayerPrefs.GetInt("currScore");
+        }
+        else
+        {
+            tweet = "My Final Score is: " + 0;
+        }
+        Application.OpenURL(_TWITTER_ADDRESS +
+                    "?text=" + WWW.EscapeURL(tweet) +
+                    "&amp;lang=" + WWW.EscapeURL(_TWEET_LANGUAGE));
+    }
+
 }
