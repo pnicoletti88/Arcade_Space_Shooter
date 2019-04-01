@@ -24,6 +24,7 @@ public class Hero_Script : MonoBehaviour
 
     private GameObject _lastTriggerGo = null;
     private float _startTime = 0;
+    private Weapon _weapon;
 
     void Awake()
     {
@@ -40,6 +41,8 @@ public class Hero_Script : MonoBehaviour
     void Start()
     {
         _startTime = Time.time;
+        _weapon = GetComponentInChildren<Weapon>();
+
     }
 
     // Update is called once per frame
@@ -55,6 +58,23 @@ public class Hero_Script : MonoBehaviour
         }
         else
         {
+            //Switch weapon when the key 'c' is clicked
+            if (Input.GetKeyDown("c"))
+            {
+                if (_weapon.type == WeaponType.single) { _weapon.type = WeaponType.triple; }
+                else { _weapon.type = WeaponType.single; }
+            }
+            if (Input.GetKeyDown("x"))
+            {
+                if (_weapon.type != WeaponType.plasmaThrower) { _weapon.type = WeaponType.plasmaThrower; }
+                else { _weapon.type = WeaponType.homing; }
+            }
+            if (Input.GetKeyDown("z"))
+            {
+                if (_weapon.type != WeaponType.freezeGun) { _weapon.type = WeaponType.freezeGun; }
+                else { _weapon.type = WeaponType.moab; }
+            }
+
             //these method used input based on the user defined axis and return a value between 1- and 1 depending on which direction is push
             //starts at 0 and builds to 1 the longer you hold it
             GetComponent<BoundsCheck>().boundsCheckActive = true;
@@ -94,6 +114,15 @@ public class Hero_Script : MonoBehaviour
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
 
+        print(other.tag);
+        if (other.tag == "ProjectileEnemy")
+        {
+            Destroy(other.gameObject);
+            shieldLevel--;
+            return;
+        }
+
+
         if (go == _lastTriggerGo)
         {
             return;
@@ -102,16 +131,16 @@ public class Hero_Script : MonoBehaviour
         _lastTriggerGo = go;
         //decreases shield level upon trigger with an enemy
         //destroys enemy
-        if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2")
+        
+        if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2" || go.tag == "Enemy4")
         {
             shieldLevel--;
             Main_MainScene.scriptReference.DestroyEnemy(go); //destroy enemy function used as it removes the enemy from the list in main
         }
-        else
-        {
-            print("Triggered by non-enemy: " + go.name);
-        }
+        
     }
+
+
 
     //shield level property allows _shieldLevel to be set as private and is only accessed through get and set
     public float shieldLevel

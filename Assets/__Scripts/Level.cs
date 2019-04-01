@@ -48,14 +48,14 @@ public class Level : MonoBehaviour
     {
         if (newLevel != level)
             levelText.text = "NEW LEVEL!";
-        if (newLevel < 4) { 
+        if (newLevel < 5) { 
         level = newLevel;
         randRange = newLevel;
     }
-        else if (newLevel >= 4)
+        else if (newLevel >= 5)
         {
             level = newLevel;
-            randRange = 3;
+            randRange = 4;
             eSpawnRate = eSpawnRate*1.001f;
         }
         levelText.text = "Level: " + newLevel;
