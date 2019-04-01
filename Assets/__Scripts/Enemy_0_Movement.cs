@@ -15,4 +15,9 @@ public class Enemy_0_Movement : Enemy_Parent
         temporaryPosition.y -= 10f * Time.deltaTime * _speedFactor;
         position = temporaryPosition;
     }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
 }

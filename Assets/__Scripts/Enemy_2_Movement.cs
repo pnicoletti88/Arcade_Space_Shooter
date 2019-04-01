@@ -15,7 +15,7 @@ public class Enemy_2_Movement : Enemy_Parent
     }
 
     //keyword new to hide update of parent class
-    public override void Update()
+    protected override void Update()
     {
         _timeCounter += 4*Time.deltaTime; //time counter used for sin wave movement pattern
         base.Update();

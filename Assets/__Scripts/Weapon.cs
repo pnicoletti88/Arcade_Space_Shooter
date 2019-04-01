@@ -175,7 +175,6 @@ public class Weapon : MonoBehaviour
     public Projectile MakeProjectile()
     {
         GameObject go = Instantiate(def.projectilePreFab);
-        print("wep: " + go.tag);
         if (transform.parent.gameObject.tag == "Hero") //sets up the porjectile as friendly
         {
             go.tag = "ProjectileHero";

@@ -113,7 +113,8 @@ public class Main_MainScene : MonoBehaviour
     public void SpawnEnemy()
     {
         //int randEnemy = Random.Range(0, preFabEnemies.Length); //randomly find which enemy to generate
-        int randEnemy = Random.Range(0, _level.randRange); //random find which enemy to generate within the range specified by level class
+        //int randEnemy = Random.Range(0, _level.randRange); //random find which enemy to generate within the range specified by level class
+        int randEnemy = 3;
         GameObject spawned = Instantiate<GameObject>(preFabEnemies[randEnemy]);
 
         enemySpawnRate = Level.eSpawnRate; //update spawn rate to match level class
@@ -175,7 +176,14 @@ public class Main_MainScene : MonoBehaviour
         }
         else
         {
-            return _allEnemiesList[0];
+            foreach(GameObject obj in _allEnemiesList)
+            {
+                if (obj.transform.position.y > Hero_Script.heroScriptReference.gameObject.transform.position.y)
+                {
+                    return obj;
+                }
+            }
+            return _allEnemiesList[_allEnemiesList.Count - 1];
         }
     }
 

@@ -90,7 +90,7 @@ public abstract class Enemy_Parent : MonoBehaviour
         _colourChangeTime = 0;
     }
 
-    public virtual void Update()
+    protected virtual void Update()
     {
         Move(); //calls move which is defined in the child class
         if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
@@ -194,7 +194,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     //function for collision with a projectile
     void OnCollisionEnter(Collision coll)
     {
-        
+        Debug.Log("COllide");
         GameObject otherColl = coll.gameObject;
         
         if (otherColl.tag == "ProjectileHero")
@@ -206,7 +206,6 @@ public abstract class Enemy_Parent : MonoBehaviour
 
             if (_bound.onScreen)
             {
-                Debug.Log(otherColl.name);
                 if (otherColl.name == "Missile(Clone)")
                 {
                     //missile collides many time with the enemy when it hits due to how it moves

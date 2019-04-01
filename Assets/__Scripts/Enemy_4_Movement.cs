@@ -13,7 +13,7 @@ public class Enemy_4_Movement : Enemy_0_Movement
         _health = 75;
     }
 
-    void Update()
+    protected override void Update()
     {
         if (fireWeaponsDelegate != null)
         {
