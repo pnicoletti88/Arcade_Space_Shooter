@@ -70,5 +70,4 @@ public class Level : MonoBehaviour
         }
         levelText.text = "Level: " + newLevel;
     }
-
 }

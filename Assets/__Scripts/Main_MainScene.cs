@@ -123,7 +123,9 @@ public class Main_MainScene : MonoBehaviour
             spawned = Instantiate<GameObject>(preFabEnemies[4]);
         }
         else
+        {
             spawned = Instantiate<GameObject>(preFabEnemies[randEnemy]);
+        }
 
 
         enemySpawnRate = Level.eSpawnRate; //update spawn rate to match level class
@@ -149,14 +151,16 @@ public class Main_MainScene : MonoBehaviour
         startPos.x = Random.Range(xMinimum, xMaximum);
         startPos.y = _boundM.camHeight + enemyPad;
 
+        //adds the enemy into the list of all enemies
+        _allEnemiesList.Add(spawned);
+
         if (boss)
         {
             startPos.x = 10;
         }
         spawned.transform.position = startPos;
 
-        //adds the enemy into the list of all enemies
-        _allEnemiesList.Add(spawned);
+        
 
         //this stop enemies from spawning
         if (_spawnEnemies)
@@ -165,7 +169,10 @@ public class Main_MainScene : MonoBehaviour
             {
                 _spawnEnemies = false;
             }
-            Invoke("SpawnEnemy", 1f / enemySpawnRate); //invokes the function to run again
+            else
+            {
+                Invoke("SpawnEnemy", 1f / enemySpawnRate); //invokes the function to run again
+            }
         }
         else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
         {

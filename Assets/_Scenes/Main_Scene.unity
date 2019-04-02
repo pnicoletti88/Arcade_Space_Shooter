@@ -543,6 +543,12 @@ MonoBehaviour:
     damage: 10
     speed: 25
     delayBetweenShots: 2
+  - type: 8
+    projectilePreFab: {fileID: 6592021164037511616, guid: 129628e1f5e661c4da859734ac0b575b,
+      type: 3}
+    damage: 10
+    speed: 25
+    delayBetweenShots: 0.75
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

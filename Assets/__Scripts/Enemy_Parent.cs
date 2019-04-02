@@ -62,6 +62,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     private float _healthDamageOnNextUpdate = 0;
     private float _frozenTime = 0;
     private float _timeToRemainFrozen = 2.5f;
+    private bool _flyAway = false;
 
     protected BoundsCheck _bound;
     protected float _health = 0; //set in child class
@@ -92,8 +93,9 @@ public abstract class Enemy_Parent : MonoBehaviour
 
     protected virtual void Update()
     {
+
         Move(); //calls move which is defined in the child class
-        if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
+        if (_bound != null && ((_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight)||(_bound.offScreenUp && _flyAway)))
         {
             Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
@@ -107,7 +109,7 @@ public abstract class Enemy_Parent : MonoBehaviour
 
         if (_onFireTime != 0)
         {
-            if((Time.time - _onFireTime) > _timeToRemainOnFire)
+            if ((Time.time - _onFireTime) > _timeToRemainOnFire)
             {
                 ChangeColour(true);
                 _onFireTime = 0;
@@ -152,8 +154,8 @@ public abstract class Enemy_Parent : MonoBehaviour
             ChangeColour(true);
             _colourChangeTime = 0;
         }
-       
     }
+
 
     //since this is different for all classes it will be implemented by them
     protected abstract void Move();
@@ -339,4 +341,5 @@ public abstract class Enemy_Parent : MonoBehaviour
             }
         }
     }
+
 }

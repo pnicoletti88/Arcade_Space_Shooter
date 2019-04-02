@@ -15,7 +15,8 @@ public enum WeaponType
     plasmaThrower,
     freezeGun,
     moab,
-    singleEnemy
+    singleEnemy,
+    tripleEnemy
 }
 
 [System.Serializable]//this allows the system to serialize this class (convert it to a byte array and pass it easily)
@@ -110,7 +111,7 @@ public class Weapon : MonoBehaviour
         }
         else if (rootGo.GetComponent<Enemy_Boss_Movement>() != null)
         {
-            rootGo.GetComponent<Enemy_Boss_Movement>().fireWeaponsDelegate = Fire;
+            rootGo.GetComponent<Enemy_Boss_Movement>().fireWeaponsDelegate += Fire;
         }
 
         def = Main_MainScene.GetWeaponDefinition(_type);
@@ -144,6 +145,7 @@ public class Weapon : MonoBehaviour
                 break;
 
             case WeaponType.triple: //creates the three projectiles and angles them correctly
+            case WeaponType.tripleEnemy:
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
                 p = MakeProjectile();
