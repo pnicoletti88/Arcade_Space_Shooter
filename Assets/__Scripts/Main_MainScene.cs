@@ -196,11 +196,27 @@ public class Main_MainScene : MonoBehaviour
         }
         else
         {
+            //this function attemps to find an enemy which is in front of the hero, and also cloe from an x position
+            //it uses a simple approach with if statements (it is by no means a perfect algorithm) but it is good enough
+            //simple approached used as it gets called a lot and don't want to affect frame rate
             foreach(GameObject obj in _allEnemiesList)
             {
+                float deltaEnemyMissileY = obj.transform.position.y - Hero_Script.heroScriptReference.gameObject.transform.position.y;
+                float deltaEnemyMissileX = Mathf.Abs(obj.transform.position.x - Hero_Script.heroScriptReference.gameObject.transform.position.x);
                 if (obj.transform.position.y > Hero_Script.heroScriptReference.gameObject.transform.position.y)
                 {
-                    return obj;
+                    if (deltaEnemyMissileY > 0.0f && deltaEnemyMissileY < 4.0f && deltaEnemyMissileX < 2.0f)
+                    {
+                        return obj;
+                    }
+                    if (deltaEnemyMissileY > 4.0f && deltaEnemyMissileY < 8.0f && deltaEnemyMissileX < 4.0f)
+                    {
+                        return obj;
+                    }
+                    if(deltaEnemyMissileY > 10.0f)
+                    {
+                        return obj;
+                    }
                 }
             }
             return _allEnemiesList[_allEnemiesList.Count - 1];

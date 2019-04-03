@@ -145,11 +145,27 @@ public class Weapon : MonoBehaviour
                 break;
 
             case WeaponType.triple: //creates the three projectiles and angles them correctly
-            case WeaponType.tripleEnemy:
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
                 p = MakeProjectile();
                 p.transform.rotation = Quaternion.AngleAxis(30, Vector3.back);
+                p.rigidBodyProjectile.velocity = p.transform.rotation * vel; //changes the velocity vector to rotate projectile
+                p = MakeProjectile();
+                p.transform.rotation = Quaternion.AngleAxis(-30, Vector3.back);
+                p.rigidBodyProjectile.velocity = p.transform.rotation * vel;
+                break;
+
+            case WeaponType.tripleEnemy:
+                p = MakeProjectile();
+                p.rigidBodyProjectile.velocity = vel;
+                p = MakeProjectile();
+                p.transform.rotation = Quaternion.AngleAxis(15, Vector3.back);
+                p.rigidBodyProjectile.velocity = p.transform.rotation * vel; //changes the velocity vector to rotate projectile
+                p = MakeProjectile();
+                p.transform.rotation = Quaternion.AngleAxis(30, Vector3.back);
+                p.rigidBodyProjectile.velocity = p.transform.rotation * vel; //changes the velocity vector to rotate projectile
+                p = MakeProjectile();
+                p.transform.rotation = Quaternion.AngleAxis(-15, Vector3.back);
                 p.rigidBodyProjectile.velocity = p.transform.rotation * vel; //changes the velocity vector to rotate projectile
                 p = MakeProjectile();
                 p.transform.rotation = Quaternion.AngleAxis(-30, Vector3.back);
@@ -161,9 +177,6 @@ public class Weapon : MonoBehaviour
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
                 break;
-
-
-
         }
     }
 
@@ -181,12 +194,12 @@ public class Weapon : MonoBehaviour
     public Projectile MakeProjectile()
     {
         GameObject go = Instantiate(def.projectilePreFab);
-        if (transform.parent.gameObject.tag == "Hero") //sets up the porjectile as friendly
+        if (transform.parent.gameObject.tag == "Hero" && go.tag != "freezeGun" && go.tag != "homing") //sets up the porjectile as friendly
         {
             go.tag = "ProjectileHero";
             go.layer = LayerMask.NameToLayer("ProjectileHero");
         }
-        else //this section is not currently used but include for future functionality
+        else if (go.tag != "freezeGun" && go.tag != "homing")//this section is not currently used but include for future functionality
         {
             go.tag = "ProjectileEnemy"; //makes the projectile from an enemy
             go.layer = LayerMask.NameToLayer("ProjectileEnemy");

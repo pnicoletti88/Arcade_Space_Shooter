@@ -5078,7 +5078,7 @@ GameObject:
   - component: {fileID: 8062340959346677527}
   m_Layer: 10
   m_Name: Missile
-  m_TagString: ProjectileHero
+  m_TagString: homing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

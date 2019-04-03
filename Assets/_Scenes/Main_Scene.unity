@@ -1362,9 +1362,9 @@ GameObject:
   - component: {fileID: 1444433488}
   - component: {fileID: 1444433487}
   - component: {fileID: 1444433486}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Plasma Thrower Particle System
-  m_TagString: ProjectileHero
+  m_TagString: plasmaThrower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

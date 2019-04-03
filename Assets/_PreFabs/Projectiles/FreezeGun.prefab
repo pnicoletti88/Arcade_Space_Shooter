@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3336219894608596222}
   m_Layer: 10
   m_Name: FreezeGun
-  m_TagString: ProjectileHero
+  m_TagString: freezeGun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

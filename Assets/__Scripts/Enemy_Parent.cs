@@ -100,7 +100,7 @@ public abstract class Enemy_Parent : MonoBehaviour
             Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
 
-        if (_health != 0)
+        if (_healthDamageOnNextUpdate != 0)
         {
             _health -= _healthDamageOnNextUpdate;
             _healthDamageOnNextUpdate = 0;
@@ -164,33 +164,30 @@ public abstract class Enemy_Parent : MonoBehaviour
     //this function damages the enemy when they collide with a projectile.
     void OnParticleCollision(GameObject otherColl)
     {
-        if (otherColl.tag == "ProjectileHero")
+        Debug.Log(otherColl.tag);
+        if (otherColl.tag == "plasmaThrower")
         {
-            if (otherColl.name == "Plasma Thrower Particle System")
+            if (_onFireTime == 0)
             {
-                if (_onFireTime == 0)
-                {
-                    ChangeColour(false, 50, -75, -75, false);
-                }
-                _onFireTime = Time.time;
+                ChangeColour(false, 50, -75, -75, false);
             }
-            else if(otherColl.name == "FreezeGun(Clone)")
-            {
-                if (_frozenTime == 0)
-                {
-                    ChangeColour(false, -75, -75, 50, false);
-                    _speedFactor = 0.2f;
-                }
-                _frozenTime = Time.time;
-                Destroy(otherColl);
-            }
-            else if(otherColl.name == "Big Explosion(Clone)")
-            {
-                _health = 0;
-                CheckHealth();
-            }
+            _onFireTime = Time.time;
         }
-        
+        else if (otherColl.tag == "freezeGun")
+        {
+            if (_frozenTime == 0)
+            {
+                ChangeColour(false, -75, -75, 50, false);
+                _speedFactor = 0.2f;
+            }
+            _frozenTime = Time.time;
+            Destroy(otherColl);
+        }
+        else if (otherColl.tag == "moab")
+        {
+            _health = 0;
+            CheckHealth();
+        }
     }
 
     //function for collision with a projectile
@@ -199,7 +196,7 @@ public abstract class Enemy_Parent : MonoBehaviour
         Debug.Log("COllide");
         GameObject otherColl = coll.gameObject;
         
-        if (otherColl.tag == "ProjectileHero")
+        if (otherColl.tag == "ProjectileHero" || otherColl.tag == "homing")
         {
             Projectile p = otherColl.GetComponent<Projectile>();
             Destroy(otherColl);
@@ -208,7 +205,7 @@ public abstract class Enemy_Parent : MonoBehaviour
 
             if (_bound.onScreen)
             {
-                if (otherColl.name == "Missile(Clone)")
+                if (otherColl.tag == "homing")
                 {
                     //missile collides many time with the enemy when it hits due to how it moves
                     //in order to deal with this it deals its damage during the next update (as this is after the spur of collisions)
@@ -218,8 +215,9 @@ public abstract class Enemy_Parent : MonoBehaviour
                 else
                 {
                     _health -= Main_MainScene.GetWeaponDefinition(p.type).damage; //update health
+                    CheckHealth();
                 }
-                CheckHealth();
+                
             }    
         }
     }
@@ -237,6 +235,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     //updates the user score according to the type of enemy
     public static void UpdateScore(GameObject gA)
     {
+        Debug.Log(gA.tag);
         switch(gA.tag)
         {
             case "Enemy0":
@@ -246,6 +245,9 @@ public abstract class Enemy_Parent : MonoBehaviour
                 Score.scoreControllerReference.AddScore(10);
                 break;
             case "Enemy2":
+                Score.scoreControllerReference.AddScore(15);
+                break;
+            case "Enemy4":
                 Score.scoreControllerReference.AddScore(15);
                 break;
             case "EnemyBoss":

@@ -4987,7 +4987,7 @@ ParticleSystem:
 --- !u!199 &5451028065665606584
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -9685,7 +9685,7 @@ ParticleSystem:
 --- !u!199 &8688940781844147502
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -10290,7 +10290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe6db8ebed454f40809969bd4991d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1
+  radius: -10
   keepOnScreen: 0
   onScreen: 1
   camWidth: 0
@@ -15668,7 +15668,7 @@ ParticleSystem:
 --- !u!199 &8455176926036818057
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

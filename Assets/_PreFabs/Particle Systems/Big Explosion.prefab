@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1169465609591070772}
   m_Layer: 10
   m_Name: Big Explosion
-  m_TagString: ProjectileHero
+  m_TagString: moab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

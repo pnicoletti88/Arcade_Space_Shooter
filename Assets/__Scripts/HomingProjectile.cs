@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//PLEASE IGNORE THIS FILE - it is for phase 3 and was just done now for fun
-//It is not implemented in the game right now as there is no way to switch to homing missile in game
-
 /*
  * Purpose: This class controls the homing missles
  * It extends the Porjectile class - allowing the projectiles to be made in the same way
@@ -44,24 +41,19 @@ public class HomingProjectile : Projectile
             float deltaX = enemyLocation.x - transform.position.x;
             float deltaY = enemyLocation.y - transform.position.y;
 
-            Vector2 targetDir = new Vector2(deltaX, deltaY);
-
-            //use arctan to get angle using deltaX and Y between missile and enemy
-            //convert from radians to degrees
-
-            //flip angle is missle is above enemy
-
-
-            //update angle and velocity of ship
-            //SPEED HAS BEEN HARDCODED - change this?
+            Vector2 targetDir = new Vector2(deltaX, deltaY); //calculating vector2 which points from missile enemy
 
             Vector3 vel = GetComponent<Rigidbody>().velocity;
-            Vector2 currDir = new Vector2(vel.x, vel.y);
+            Vector2 currDir = new Vector2(vel.x, vel.y); //calculating vector2 in the current direction of the missile
 
             float targetAngle = getAngle(targetDir);
             float currentAngle = getAngle(currDir);
             float finalAngle = targetAngle;
 
+
+            //determine which way the missle needs to rotate based on angle towards the enemy and the current angle of the missle
+            //this code uses min and max to limit the maximum angle rotation to _degreePerFrame
+            //this give the missile a much more natural movement pattern
             if (targetAngle - currentAngle < 180.0f && targetAngle - currentAngle > 0.0f)
             {
                 finalAngle = Mathf.Min(targetAngle, currentAngle + _degreePerFrame);
@@ -86,11 +78,15 @@ public class HomingProjectile : Projectile
 
         }
     }
+
+    //this is a helper function to find the angle between the positive y-axis and the vector
+    //angle is measure clockwise
     private float getAngle(Vector2 vector)
     {
         float angle = Mathf.Atan(vector.x / vector.y);
         angle = angle / (2 * Mathf.PI) * 360;
 
+        //angle needs to be adjusted according to CAST rule to make angle positive and put vector in correct quadrant
         if (vector.x >= 0 && vector.y >= 0)
         {
             return angle;
@@ -110,10 +106,4 @@ public class HomingProjectile : Projectile
         return 0;
     }
 
-    public float GetDamage()
-    {
-        float damage = _damageToDeal;
-        _damageToDeal = 0;
-        return damage;
-    }
 }
