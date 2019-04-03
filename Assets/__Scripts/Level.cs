@@ -39,16 +39,14 @@ public class Level : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_score.score % 25 >= 0 && _score.score % 25 < 25) {
-            UpdateLevel(_score.score / 25+1);
+        if (_score.score % 75 >= 0 && _score.score % 75 < 75) {
+            UpdateLevel(_score.score / 75+1);
           }
 
     }
 
     void UpdateLevel(int newLevel)
-    {
-        if (newLevel != level)
-            levelText.text = "NEW LEVEL!";
+    { 
         if (newLevel < 5) { 
         level = newLevel;
         randRange = newLevel;
@@ -63,6 +61,7 @@ public class Level : MonoBehaviour
             }
             else
             {
+                boss = false;
                 level = newLevel;
                 randRange = 4;
                 eSpawnRate = eSpawnRate * 1.001f;

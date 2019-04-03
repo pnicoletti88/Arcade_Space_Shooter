@@ -117,6 +117,7 @@ public class Main_MainScene : MonoBehaviour
         
         bool boss = _level.boss;
         GameObject spawned;
+
         if (boss)
         {
 
@@ -158,21 +159,15 @@ public class Main_MainScene : MonoBehaviour
         {
             startPos.x = 10;
         }
-        spawned.transform.position = startPos;
 
-        
+        spawned.transform.position = startPos;
 
         //this stop enemies from spawning
         if (_spawnEnemies)
         {
-            if (boss)
-            {
-                _spawnEnemies = false;
-            }
-            else
-            {
+            if (!boss)
                 Invoke("SpawnEnemy", 1f / enemySpawnRate); //invokes the function to run again
-            }
+
         }
         else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
         {
@@ -244,6 +239,8 @@ public class Main_MainScene : MonoBehaviour
         GameObject explos = Instantiate(particleExplosion);
         explos.transform.position = enemyToDestroy.transform.position;
         Destroy(enemyToDestroy);
+        if (enemyToDestroy.tag == "EnemyBoss")
+            Invoke("SpawnEnemy", 1 / enemySpawnRate);
     }
 
     public void DestroyPickup(GameObject pickUpToDestroy)
