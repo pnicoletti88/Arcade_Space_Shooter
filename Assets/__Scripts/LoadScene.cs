@@ -6,14 +6,9 @@ using UnityEngine.SceneManagement;
 public class LoadScene : MonoBehaviour
 {
     [SerializeField] public MenuButtonController menuButtonController;
-    private AssetBundle _myLoadedAssetBundle;
+    public static LoadScene sceneLoader;
+    public bool exitScene = false;
 
-
-    void Start()
-    {
-        //LoadedAssetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/_Scenes");
- 
-    }
 
     void Update()
     {
@@ -21,20 +16,33 @@ public class LoadScene : MonoBehaviour
         if (Input.GetAxis("Submit") == 1 && menuButtonController.index == 0)
         {
             // Use a coroutine to load the Scene in the background, Asynchronous load is used to prevent hiccups and allow animations to fully run.
-            StartCoroutine(LoadYourAsyncScene());
+            StartCoroutine(LoadYourAsyncScene("Main_Scene"));
+            
         }
-        if (Input.GetAxis("Submit") == 1 && menuButtonController.index == 3)
+        // If Return to title screen button game is selected, and submit is pressed, return to the title screen
+        else if (Input.GetAxis("Submit") == 1 && menuButtonController.index == 1)
         {
-            HandleClickPost();
+            // Use a coroutine to load the Scene in the background, Asynchronous load is used to prevent hiccups and allow animations to fully run.
+            if (SceneManager.GetActiveScene().name != "Title_Screen") {
+                StartCoroutine(LoadYourAsyncScene("Title_Screen"));
+            }
+            /* the if statement is there to ensure that if the "Quit Game" button on the title screen (which also has index 1) is pressed, nothing happens. 
+             * This button is included as a Proof-of-Concept, as the application cannot be exited within unity. 
+             * The game must be taken to build stages for it to function as an isolated application, and thus require a "quit game" button. */
+        }
+        else if (Input.GetAxis("Submit") == 1 && menuButtonController.index == 2)
+        {
+            HandleClickPost(); // calls function to post to twitter
         }
     }
 
     
-    IEnumerator LoadYourAsyncScene()
+    IEnumerator LoadYourAsyncScene(string scene)
     {
-        yield return new WaitForSeconds(3);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main_Scene");
-        //// Wait until the asynchronous scene fully loads, but alos give minimum 3 second wait time to allow for animations.
+        exitScene = true;
+        yield return new WaitForSeconds(4.5f);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
+        //// Wait until the asynchronous scene fully loads, but alos give minimum 3 second wait time to allow for animations/noises to execute
         
         while (!asyncLoad.isDone)
         {
@@ -46,6 +54,7 @@ public class LoadScene : MonoBehaviour
     private const string _TWITTER_ADDRESS = "http://twitter.com/intent/tweet";
     private const string _TWEET_LANGUAGE = "en";
 
+    //function that handles posting the final score to twitter
     void HandleClickPost()
     {
         string tweet;

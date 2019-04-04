@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MenuButtonController : MonoBehaviour
 {
+    public AudioSource audioSource;
     public int index;
     [SerializeField] public int maxIndex;
-    [SerializeField] private bool keyDown;
-    public AudioSource audioSource;
+    [SerializeField] private bool _keyDown;
+    
+    
 
     void Start()
     {
@@ -16,13 +18,14 @@ public class MenuButtonController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetAxis("Vertical") != 0)
+
+        if (Input.GetAxis("Vertical") != 0)
         {
-            if (!keyDown) // this logic, in addition with the logic at line 42, ensures that if the user "holds" the key down, the menu will only respond once. They must release the key for one frame, have the condtion return to false, and then press a key again - this prevents the user from cycling through the options too quickly.
+            if (!_keyDown) // this logic, in addition with the logic at line 42, ensures that if the user "holds" the key down, the menu will only respond once. They must release the key for one frame, have the condtion return to false, and then press a key again - this prevents the user from cycling through the options too quickly.
             {
-                if(Input.GetAxis("Vertical") < 0)
+                if (Input.GetAxis("Vertical") < 0)
                 {
-                    if(index < maxIndex)
+                    if (index < maxIndex)
                     {
                         index++;
                     }
@@ -30,9 +33,10 @@ public class MenuButtonController : MonoBehaviour
                     {
                         index = 0; // this resets the position if you "loop" over, and hit the up arrow when on the top item.
                     }
-                } else if (Input.GetAxis("Vertical") > 0)
+                }
+                else if (Input.GetAxis("Vertical") > 0)
                 {
-                    if(index > 0)
+                    if (index > 0)
                     {
                         index--;
                     }
@@ -41,11 +45,13 @@ public class MenuButtonController : MonoBehaviour
                         index = maxIndex; // similarly, this enables the "looping" ability
                     }
                 }
-                keyDown = true;
+                _keyDown = true;
             }
-        } else
+        }
+        else
         {
-            keyDown = false;
+            _keyDown = false;
         }
     }
+
 }

@@ -43,6 +43,8 @@ public class Weapon : MonoBehaviour
 
     private Renderer _collarRend; //render of the weapon - will allow for colour switching later on
     private ParticleSystem.EmissionModule _plasmaThrowerParticles;
+    public AudioSource audioSource;
+    public AudioClip bullet;
 
     void Awake()
     {
@@ -55,6 +57,7 @@ public class Weapon : MonoBehaviour
     {
         collar = transform.Find("Collar").gameObject;
         _collarRend = collar.GetComponent<Renderer>(); //this will be used for colour changing to gun (phase 3)
+        audioSource = GetComponent<AudioSource>();
 
 
 
@@ -178,6 +181,7 @@ public class Weapon : MonoBehaviour
                 p.rigidBodyProjectile.velocity = vel;
                 break;
         }
+        audioSource.PlayOneShot(bullet);
     }
 
     public void FirePlasmaThrower()

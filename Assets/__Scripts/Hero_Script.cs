@@ -13,6 +13,8 @@ public class Hero_Script : MonoBehaviour
     public float gameRestartDelay = 2f;
     public GameObject projectilePreFab;
     public float projectileSpeed = 40f;
+    
+    
 
     [Header("Set in Dynamically")]
     [SerializeField]
@@ -198,6 +200,8 @@ public class Hero_Script : MonoBehaviour
                     Score.scoreControllerReference.highscore = Score.scoreControllerReference.score;
                     Score.scoreControllerReference.SavePlayerProgress();
                 }
+                //Updates current score for death screen, regardless of score.
+                Score.scoreControllerReference.SavePlayerMostRecentScore();
                 Main_MainScene.scriptReference.spawnEnemies = false; //stops enemy spawning when ship is destroyed
                 Main_MainScene.scriptReference.spawnPickUps = false;
                 Destroy(this.gameObject); //destroy the ship

@@ -19,7 +19,7 @@ public class Parralax : MonoBehaviour
     {
         _panelHeight = panels[0].transform.localScale.y;
         _panelDepth = panels[0].transform.position.z;
-        //_panelDepth = 10;
+ 
 
         // sets height and depth of the star panels
         panels[0].transform.position = new Vector3(0, 0, _panelDepth);
@@ -34,7 +34,7 @@ public class Parralax : MonoBehaviour
 
         tY = Time.time * scrollingSpeed % _panelHeight + (_panelHeight * 0.5f);
 
-        if(player != null)
+        if(player != null && player.CompareTag("Hero"))
         {
             tX = -player.transform.position.x * motionMult;
         }

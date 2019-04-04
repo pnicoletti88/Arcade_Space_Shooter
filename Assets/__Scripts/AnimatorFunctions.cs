@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimatorFunctions : MonoBehaviour
 {
-    [SerializeField] public MenuButtonController menuButtonController;
+    public MenuButtonController menuButtonController;
     
     void PlaySound(AudioClip sound)
     {
