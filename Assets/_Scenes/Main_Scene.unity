@@ -1633,7 +1633,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  cullingMode: 0
+  cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
@@ -6368,7 +6368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 4
   def:
-    type: 0
+    type: 4
     projectilePreFab: {fileID: 0}
     damage: 0
     speed: 0
