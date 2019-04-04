@@ -8,6 +8,17 @@ public class LoadScene : MonoBehaviour
     [SerializeField] public MenuButtonController menuButtonController;
     public static LoadScene sceneLoader;
     public bool exitScene = false;
+    void Awake()
+    {
+        if (sceneLoader == null)
+        {
+            sceneLoader = this; //sets up singleton so that only 1 sceneLoader can be created.
+        }
+        else
+        {
+            Debug.LogError("Attempted Creation of Second sceneLoader");
+        }
+    }
 
 
     void Update()

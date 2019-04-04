@@ -9,7 +9,7 @@ public class FadeText : MonoBehaviour
     public bool isMenu;
     public LoadScene sceneLoader;
     private IEnumerator _coroutine;
-    private bool once = true;
+    private bool _once = true;
 
     void Update()
     {
@@ -17,12 +17,25 @@ public class FadeText : MonoBehaviour
         {
             exit = sceneLoader.exitScene;
         }
-        if (exit && once)
+        if (exit && _once)
         {
-            once = false;
-            _coroutine = FadeTextToZeroAlpha(1f, GetComponent<Text>());
-            StartCoroutine(_coroutine);
+            _once = false;
+            if (isMenu)
+            { 
+                Invoke("WaitBeforeFade", 2.5f);
+            }
+            else
+            {
+                WaitBeforeFade();
+            }
         }
+    }
+
+    public void WaitBeforeFade()
+    {
+        
+        _coroutine = FadeTextToZeroAlpha(1f, GetComponent<Text>());
+        StartCoroutine(_coroutine);
     }
 
     public IEnumerator FadeTextToZeroAlpha(float t, Text text)
