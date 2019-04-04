@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
+    // Score controller class to deal with updating the Text UI elements in the main game.
     public static Score scoreControllerReference = null;
 
 

@@ -10,10 +10,11 @@ public class FadeImage : FadeText
     private bool _imageOnce = true;
     private bool _imageExit = false;
     
-
+    //inherits from FadeText UI class, with minor updates to work for an image.
     void Update()
     {
-        _imageExit = parentFade.exit;
+        // reference to a parent class object limits the need for MenuButton to have a reference every time to a FadeImage script - the only UI image that needs this is the twitter button, so a more robust system is unneccessary, if not counterproductive.
+        _imageExit = parentFade.exit; 
         if(_imageExit && _imageOnce)
         {
             _imageOnce = false;
@@ -22,16 +23,17 @@ public class FadeImage : FadeText
         }
     }
 
-    public IEnumerator FadeImageToZeroAlpha(float t, Image image )
+    // similar to parent class fade function, however this is adapted to an image UI object.
+    public IEnumerator FadeImageToZeroAlpha(float rate, Image image )
     { 
         image.color = new Color(image.color.r, image.color.g, image.color.b, 1);
         while (image.color.a > 0.0f)
         {
-            if (image.color.a - (Time.deltaTime / t) <= 0.0f)
+            if (image.color.a - (Time.deltaTime / rate) <= 0.0f)
             {
                 StopCoroutine(_imageCoroutine);
             }
-            image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - (Time.deltaTime / t));
+            image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - (Time.deltaTime / rate));
             yield return null;
         }
     }

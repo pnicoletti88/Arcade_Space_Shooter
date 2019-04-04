@@ -184,6 +184,7 @@ public class Weapon : MonoBehaviour
         }
         if (def.bulletNoise != null)
         {
+            // plays the audioClip each time a bullet is shot.
             audioSource.PlayOneShot(def.bulletNoise);
         }
     }

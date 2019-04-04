@@ -9,7 +9,7 @@ public class MenuButtonController : MonoBehaviour
     [SerializeField] public int maxIndex;
     [SerializeField] private bool _keyDown;
     
-    
+    // script controls user input for controling the menu items.
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class MenuButtonController : MonoBehaviour
 
         if (Input.GetAxis("Vertical") != 0)
         {
-            if (!_keyDown) // this logic, in addition with the logic at line 42, ensures that if the user "holds" the key down, the menu will only respond once. They must release the key for one frame, have the condtion return to false, and then press a key again - this prevents the user from cycling through the options too quickly.
+            if (!_keyDown) // this logic, in addition with the logic at line 48, ensures that if the user "holds" the key down, the menu will only respond once. They must release the key for one frame, have the condtion return to false, and then press a key again - this prevents the user from cycling through the options too quickly.
             {
                 if (Input.GetAxis("Vertical") < 0)
                 {

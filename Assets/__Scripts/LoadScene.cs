@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour
 {
+    // script is intended to deal with input from the user and work with menuButtonController to load the correct scene, or perform the right operation when a button is pressed.
     [SerializeField] public MenuButtonController menuButtonController;
     public static LoadScene sceneLoader;
     public bool exitScene = false;
@@ -53,8 +54,8 @@ public class LoadScene : MonoBehaviour
         exitScene = true;
         yield return new WaitForSeconds(3.0f);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
-        //// Wait until the asynchronous scene fully loads, but alos give minimum 3 second wait time to allow for animations/noises to execute
-        
+        // Wait until the asynchronous scene fully loads, but alos give minimum 3 second wait time to allow for animations/noises to execute, and for the FadeTextToZeroAlpha coroutine to finish.
+        // Scene is loaded asynchronously to minimze issues and noticeable framerate drops with the transition between scenes, given the events that occur at the scene exit, and the events that occur when a the new game begins.
         while (!asyncLoad.isDone)
         {
             

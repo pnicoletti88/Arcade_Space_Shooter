@@ -17,8 +17,8 @@ public class MenuButton : MonoBehaviour
     
     void Start()
     {
-        animator.enabled = true;
-        _fadeText = GetComponent<FadeText>();
+        animator.enabled = true; // enables the animator when object is created
+        _fadeText = GetComponent<FadeText>(); // creates a reference to the script that fades text to zero alpha.
     }
 
     void Update()
@@ -43,6 +43,7 @@ public class MenuButton : MonoBehaviour
             }
             if (sceneLoader.exitScene)
             {
+                // starts the coroutine before the new scene is loaded
                 StartCoroutine(waitAnimation());
             }
         }
@@ -54,8 +55,9 @@ public class MenuButton : MonoBehaviour
     }
     public IEnumerator waitAnimation()
     {
+        // coroutine waits 2 seconds for animations to finish, then disables the animator. This is neccessary (and easiest to do in this scirpt), because if the animator is enabled, it will set the colour of each object to it's current state in the animator (likely deselected or selected), and prevents the FadeTextToZeroAlpha coroutine from working properly.
         yield return new WaitForSeconds(2.0f);
         animator.enabled = false;
-        _fadeText.exit = true;
+        _fadeText.exit = true; // lets the fadeText item know that it can begin the coroutine of fading way the UI element.
     }
 }

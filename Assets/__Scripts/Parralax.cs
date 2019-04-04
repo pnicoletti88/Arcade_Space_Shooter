@@ -34,8 +34,10 @@ public class Parralax : MonoBehaviour
 
         tY = Time.time * scrollingSpeed % _panelHeight + (_panelHeight * 0.5f);
 
+        // additional logic added to allow for star movement on any scene, even without the player - note that the 'player' item must be assigned in the inspector - however, if it is an object without the 'Hero' tag, this will not run. 
         if(player != null && player.CompareTag("Hero"))
         {
+            // player != null logic comes before the CompareTag function call - if the first term evaluates false, then comparetag will not try and find the tag of an object that does not exist. && operator only evaluates the second condition in the event the first one is true.
             tX = -player.transform.position.x * motionMult;
         }
 
