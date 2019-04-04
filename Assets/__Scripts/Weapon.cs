@@ -27,6 +27,7 @@ public class WeaponDefinition
     public float damage;
     public float speed;
     public float delayBetweenShots;
+    public AudioClip bulletNoise;
 }
 
 public class Weapon : MonoBehaviour
@@ -44,12 +45,12 @@ public class Weapon : MonoBehaviour
     private Renderer _collarRend; //render of the weapon - will allow for colour switching later on
     private ParticleSystem.EmissionModule _plasmaThrowerParticles;
     public AudioSource audioSource;
-    public AudioClip bullet;
 
     void Awake()
     {
         GameObject plasmaThrower = transform.Find("Plasma Thrower").gameObject.transform.Find("Plasma Thrower Particle System").gameObject;
         _plasmaThrowerParticles = plasmaThrower.GetComponent<ParticleSystem>().emission;
+        plasmaThrower.GetComponent<ParticleSystem>().Play(true);
         _plasmaThrowerParticles.enabled = false;//stops particles from being emitted
     }
 
@@ -181,17 +182,24 @@ public class Weapon : MonoBehaviour
                 p.rigidBodyProjectile.velocity = vel;
                 break;
         }
-        audioSource.PlayOneShot(bullet);
+        if (def.bulletNoise != null)
+        {
+            audioSource.PlayOneShot(def.bulletNoise);
+        }
     }
 
     public void FirePlasmaThrower()
     {
+        GameObject plasmaThrower = transform.Find("Plasma Thrower").gameObject.transform.Find("Plasma Thrower Particle System").gameObject;
+        Debug.Log("Is Play: " + plasmaThrower.GetComponent<ParticleSystem>().isPlaying);
         _plasmaThrowerParticles.enabled = true;
+        Debug.Log(_plasmaThrowerParticles.enabled);
     }
 
     public void StopPlasmaThrower()
     {
         _plasmaThrowerParticles.enabled = false;
+        Debug.Log("Stop ran");
     }
 
     //this function creates a projectiles - returns a reference to script attached to the projectile

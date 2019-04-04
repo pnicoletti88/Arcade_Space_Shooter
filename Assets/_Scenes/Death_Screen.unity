@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 227865585}
   - component: {fileID: 227865587}
   - component: {fileID: 227865586}
+  - component: {fileID: 227865588}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -278,6 +279,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227865584}
   m_CullTransparentMesh: 0
+--- !u!114 &227865588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227865584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53be5b81dec582042ace3c105f371d5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exit: 0
+  isMenu: 0
+  sceneLoader: {fileID: 519420033}
+  parentFade: {fileID: 1586586890}
 --- !u!1 &301493755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,6 +1456,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 7004269228469432311}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1586586890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2350777718499535402, guid: aed1cff4c0d251b4f83efe2bf86c6d2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 475750632}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd76ee6033781f54ab068d7d5ac0018b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1588135011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1807,13 +1836,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936070732}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
+  m_LocalPosition: {x: 35, y: 35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
 --- !u!1001 &7004269228469432311
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class FadeText : MonoBehaviour
     public bool isMenu;
     public LoadScene sceneLoader;
     private IEnumerator _coroutine;
-    private bool _once = true;
+    protected bool _once = true;
 
     void Update()
     {
@@ -22,7 +22,7 @@ public class FadeText : MonoBehaviour
             _once = false;
             if (isMenu)
             { 
-                Invoke("WaitBeforeFade", 2.5f);
+                Invoke("WaitBeforeFade", 2.0f);
             }
             else
             {

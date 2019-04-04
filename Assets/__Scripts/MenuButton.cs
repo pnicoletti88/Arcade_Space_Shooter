@@ -54,7 +54,7 @@ public class MenuButton : MonoBehaviour
     }
     public IEnumerator waitAnimation()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.0f);
         animator.enabled = false;
         _fadeText.exit = true;
     }
