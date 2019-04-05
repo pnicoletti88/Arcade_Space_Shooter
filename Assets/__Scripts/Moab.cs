@@ -33,7 +33,7 @@ public class Moab : Projectile
     // Update is called once per frame
     protected override void Update()
     {
-
+        transform.Rotate(0, 5f, 0);
         if (Time.time - _startTime > 1.5f && _boomCount == 0) 
         {
             Main_MainScene.scriptReference.spawnEnemies = false;
