@@ -5,8 +5,8 @@ using UnityEngine;
 public class Enemy_Boss_Movement : Enemy_Parent
 {
     public float speed; //speed field for how fast boss will drop
-    public delegate void fireWeapons(); //creates delegate type
-    public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
+    public delegate void FireWeapons(); //creates delegate type
+    public FireWeapons FireWeaponsDelegate; //creates variable of type fireWeapons
 
     void Start()
     {
@@ -25,9 +25,9 @@ public class Enemy_Boss_Movement : Enemy_Parent
     void Update()
     {
         //responsible for firing the weapon
-        if (fireWeaponsDelegate != null)
+        if (FireWeaponsDelegate != null)
         {
-            fireWeaponsDelegate();
+            FireWeaponsDelegate();
         }
         base.Update();
     }

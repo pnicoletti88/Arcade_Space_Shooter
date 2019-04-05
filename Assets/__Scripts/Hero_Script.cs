@@ -22,9 +22,9 @@ public class Hero_Script : MonoBehaviour
     [SerializeField]
     private float _shieldLevel = 4;
 
-    public delegate void fireWeapons(); //creates delegate type
-    public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
-    public fireWeapons stopWeaponsFire; //this is triggered on space bar up - stops flame thrower
+    public delegate void FireWeapons(); //creates delegate type
+    public FireWeapons FireWeaponsDelegate; //creates variable of type fireWeapons
+    public FireWeapons StopWeaponsFire; //this is triggered on space bar up - stops flame thrower
 
     private GameObject _lastTriggerGo = null;
     private float _startTime = 0; //used for flying in - holds time object is created
@@ -109,19 +109,19 @@ public class Hero_Script : MonoBehaviour
             //handles ship tilt
             transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
-            if (Input.GetAxis("Jump") == 1 && fireWeaponsDelegate != null) //fires on space bar - delegate cannot be null
+            if (Input.GetAxis("Jump") == 1 && FireWeaponsDelegate != null) //fires on space bar - delegate cannot be null
             {
-                if (fireWeaponsDelegate != null)
+                if (FireWeaponsDelegate != null)
                 {
-                    fireWeaponsDelegate(); //will fire the weapon
+                    FireWeaponsDelegate(); //will fire the weapon
                 }
             }
             //this stops the weapon from firing (it is null for everything except flame thrower
             if (Input.GetKeyUp("space"))
             {
-                if (stopWeaponsFire != null)
+                if (StopWeaponsFire != null)
                 {
-                    stopWeaponsFire();
+                    StopWeaponsFire();
                 }
             }
         }
