@@ -201,11 +201,6 @@ public abstract class Enemy_Parent : MonoBehaviour
             _frozenTime = Time.time;
             Destroy(otherColl);
         }
-        else if (otherColl.tag == "moab")
-        {
-            _health = 0; //moab kills all enemies
-            CheckHealth();
-        }
     }
 
     //function for collision with a projectile

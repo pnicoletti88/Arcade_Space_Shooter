@@ -10,9 +10,10 @@ public class Level : MonoBehaviour
     public int level = 1;
     public int randRange = 1;
     static public float eSpawnRate = 0.5f;
-    private Score _score;
+    public int levelThreshold=75;
     public bool rot = false;
-    public bool boss = false;
+    public bool boss = false; // field that tells main if a boss should spawn
+    public int scoreToUpdate = 75;
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,7 +28,6 @@ public class Level : MonoBehaviour
         eSpawnRate = 1f;
         level = 1;
         randRange = 1;
-        _score = GetComponent<Score>();
         UpdateLevel(1);
     }
 
@@ -39,20 +39,31 @@ public class Level : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_score.score % 75 >= 0 && _score.score % 75 < 75) {
-            UpdateLevel(_score.score / 75+1);
-          }
+        // new levels occur every levelThreshold amount
+        if (Score.scoreControllerReference.score >= scoreToUpdate)
+        {
+            int numLevelsToUpdate = 0;
+            while (Score.scoreControllerReference.score >= scoreToUpdate)
+            {
+                numLevelsToUpdate++;
+                scoreToUpdate += levelThreshold;
+            }
+            UpdateLevel(level + numLevelsToUpdate);
+        }
 
     }
 
+    //this function is called to set the parameters for each new level
     void UpdateLevel(int newLevel)
     { 
+        //first four levels result in one more enemy dropping, randRange increases with every new level
         if (newLevel < 5) { 
         level = newLevel;
         randRange = newLevel;
     }
         else if (newLevel >= 5)
         {
+            //every 5 levels a boss is spawned at a rate of 1f
             if (newLevel % 5 == 0)
             {
                 boss = true;
@@ -61,12 +72,14 @@ public class Level : MonoBehaviour
             }
             else
             {
+                //if the level is not a multiple of 5, spawn rate is increased by .1% each time
                 boss = false;
                 level = newLevel;
                 randRange = 4;
-                eSpawnRate = eSpawnRate * 1.001f;
+                eSpawnRate += .01f;
             }
         }
+        //text field is updated with new level
         levelText.text = "Level: " + newLevel;
     }
 }

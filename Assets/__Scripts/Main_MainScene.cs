@@ -33,7 +33,6 @@ public class Main_MainScene : MonoBehaviour
 
     private bool _spawnEnemies = true; //should enmies be spawned
     private BoundsCheck _boundM;
-    private Level _level;
 
     public bool spawnEnemies
     {
@@ -69,8 +68,7 @@ public class Main_MainScene : MonoBehaviour
         {
             Debug.LogError("Attempted Creation of Second Main Script");
         }
-        _boundM = GetComponent<BoundsCheck>(); //gets the bounds chech component
-        _level = GetComponent<Level>(); //gets the level component
+        _boundM = GetComponent<BoundsCheck>(); //gets the bounds check component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
        
         //adds the weapon definitions into the dictionary so they can be easily looked up later
@@ -85,14 +83,16 @@ public class Main_MainScene : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        int randEnemy = Random.Range(0, _level.randRange); //random find which enemy to generate within the range specified by level class
+        int randEnemy = Random.Range(0, Level.scriptRef.randRange); //random find which enemy to generate within the range specified by level class
         
-        bool boss = _level.boss;
+        bool boss = Level.scriptRef.boss; //get field to see if boss should be spawned
+
         GameObject spawned;
 
         //get different pre fab if it is the boss level
         if (boss)
         {
+            Level.scriptRef.boss = false;
             spawned = Instantiate<GameObject>(preFabEnemies[4]);
         }
         else
@@ -102,7 +102,7 @@ public class Main_MainScene : MonoBehaviour
 
 
         enemySpawnRate = Level.eSpawnRate; //update spawn rate to match level class
-        level = _level.level; //update level to match current level
+        level = Level.scriptRef.level; //update level to match current level
 
         float enemyPad = enemyPadding;
         if(spawned.GetComponent<BoundsCheck>() != null)
@@ -127,6 +127,7 @@ public class Main_MainScene : MonoBehaviour
         //adds the enemy into the list of all enemies
         _allEnemiesList.Add(spawned);
 
+        //center boss in game
         if (boss)
         {
             startPos.x = 0;
@@ -137,7 +138,7 @@ public class Main_MainScene : MonoBehaviour
         //this stop enemies from spawning
         if (_spawnEnemies)
         {
-            if (!boss)
+            if (!boss) //stops spawning of any enemy after one boss has been spawned
             {
                 Invoke("SpawnEnemy", 1f / enemySpawnRate); //invokes the function to run again
             }
@@ -253,6 +254,7 @@ public class Main_MainScene : MonoBehaviour
         GameObject explos = Instantiate(particleExplosion);
         explos.transform.position = enemyToDestroy.transform.position;
         Destroy(enemyToDestroy);
+        //invokes SpawnEnemy function again after boss is destroyed
         if (enemyToDestroy.tag == "EnemyBoss")
         {
             Invoke("SpawnEnemy", 1 / enemySpawnRate);
