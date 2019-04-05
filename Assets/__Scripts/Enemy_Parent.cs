@@ -14,17 +14,19 @@ public abstract class Enemy_Parent : MonoBehaviour
         private Color _originalColour;
         private bool _containsRender = false; //not all gameObject will have a render
         
-
+        //constructor
         public ObjectColourPairs(GameObject objIn)
         {
             _gameObj = objIn;
             if (_gameObj.GetComponent<Renderer>() != null) //determine if it has a render
             {
+                //only store colour is object has a render
                 _containsRender = true;
                 _originalColour = _gameObj.GetComponent<Renderer>().material.color;
             }
         }
 
+        //getter
         public GameObject GetGameObject()
         {
             return _gameObj;
@@ -41,6 +43,7 @@ public abstract class Enemy_Parent : MonoBehaviour
             return new Color();
         }
 
+        //indicate if object has a colour
         public bool ContainsRenderer()
         {
             return _containsRender;
@@ -55,22 +58,21 @@ public abstract class Enemy_Parent : MonoBehaviour
     private List<ObjectColourPairs> _allGameObjectsInObject;
     private float _colourChangeTime = 0;//holds time that object got damaged
     private float _onFireTime = 0;//holds time that object got set on fire
-    private float _onFireColourLastChageTime = 0;
-    private float _timeToRemainColourChange = 0.15f;
-    private float _timeToRemainOnFire = 1.5f;
-    private bool _higherColourFireCycleCounter = true;
-    private float _healthDamageOnNextUpdate = 0;
-    private float _frozenTime = 0;
-    private float _timeToRemainFrozen = 2.5f;
-    private bool _flyAway = false;
-    
+    private float _onFireColourLastChageTime = 0; //for changing shades of red when enemy is on fire
+    private float _timeToRemainColourChange = 0.15f; //how long enemy stays red for when it gets shot
+    private float _timeToRemainOnFire = 1.5f; //how long enemy remains on fire when it gets hit with flame
+    private bool _higherColourFireCycleCounter = true; //this is a boolean to control shades of when on fire
+    private float _healthDamageOnNextUpdate = 0; //this is damage to be done to enemy on next update call - for rapid collisions
+    private float _frozenTime = 0; //holds time enemy got set of fire
+    private float _timeToRemainFrozen = 2.5f; //time enemy is to remain frozen
 
-    protected BoundsCheck _bound;
+    
+    protected BoundsCheck _bound; //bounds check class
     protected float _health = 0; //set in child class
-    protected float _speedFactor = 1f;
+    protected float _speedFactor = 1f; //this is the speed factor - used to slow down the enemy
     public float powerUpDropChance = 0.2f;
-    public bool _isAlive = true;
-    public float health;
+    public bool _isAlive = true; //used to stop multiple powerups from spawning
+    public float health; //health of enemies
 
 
     //property to get and set the position of the enemy objects
@@ -101,11 +103,14 @@ public abstract class Enemy_Parent : MonoBehaviour
     {
 
         Move(); //calls move which is defined in the child class
-        if (_bound != null && ((_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight)||(_bound.offScreenUp && _flyAway)))
+
+        //destroy enemy if its off screen
+        if (_bound != null && (_bound.offScreenDown || _bound.offScreenLeft || _bound.offScreenRight))
         {
             Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
 
+        //deals damage if there is some to do on update
         if (_healthDamageOnNextUpdate != 0)
         {
             _health -= _healthDamageOnNextUpdate;
@@ -113,17 +118,22 @@ public abstract class Enemy_Parent : MonoBehaviour
             CheckHealth();
         }
 
+        //this hanldes what happens when the enemy is on fire
         if (_onFireTime != 0)
         {
+            //determines if it is time to stop being on fire
             if ((Time.time - _onFireTime) > _timeToRemainOnFire)
             {
-                ChangeColour(true);
+                ChangeColour(true); //resets colour
                 _onFireTime = 0;
             }
+
             else
             {
                 _health -= Main_MainScene.GetWeaponDefinition(WeaponType.plasmaThrower).damage * Time.deltaTime; //damage the enemy while it is on fire,  damage is per second
                 CheckHealth();
+
+                //cycles the colour
                 if ((Time.time - _onFireColourLastChageTime) > 0.1f)
                 {
                     if (_higherColourFireCycleCounter)
@@ -140,8 +150,10 @@ public abstract class Enemy_Parent : MonoBehaviour
             }
         }
 
+        //this handles what happens when the enemy is on frozen
         if (_frozenTime != 0)
         {
+            //stop being frozen
             if ((Time.time - _frozenTime) > _timeToRemainFrozen)
             {
                 _frozenTime = 0;
@@ -154,7 +166,9 @@ public abstract class Enemy_Parent : MonoBehaviour
                 CheckHealth();
             }
         }
-        else if (_colourChangeTime != 0 && (Time.time - _colourChangeTime) > _timeToRemainColourChange)
+
+        //resets colour after regular damage done
+        if (_colourChangeTime != 0 && (Time.time - _colourChangeTime) > _timeToRemainColourChange && _onFireTime == 0 && _frozenTime == 0)
         {
             ChangeColour(true);
             _colourChangeTime = 0;
@@ -189,7 +203,7 @@ public abstract class Enemy_Parent : MonoBehaviour
         }
         else if (otherColl.tag == "moab")
         {
-            _health = 0;
+            _health = 0; //moab kills all enemies
             CheckHealth();
         }
     }
@@ -203,7 +217,7 @@ public abstract class Enemy_Parent : MonoBehaviour
         {
             Projectile p = otherColl.GetComponent<Projectile>();
             Destroy(otherColl);
-            ChangeColour(false, 50, -75, -75,false);
+            ChangeColour(false, 50, -75, -75,false); //changes colour to show the damage
             _colourChangeTime = Time.time;
 
             if (_bound.onScreen)
@@ -262,11 +276,8 @@ public abstract class Enemy_Parent : MonoBehaviour
                 //changes colour if equal
                 if (reset)
                 {
-                    //resets colour if not equal
-                    
+                    //resets colour 
                     pair.GetGameObject().GetComponent<Renderer>().material.color = pair.GetColor();
-                    
-
                 }
                 else
                 {
@@ -278,6 +289,8 @@ public abstract class Enemy_Parent : MonoBehaviour
                     Color newCol = new Color();//note rgb is scaled to be between 0 and 1 in unity (instead of 0 - 255)
 
                     //following blocks changes rbg value keeping it within 0 and 1 through min and max
+                    //colour can never be outside of 0 and 1 which is why min and max is used
+                    //changing R
                     if (changeInR >= 0)
                     {
                         newCol.r = Mathf.Min(255, (rValue * 255 + changeInR)) / 255;
@@ -286,7 +299,7 @@ public abstract class Enemy_Parent : MonoBehaviour
                     {
                         newCol.r = Mathf.Max(0, (rValue * 255 + changeInR)) / 255;
                     }
-
+                    //Changing G
                     if (changeInG >= 0)
                     {
                         newCol.g = Mathf.Min(255, (gValue * 255 + changeInG)) / 255;
@@ -295,7 +308,7 @@ public abstract class Enemy_Parent : MonoBehaviour
                     {
                         newCol.g = Mathf.Max(0, (gValue * 255 + changeInG)) / 255;
                     }
-
+                    //Changing B
                     if (changeInB >= 0)
                     {
                         newCol.b = Mathf.Min(255, (bValue * 255 + changeInB)) / 255;

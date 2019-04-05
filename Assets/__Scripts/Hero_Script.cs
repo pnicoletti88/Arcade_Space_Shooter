@@ -27,9 +27,9 @@ public class Hero_Script : MonoBehaviour
     public fireWeapons stopWeaponsFire; //this is triggered on space bar up - stops flame thrower
 
     private GameObject _lastTriggerGo = null;
-    private float _startTime = 0;
+    private float _startTime = 0; //used for flying in - holds time object is created
     private Weapon _weapon;
-    private float _weaponStartLife = 0;
+    private float _weaponStartLife = 0; 
     private float _weaponDuration = int.MaxValue;
     private bool _TurnPowerUpOff = true;
     private AudioSource _audioSource;
@@ -58,7 +58,7 @@ public class Hero_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Time.time - _startTime) <= 2.0f)
+        if ((Time.time - _startTime) <= 2.0f) //during first two second user has no control over ship as it flies in
         {
 
             float change = 10f * (2.0f - (Time.time - _startTime)) * Time.deltaTime;
@@ -86,6 +86,8 @@ public class Hero_Script : MonoBehaviour
                 else { _weapon.type = WeaponType.moab; }
             }
             */
+
+            //if powerUp has been active for its lifetime then you need 
             if(Time.time - _weaponStartLife > _weaponDuration && _TurnPowerUpOff)
             {
                 _TurnPowerUpOff = false;
@@ -114,6 +116,7 @@ public class Hero_Script : MonoBehaviour
                     fireWeaponsDelegate(); //will fire the weapon
                 }
             }
+            //this stops the weapon from firing (it is null for everything except flame thrower
             if (Input.GetKeyUp("space"))
             {
                 if (stopWeaponsFire != null)

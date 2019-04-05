@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Enemy_2_Movement : Enemy_Parent
 {
-    private float _slide;
-    private float _timeCounter = 0;
+    private float _slide; //this is the amplitude of the sin wave
+    private float _timeCounter = 0; //this is used hold the time difference to control the sin wave
 
     void Start()
     {

@@ -20,6 +20,7 @@ public class Enemy_1_Movement : Enemy_Parent
         } 
     }
 
+    //handles movement of the enemy
     protected override void Move()
     {
         Vector3 temporaryPosition = position;

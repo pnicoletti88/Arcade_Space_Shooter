@@ -24,6 +24,7 @@ public class Enemy_Boss_Movement : Enemy_Parent
 
     void Update()
     {
+        //responsible for firing the weapon
         if (fireWeaponsDelegate != null)
         {
             fireWeaponsDelegate();

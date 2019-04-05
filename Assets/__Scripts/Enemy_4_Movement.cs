@@ -15,6 +15,7 @@ public class Enemy_4_Movement : Enemy_0_Movement
 
     protected override void Update()
     {
+        //this ship fires bullets - call fire every update but it only fire when gun is reloaded due to weapon
         if (fireWeaponsDelegate != null)
         {
             fireWeaponsDelegate();
