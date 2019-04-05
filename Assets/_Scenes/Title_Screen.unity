@@ -1201,7 +1201,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cf624a8aea88b3145a879ea71257e9a7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.101
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1631,16 +1631,16 @@ PrefabInstance:
       propertyPath: menuButtonController
       value: 
       objectReference: {fileID: 1102223473}
-    - target: {fileID: 3641157730572331373, guid: aed1cff4c0d251b4f83efe2bf86c6d2b,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2350777718499535402, guid: aed1cff4c0d251b4f83efe2bf86c6d2b,
         type: 3}
       propertyPath: sceneLoader
       value: 
       objectReference: {fileID: 519420033}
+    - target: {fileID: 3641157730572331373, guid: aed1cff4c0d251b4f83efe2bf86c6d2b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed1cff4c0d251b4f83efe2bf86c6d2b, type: 3}
 --- !u!95 &7004269228469432312 stripped
