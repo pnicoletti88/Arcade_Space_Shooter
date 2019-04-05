@@ -7,6 +7,7 @@ public class Level : MonoBehaviour
 {
     static public Level scriptRef;
     public Text levelText;
+    public Text newLevelText;
     public int level = 1;
     public int randRange = 1;
     static public float eSpawnRate = 0.5f;
@@ -55,7 +56,13 @@ public class Level : MonoBehaviour
 
     //this function is called to set the parameters for each new level
     void UpdateLevel(int newLevel)
-    { 
+    {
+        //If its a new level that is not level one, display new level in newLevelText UI element
+        if (newLevel != 1)
+        {
+            newLevelText.text = "NEW LEVEL!!";
+            Invoke("ClearNewLevel", 2);
+        }
         //first four levels result in one more enemy dropping, randRange increases with every new level
         if (newLevel < 5) { 
         level = newLevel;
@@ -81,9 +88,10 @@ public class Level : MonoBehaviour
         }
         //text field is updated with new level
         levelText.text = "Level: " + newLevel;
-        
-        
-
-
+    }
+    //Clears text from newLevelText UI element
+    void ClearNewLevel()
+    {
+        newLevelText.text = "";
     }
 }
