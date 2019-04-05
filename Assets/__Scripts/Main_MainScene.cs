@@ -10,8 +10,9 @@ public class Main_MainScene : MonoBehaviour
     static public Main_MainScene scriptReference; //Singleton
 
     [Header("Set in Inspector")]
+    public Vector3 lastPos;
     public GameObject[] preFabEnemies = new GameObject[4];
-    public GameObject[] preFabPickUps = new GameObject[3];
+    public GameObject preFabPickUp;
     public float enemySpawnRate = 0.5f;
     public float enemyPadding = 1.5f;
     public int level = 1; //level field
@@ -44,6 +45,16 @@ public class Main_MainScene : MonoBehaviour
         }
     }
 
+    //Create Pickups
+    public PickUp Homing = new PickUp(Color.red, WeaponType.homing, "H", 20, "homing");
+    public PickUp Moab = new PickUp(Color.blue, WeaponType.homing, "M", 20, "moab");
+    public PickUp Freeze = new PickUp(Color.yellow, WeaponType.homing, "F", 20, "freezeGun");
+    public PickUp Plasma = new PickUp(Color.cyan, WeaponType.homing, "P", 20, "plasmaThrower");
+    public PickUp Triple = new PickUp(Color.magenta, WeaponType.homing, "T", 20, "triple");
+    public PickUp Shield = new PickUp(Color.white, WeaponType.none, "S", 0, "shield");
+
+    
+
 
 
     //list of all active enemies - will be needed for more complex weapons so it was set up now to avoid large refactor later
@@ -73,15 +84,49 @@ public class Main_MainScene : MonoBehaviour
         {
             _weaponDictionary.Add(def.type, def); //adds the definition for the weapons into the dictionary for easy look up later
         }
-    }
 
+    }
+    public void DropAPickUp(Vector3 pos)
+    {
+        PickUp[] pickUps = { Triple, Homing, Plasma, Freeze, Moab };
+        int loadRand = Random.Range(0, pickUps.Length);
+        PickUp tmp = pickUps[loadRand];
+        GameObject toSpawn = Instantiate<GameObject>(preFabPickUp);
+        Renderer rend = toSpawn.gameObject.GetComponent<Renderer>();
+        rend.material.color = tmp.color;
+        TextMesh label = toSpawn.GetComponentInChildren<TextMesh>();
+        label.text = tmp.text;
+        toSpawn.gameObject.tag = pickUps[loadRand].tag;
+        float pickUpPad = 1f;
+
+
+        if (toSpawn.GetComponent<BoundsCheck>() != null)
+        {
+            pickUpPad = Mathf.Abs(toSpawn.GetComponent<BoundsCheck>().radius); //factors in the radius of the pickup for bounds check
+        }
+        Vector3 startPos = Vector3.zero;
+        float xMinimum = -_boundM.camWidth + pickUpPad;
+        float xMaximum = _boundM.camWidth - pickUpPad;
+
+        //set the pickup to start somewhere just above the left of the screen
+        startPos.x = Random.Range(xMinimum, xMaximum);
+        startPos.y = _boundM.camHeight + pickUpPad;
+        toSpawn.transform.position = pos;
+        _allPickUpList.Add(toSpawn);
+
+
+    }
     public void SpawnPickUps()
     {
-        string[] pickUps = { "triple", "homing", "plasmaThrower", "freezeGun", "moab" };
+        PickUp[] pickUps = { Triple, Homing, Plasma, Freeze, Moab };
         int loadRand = Random.Range(0, pickUps.Length);
-        int randPickUp = Random.Range(0, preFabPickUps.Length);
-        GameObject toSpawn = Instantiate<GameObject>(preFabPickUps[randPickUp]); ;
-        toSpawn.gameObject.tag = pickUps[loadRand];
+        PickUp tmp = pickUps[loadRand];
+        GameObject toSpawn = Instantiate<GameObject>(preFabPickUp);
+        Renderer rend = toSpawn.gameObject.GetComponent<Renderer>();
+        rend.material.color = tmp.color;
+        TextMesh label = toSpawn.GetComponentInChildren<TextMesh>();
+        label.text = tmp.text;
+        toSpawn.gameObject.tag = pickUps[loadRand].tag;
         float pickUpPad = 1f;
         
 
@@ -96,7 +141,6 @@ public class Main_MainScene : MonoBehaviour
         //set the pickup to start somewhere just above the left of the screen
         startPos.x = Random.Range(xMinimum, xMaximum);
         startPos.y = _boundM.camHeight + pickUpPad;
-        toSpawn.transform.position = startPos;
         toSpawn.transform.position = startPos;
         _allPickUpList.Add(toSpawn);
         //this stop enemies from spawning

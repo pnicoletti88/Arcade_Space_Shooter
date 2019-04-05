@@ -229,6 +229,10 @@ public abstract class Enemy_Parent : MonoBehaviour
         {
             UpdateScore(gameObject);
             Main_MainScene.scriptReference.DestroyEnemy(gameObject);
+            if (Random.Range(0,2) == 0)
+            {
+                Main_MainScene.scriptReference.DropAPickUp(gameObject.transform.position);
+            }
         }
     }
 

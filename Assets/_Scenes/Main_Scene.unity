@@ -492,8 +492,8 @@ MonoBehaviour:
   - {fileID: 2541452477685604455, guid: d5c898caa7bf4aa4e85aff3278c486d8, type: 3}
   - {fileID: 2690714935153572809, guid: 11069b3583417324bba0dbec589f6232, type: 3}
   - {fileID: 3943664169245087171, guid: 9bef489f8f2a54467b85866370312cca, type: 3}
-  preFabPickUps:
-  - {fileID: 2947699988509494092, guid: 04bb22ddd4dc2b247b46f905291e517d, type: 3}
+  preFabPickUp: {fileID: 2947699988509494092, guid: 04bb22ddd4dc2b247b46f905291e517d,
+    type: 3}
   enemySpawnRate: 1
   enemyPadding: 1.5
   level: 1
@@ -6366,7 +6366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1edbeff7b11d1684d93312cffaac8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 4
+  _type: 1
   def:
     type: 4
     projectilePreFab: {fileID: 0}

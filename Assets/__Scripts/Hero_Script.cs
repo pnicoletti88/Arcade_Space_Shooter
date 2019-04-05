@@ -135,23 +135,27 @@ public class Hero_Script : MonoBehaviour
         print(rootT.tag);
         if(other.tag == "homing")
         {
-            PowerUp(WeaponType.homing, 5, other.gameObject);
+            PowerUp(WeaponType.homing, Main_MainScene.scriptReference.Homing.duration, other.gameObject);
         }
         if (other.tag == "triple")
         {
-            PowerUp(WeaponType.triple, 10, other.gameObject);
+            PowerUp(WeaponType.triple, Main_MainScene.scriptReference.Triple.duration, other.gameObject);
         }
         if (other.tag == "plasmaThrower")
         {
-            PowerUp(WeaponType.plasmaThrower, 10, other.gameObject);
+            PowerUp(WeaponType.plasmaThrower, Main_MainScene.scriptReference.Plasma.duration, other.gameObject);
         }
         if (other.tag == "freezeGun")
         {
-            PowerUp(WeaponType.freezeGun, 10, other.gameObject);
+            PowerUp(WeaponType.freezeGun, Main_MainScene.scriptReference.Freeze.duration, other.gameObject);
         }
         if (other.tag == "moab")
         {
-            PowerUp(WeaponType.moab, 5, other.gameObject);
+            PowerUp(WeaponType.moab, Main_MainScene.scriptReference.Moab.duration, other.gameObject);
+        }
+        if (other.tag == "shield")
+        {
+            shieldLevel++;
         }
         if (other.tag == "ProjectileEnemy")
         {
