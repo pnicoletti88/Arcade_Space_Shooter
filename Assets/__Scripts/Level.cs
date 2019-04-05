@@ -76,10 +76,14 @@ public class Level : MonoBehaviour
                 boss = false;
                 level = newLevel;
                 randRange = 4;
-                eSpawnRate += .01f;
+                eSpawnRate += 0.1f;
             }
         }
         //text field is updated with new level
         levelText.text = "Level: " + newLevel;
+        
+        
+
+
     }
 }

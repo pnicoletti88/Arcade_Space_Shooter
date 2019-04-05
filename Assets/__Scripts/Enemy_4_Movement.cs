@@ -6,7 +6,7 @@ public class Enemy_4_Movement : Enemy_0_Movement
 {
 
     public delegate void fireWeapons(); //creates delegate type
-    public fireWeapons fireWeaponsDelegate; //creates variable of type fireWeapons
+    public fireWeapons FireWeaponsDelegate; //creates variable of type fireWeapons
 
     void Start()
     {
@@ -16,9 +16,9 @@ public class Enemy_4_Movement : Enemy_0_Movement
     protected override void Update()
     {
         //this ship fires bullets - call fire every update but it only fire when gun is reloaded due to weapon
-        if (fireWeaponsDelegate != null)
+        if (FireWeaponsDelegate != null)
         {
-            fireWeaponsDelegate();
+            FireWeaponsDelegate();
         }
         base.Update();
     }

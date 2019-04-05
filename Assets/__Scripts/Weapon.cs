@@ -101,22 +101,22 @@ public class Weapon : MonoBehaviour
             if (wt != WeaponType.plasmaThrower)
             {
                 _plasmaThrowerParticles.enabled = false;//incase of switch while space is being held
-                rootGo.GetComponent<Hero_Script>().fireWeaponsDelegate = Fire; //assigning fire the the function delegate
-                rootGo.GetComponent<Hero_Script>().stopWeaponsFire = null;
+                rootGo.GetComponent<Hero_Script>().FireWeaponsDelegate = Fire; //assigning fire the the function delegate
+                rootGo.GetComponent<Hero_Script>().StopWeaponsFire = null;
             }
             else
             {
-                rootGo.GetComponent<Hero_Script>().fireWeaponsDelegate = FirePlasmaThrower;
-                rootGo.GetComponent<Hero_Script>().stopWeaponsFire = StopPlasmaThrower;
+                rootGo.GetComponent<Hero_Script>().FireWeaponsDelegate = FirePlasmaThrower;
+                rootGo.GetComponent<Hero_Script>().StopWeaponsFire = StopPlasmaThrower;
             }
         }
         else if (rootGo.GetComponent<Enemy_4_Movement>() != null)
         {
-            rootGo.GetComponent<Enemy_4_Movement>().fireWeaponsDelegate = Fire;
+            rootGo.GetComponent<Enemy_4_Movement>().FireWeaponsDelegate = Fire;
         }
         else if (rootGo.GetComponent<Enemy_Boss_Movement>() != null)
         {
-            rootGo.GetComponent<Enemy_Boss_Movement>().fireWeaponsDelegate += Fire;
+            rootGo.GetComponent<Enemy_Boss_Movement>().FireWeaponsDelegate += Fire;
         }
         def = Main_MainScene.GetWeaponDefinition(_type);
         lastShotTime = 0; //this means that weapon will be ready to fire right when it is switched to
