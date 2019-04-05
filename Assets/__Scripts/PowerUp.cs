@@ -6,9 +6,9 @@ public class PowerUp : MonoBehaviour
 {
     [Header("Set in Inspector")]
     public Vector2 rotMinMax = new Vector2(15, 90);
-    public Vector2 driftMinMax = new Vector2(0.8f, 3.0f);
-    public float lifeTime = 0.5f;
-    public float fadeTime = 1.25f;
+    public Vector2 driftMinMax = new Vector2(1f, 1.25f);
+    public float lifeTime = 1f;
+    public float fadeTime = 2.5f;
     
     
 
@@ -19,6 +19,7 @@ public class PowerUp : MonoBehaviour
     public Vector3 rotPerSecond;
     public float birthTime;
     public float duration;
+    public float direction;
 
     private Rigidbody _rigidbody;
     private BoundsCheck _boundsCheck;
@@ -35,11 +36,20 @@ public class PowerUp : MonoBehaviour
         
 
         Vector3 vel = Random.onUnitSphere;
+        direction = Random.Range(0, 1);
+        if(direction <= 0.5)
+        {
+            direction = -1.5f;
+        }
+        else
+        {
+            direction = 1.5f;
+        }
 
         vel.z = 0;
         vel.Normalize();
-        vel.x = Random.Range(driftMinMax.x, driftMinMax.y);
-        vel.y = -Random.Range(driftMinMax.x, driftMinMax.y);
+        vel.x = direction*Random.Range(driftMinMax.x, driftMinMax.y);
+        vel.y = -17.5f*Random.Range(driftMinMax.x, driftMinMax.y);
         _rigidbody.velocity = vel;
 
         transform.rotation = Quaternion.identity;
@@ -69,7 +79,7 @@ public class PowerUp : MonoBehaviour
             _cubeRend.material.color = c;
 
             c = letter.color;
-            c.a = 1f - (u * 0.5f);
+            c.a = 1f - (u * 0.75f);
             letter.color = c;
         }
 
