@@ -6,7 +6,7 @@ public class PowerUp : MonoBehaviour
 {
     [Header("Set in Inspector")]
     public Vector2 rotMinMax = new Vector2(15, 90);
-    public Vector2 driftMinMax = new Vector2(0.2f, 0.6f);
+    public Vector2 driftMinMax = new Vector2(0.8f, 3.0f);
     public float lifeTime = 0.5f;
     public float fadeTime = 1.25f;
     
@@ -38,7 +38,8 @@ public class PowerUp : MonoBehaviour
 
         vel.z = 0;
         vel.Normalize();
-        vel *= Random.Range(driftMinMax.x, driftMinMax.y);
+        vel.x = Random.Range(driftMinMax.x, driftMinMax.y);
+        vel.y = -Random.Range(driftMinMax.x, driftMinMax.y);
         _rigidbody.velocity = vel;
 
         transform.rotation = Quaternion.identity;

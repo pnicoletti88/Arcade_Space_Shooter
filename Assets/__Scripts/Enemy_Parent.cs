@@ -70,6 +70,7 @@ public abstract class Enemy_Parent : MonoBehaviour
     protected float _speedFactor = 1f;
     public float powerUpDropChance = 0.2f;
     public bool _isAlive = true;
+    public float health;
 
 
     //property to get and set the position of the enemy objects
@@ -93,6 +94,7 @@ public abstract class Enemy_Parent : MonoBehaviour
         _onFireColourLastChageTime = 0;
         _onFireTime = 0;
         _colourChangeTime = 0;
+        _health = health;
     }
 
     protected virtual void Update()
@@ -167,7 +169,6 @@ public abstract class Enemy_Parent : MonoBehaviour
     //this function damages the enemy when they collide with a projectile.
     void OnParticleCollision(GameObject otherColl)
     {
-        Debug.Log(otherColl.tag);
         if (otherColl.tag == "plasmaThrower")
         {
             if (_onFireTime == 0)
@@ -229,41 +230,17 @@ public abstract class Enemy_Parent : MonoBehaviour
     {
         if (_health <= 0)
         {
-            UpdateScore(gameObject);
             if (_isAlive)
             {
                 Main_MainScene.scriptReference.ShipDestroyed(this);
             }
             _isAlive = false;
-            Main_MainScene.scriptReference.DestroyEnemy(gameObject);
+            Main_MainScene.scriptReference.DestroyEnemy(gameObject,true);
         }
     }
 
     //updates the user score according to the type of enemy
-    public static void UpdateScore(GameObject gA)
-    {
-        Debug.Log(gA.tag);
-        switch(gA.tag)
-        {
-            case "Enemy0":
-                Score.scoreControllerReference.AddScore(5);
-                break;
-            case "Enemy1":
-                Score.scoreControllerReference.AddScore(10);
-                break;
-            case "Enemy2":
-                Score.scoreControllerReference.AddScore(15);
-                break;
-            case "Enemy4":
-                Score.scoreControllerReference.AddScore(15);
-                break;
-            case "EnemyBoss":
-                Score.scoreControllerReference.AddScore(150);
-                break;
-            default:
-                break;
-        }
-    }
+    
 
     //use to show the enemy taking damage or being on plasma fire
     void ChangeColour(bool reset, float changeInR=0, float changeInG=0, float changeInB=0, bool useCurrentColor=false)

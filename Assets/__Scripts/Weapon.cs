@@ -21,6 +21,8 @@ public enum WeaponType
 }
 
 [System.Serializable]//this allows the system to serialize this class (convert it to a byte array and pass it easily)
+
+//this holds all the parts of the weapon definition
 public class WeaponDefinition
 {
     public WeaponType type = WeaponType.none;

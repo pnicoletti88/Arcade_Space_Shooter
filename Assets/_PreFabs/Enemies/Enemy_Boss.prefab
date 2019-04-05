@@ -346,8 +346,13 @@ MonoBehaviour:
     damage: 0
     speed: 0
     delayBetweenShots: 0
+    bulletNoise: {fileID: 0}
+    letter: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
   collar: {fileID: 0}
   lastShotTime: 0
+  audioSource: {fileID: 0}
 --- !u!1 &1955210021995034529
 GameObject:
   m_ObjectHideFlags: 0
@@ -10277,6 +10282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb084c87c47445959949afde28509dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerUpDropChance: 0.2
+  _isAlive: 1
+  health: 500
   speed: 0
 --- !u!114 &1784049222618074692
 MonoBehaviour:
@@ -10369,8 +10377,13 @@ MonoBehaviour:
     damage: 0
     speed: 0
     delayBetweenShots: 0
+    bulletNoise: {fileID: 0}
+    letter: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
   collar: {fileID: 0}
   lastShotTime: 0
+  audioSource: {fileID: 0}
 --- !u!1 &4402657505850731600
 GameObject:
   m_ObjectHideFlags: 0
@@ -15780,5 +15793,10 @@ MonoBehaviour:
     damage: 0
     speed: 0
     delayBetweenShots: 0
+    bulletNoise: {fileID: 0}
+    letter: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
   collar: {fileID: 0}
   lastShotTime: 0
+  audioSource: {fileID: 0}

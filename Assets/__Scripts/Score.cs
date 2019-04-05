@@ -75,4 +75,28 @@ public class Score : MonoBehaviour
         PlayerPrefs.SetInt("currScore", score);
         PlayerPrefs.Save();
     }
+
+    public void UpdateScore(string enemyTag)
+    {
+        switch (enemyTag)
+        {
+            case "Enemy0":
+                AddScore(5);
+                break;
+            case "Enemy1":
+                AddScore(10);
+                break;
+            case "Enemy2":
+                AddScore(15);
+                break;
+            case "Enemy4":
+                AddScore(15);
+                break;
+            case "EnemyBoss":
+                AddScore(150);
+                break;
+            default:
+                break;
+        }
+    }
 }

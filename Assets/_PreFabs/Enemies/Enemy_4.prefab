@@ -53,8 +53,13 @@ MonoBehaviour:
     damage: 0
     speed: 0
     delayBetweenShots: 0
+    bulletNoise: {fileID: 0}
+    letter: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
   collar: {fileID: 0}
   lastShotTime: 0
+  audioSource: {fileID: 0}
 --- !u!1 &2690714935153572809
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68591c6a4d2c7064eb627d736c38eb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerUpDropChance: 0.2
+  _isAlive: 1
+  health: 75
+  health: 75
 --- !u!65 &2063668323633818663
 BoxCollider:
   m_ObjectHideFlags: 0

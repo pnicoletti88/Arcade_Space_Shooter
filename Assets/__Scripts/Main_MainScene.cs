@@ -31,7 +31,7 @@ public class Main_MainScene : MonoBehaviour
 
     public WeaponDefinition[] weaponDefn;
 
-    private bool _spawnEnemies = true; 
+    private bool _spawnEnemies = true; //should enmies be spawned
     private BoundsCheck _boundM;
     private Level _level;
 
@@ -43,11 +43,11 @@ public class Main_MainScene : MonoBehaviour
             _spawnEnemies = value;
             if (!_spawnEnemies)
             {
-                CancelInvoke("SpawnEnemy");
+                CancelInvoke("SpawnEnemy"); //sto spawn calls that are invoked
             }
             else if (_spawnEnemies && !IsInvoking("SpawnEnemy"))
             {
-                Invoke("SpawnEnemy", 1f);
+                Invoke("SpawnEnemy", 1f); //start up spawn calls
             }
         }
     }
@@ -90,6 +90,7 @@ public class Main_MainScene : MonoBehaviour
         bool boss = _level.boss;
         GameObject spawned;
 
+        //get different pre fab if it is the boss level
         if (boss)
         {
             spawned = Instantiate<GameObject>(preFabEnemies[4]);
@@ -160,38 +161,58 @@ public class Main_MainScene : MonoBehaviour
     }
 
 
-    //needs to be coded at some point to do actual function - just gives last Enemy for now
-    //used by the homing missile function - PLEASE IGNORE FOR NOW :)
+    //get target for homing missile
     public GameObject getClosestsEnemy()
     {
         if (_allEnemiesList.Count == 0)
         {
-            return null;
+            return null; //no enemies to target
         }
         else
         {
-            //this function attemps to find an enemy which is in front of the hero, and also cloe from an x position
-            //it uses a simple approach with if statements (it is by no means a perfect algorithm) but it is good enough
-            //simple approached used as it gets called a lot and don't want to affect frame rate
-            foreach(GameObject obj in _allEnemiesList)
+            GameObject SixtyDegree = null; //Ship within 60 degee view of hero
+            GameObject NintyDegree = null; //Ship within 90 degee view of hero
+
+            float ThirtyDegreeXOverY = 0.577f;
+            float SixtyDegreeXOverY = 1.732f;
+
+
+            /*Goal of this code is to find "best" enemy for homing missile to lock onto
+             * first tries to find an enemey within 30 degreee field of view
+             * then tries 60 degree
+             * then 90
+             * then returns a random enemy if all enemies are below the ship
+             */
+            foreach (GameObject obj in _allEnemiesList)
             {
                 float deltaEnemyMissileY = obj.transform.position.y - Hero_Script.heroScriptReference.gameObject.transform.position.y;
-                float deltaEnemyMissileX = Mathf.Abs(obj.transform.position.x - Hero_Script.heroScriptReference.gameObject.transform.position.x);
-                if (obj.transform.position.y > Hero_Script.heroScriptReference.gameObject.transform.position.y)
+                float deltaEnemyMissileX = Mathf.Abs(obj.transform.position.x - Hero_Script.heroScriptReference.gameObject.transform.position.x); //side of axis does not matter - abs is easier
+                deltaEnemyMissileX = Mathf.Min(deltaEnemyMissileX, deltaEnemyMissileX - 0.5f);//account for ship size
+                
+                if (deltaEnemyMissileY > 0.0f)
                 {
-                    if (deltaEnemyMissileY > 0.0f && deltaEnemyMissileY < 4.0f && deltaEnemyMissileX < 2.0f)
+                    if (deltaEnemyMissileY * ThirtyDegreeXOverY > deltaEnemyMissileX)
                     {
                         return obj;
                     }
-                    if (deltaEnemyMissileY > 4.0f && deltaEnemyMissileY < 8.0f && deltaEnemyMissileX < 4.0f)
+                    else if(SixtyDegree == null && deltaEnemyMissileY * SixtyDegreeXOverY > deltaEnemyMissileX)
                     {
-                        return obj;
+                        SixtyDegree = obj;
                     }
-                    if(deltaEnemyMissileY > 10.0f)
+                    else if (SixtyDegree == null && NintyDegree == null)
                     {
-                        return obj;
+                        NintyDegree = obj;
                     }
                 }
+            }
+
+            if (SixtyDegree != null)
+            {
+                return SixtyDegree;
+            }
+            else if(NintyDegree != null)
+            {
+                return NintyDegree;
             }
             return _allEnemiesList[_allEnemiesList.Count - 1];
         }
@@ -202,8 +223,7 @@ public class Main_MainScene : MonoBehaviour
     {
         foreach(GameObject item in _allEnemiesList)
         {
-            Enemy_Parent.UpdateScore(item);
-            DestroyEnemy(item,false);
+            DestroyEnemy(item,true,false);
         }
         _allEnemiesList = new List<GameObject>(); //C# garbage collection will remove of old list from memory
     }
@@ -220,11 +240,15 @@ public class Main_MainScene : MonoBehaviour
 
     //this method will be used to destroy individual enemies...DO NOT destroy enemy without using this method!
     //Destroys and removes enemies from the list of enemies
-    public void DestroyEnemy(GameObject enemyToDestroy, bool removeFromList = true)
+    public void DestroyEnemy(GameObject enemyToDestroy, bool updateScore = false, bool removeFromList = true)
     {
         if (removeFromList)
         {  
             _allEnemiesList.Remove(enemyToDestroy);
+        }
+        if (updateScore)
+        {
+            Score.scoreControllerReference.UpdateScore(enemyToDestroy.tag);
         }
         GameObject explos = Instantiate(particleExplosion);
         explos.transform.position = enemyToDestroy.transform.position;
