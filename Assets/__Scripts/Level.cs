@@ -10,10 +10,10 @@ public class Level : MonoBehaviour
     public int level = 1;
     public int randRange = 1;
     static public float eSpawnRate = 0.5f;
-    public int levelThreshold=75;
+    public int levelThreshold=75; //threshold for each level
     public bool rot = false;
     public bool boss = false; // field that tells main if a boss should spawn
-    public int scoreToUpdate = 75;
+    public int scoreToUpdate = 75; // field is the score needed for next level;
     // Start is called before the first frame update
     void Awake()
     {
