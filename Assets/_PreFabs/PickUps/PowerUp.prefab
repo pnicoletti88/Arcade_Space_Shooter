@@ -147,14 +147,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotMinMax: {x: 15, y: 90}
   driftMinMax: {x: 0.2, y: 1}
-  lifeTime: 4
-  fadeTime: 1.5
+  lifeTime: 2
+  fadeTime: 2
   type: 0
   cube: {fileID: 0}
   letter: {fileID: 0}
   rotPerSecond: {x: 0, y: 0, z: 0}
   birthTime: 0
   duration: 0
+  direction: 0
 --- !u!1 &7127938108200801096
 GameObject:
   m_ObjectHideFlags: 0

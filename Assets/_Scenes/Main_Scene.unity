@@ -2669,6 +2669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3833c893c7ae1f46b4ed8a0f387d2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossScore: 150
   scoreText: {fileID: 1693983485}
   score: 0
   highscoreText: {fileID: 548084219}
@@ -2688,8 +2689,10 @@ MonoBehaviour:
   levelText: {fileID: 506155973}
   level: 1
   randRange: 1
+  levelThreshold: 75
   rot: 0
   boss: 0
+  scoreToUpdate: 75
 --- !u!1 &539326102
 GameObject:
   m_ObjectHideFlags: 0
@@ -11141,7 +11144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1edbeff7b11d1684d93312cffaac8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 6
+  _type: 1
   def:
     type: 4
     projectilePreFab: {fileID: 0}

@@ -71,10 +71,17 @@ public class Main_MainScene : MonoBehaviour
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds check component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
        
+        
+        if (PowerUp.allPossibleColors == null)
+        {
+            PowerUp.allPossibleColors = new List<Color>();
+        }
+
         //adds the weapon definitions into the dictionary so they can be easily looked up later
         foreach (WeaponDefinition def in weaponDefn)
         {
             _weaponDictionary.Add(def.type, def); //adds the definition for the weapons into the dictionary for easy look up later
+            PowerUp.allPossibleColors.Add(def.color);
         }
 
     }
@@ -273,7 +280,13 @@ public class Main_MainScene : MonoBehaviour
             GameObject go = Instantiate(prefabPowerUp) as GameObject;
             PowerUp powerUp = go.GetComponent<PowerUp>();
 
-            powerUp.SetType(powerUpType);
+            bool rand = false;
+
+            float randVal = Random.Range(0.0f,1.0f);
+
+            if (randVal < 0.15f && powerUpType != WeaponType.shield) { rand = true; }
+            
+            powerUp.SetType(powerUpType,rand);
             powerUp.transform.position = e.transform.position;
         }
     }
