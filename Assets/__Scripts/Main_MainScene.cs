@@ -19,7 +19,14 @@ public class Main_MainScene : MonoBehaviour
     public GameObject particleExplosion;
     public GameObject prefabPowerUp;
 
-    private WeaponType[] _powerUpFrequency = new WeaponType[] { WeaponType.shield, WeaponType.shield, WeaponType.freezeGun, WeaponType.freezeGun, WeaponType.homing, WeaponType.homing, WeaponType.moab, WeaponType.plasmaThrower, WeaponType.plasmaThrower, WeaponType.triple, WeaponType.triple, WeaponType.triple };
+    //This Array holds the references to the different weapon types, and one is randomly assigned when a powerup object is created. The larger the
+    //number of instances in this array, the higher probability that that type of powerup will drop. (e.g. triple is the most common)
+    private WeaponType[] _powerUpFrequency = new WeaponType[] { WeaponType.shield, WeaponType.shield, WeaponType.shield,
+        WeaponType.homing, WeaponType.homing,
+        WeaponType.freezeGun, 
+        WeaponType.moab,
+        WeaponType.plasmaThrower, 
+        WeaponType.triple, WeaponType.triple, WeaponType.triple };
 
 
     public WeaponDefinition[] weaponDefn;
@@ -228,7 +235,9 @@ public class Main_MainScene : MonoBehaviour
         }
         
     }
-
+    
+    // this function is called when an enemy ship is destroyed - depending on the ship (weaker ones have less probability of dropping a powerup)
+    // the random function will determine if a powerup should drop. Then, another element of randomness determines which powerup should be dropped.
     public void ShipDestroyed(Enemy_Parent e)
     {
         if(Random.value <= e.powerUpDropChance)

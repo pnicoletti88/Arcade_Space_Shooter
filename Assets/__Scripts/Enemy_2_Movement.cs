@@ -11,7 +11,7 @@ public class Enemy_2_Movement : Enemy_Parent
     void Start()
     {
         _slide = Random.Range(15, 20); //this determines the amplitude of sine wave
-        _health = 150; // sets health from parent class to the appropriate value, depending on the enemy type.
+        _health = 95; // sets health from parent class to the appropriate value, depending on the enemy type.
         powerUpDropChance = 0.35f;
     }
 

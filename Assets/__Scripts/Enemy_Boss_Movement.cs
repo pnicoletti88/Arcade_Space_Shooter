@@ -10,15 +10,15 @@ public class Enemy_Boss_Movement : Enemy_Parent
 
     void Start()
     {
-        _health = 200; // sets health from parent class to the appropriate value, depending on the enemy type.
-        powerUpDropChance = 0.5f;
+        _health = 450; // sets health from parent class to the appropriate value, depending on the enemy type.
+        powerUpDropChance = 0.9f;
     }
 
     //handles movement of the enemy
     protected override void Move()
     {
         Vector3 temporaryPosition = position;
-        temporaryPosition.y -= 2f * Time.deltaTime * _speedFactor;
+        temporaryPosition.y -= 2.5f * Time.deltaTime * _speedFactor;
         position = temporaryPosition;
     }
 

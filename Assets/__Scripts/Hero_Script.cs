@@ -155,7 +155,7 @@ public class Hero_Script : MonoBehaviour
             Main_MainScene.scriptReference.DestroyEnemy(go); //destroy enemy function used as it removes the enemy from the list in main
         } else if(go.tag == "PowerUp")
         {
-            AbsorbPowerUp(go);
+            AbsorbPowerUp(go); // runs function to control powerup and weapon switching
         }
        
     }
@@ -165,19 +165,20 @@ public class Hero_Script : MonoBehaviour
         PowerUp powerUp = go.GetComponent<PowerUp>();
         switch (powerUp.type)
         {
-            case WeaponType.shield:
+            case WeaponType.shield: // if the item is a shield, just attempt to increase the shield.
                 shieldLevel++;
                 break;
-            default:
+            default: // else, change weapons if neeed be
                 if(powerUp.type != _weapon.type)
                 {
-                    _TurnPowerUpOff = true;
-                    _weaponDuration = powerUp.duration;
-                    _weaponStartLife = Time.time;
                     _weapon.SetType(powerUp.type);
-                }
+                } // regardless of what powerup was picked up, reset the duration element so that a fresh start occurs.
+                _TurnPowerUpOff = true;
+                _weaponDuration = powerUp.duration;
+                _weaponStartLife = Time.time;
                 break;
         }
+        //plays audio, then destorys gameobject.
         _audioSource.PlayOneShot(pickedUpSound);
         powerUp.AbsorbedBy(this.gameObject);
     }

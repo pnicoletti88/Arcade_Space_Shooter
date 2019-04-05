@@ -258,7 +258,7 @@ public abstract class Enemy_Parent : MonoBehaviour
                 Score.scoreControllerReference.AddScore(15);
                 break;
             case "EnemyBoss":
-                Score.scoreControllerReference.AddScore(75);
+                Score.scoreControllerReference.AddScore(150);
                 break;
             default:
                 break;

@@ -11,7 +11,7 @@ public class Enemy_4_Movement : Enemy_0_Movement
     void Start()
     {
         _health = 75;
-        powerUpDropChance = 0.35f;
+        powerUpDropChance = 0.4f;
     }
 
     protected override void Update()

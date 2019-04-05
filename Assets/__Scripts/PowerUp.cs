@@ -6,9 +6,9 @@ public class PowerUp : MonoBehaviour
 {
     [Header("Set in Inspector")]
     public Vector2 rotMinMax = new Vector2(15, 90);
-    public Vector2 driftMinMax = new Vector2(0.2f, 0.8f);
-    public float lifeTime = 1f;
-    public float fadeTime = 2.5f;
+    public Vector2 driftMinMax = new Vector2(0.2f, 0.6f);
+    public float lifeTime = 0.5f;
+    public float fadeTime = 1.25f;
     
     
 
@@ -53,12 +53,14 @@ public class PowerUp : MonoBehaviour
         cube.transform.rotation = Quaternion.Euler(rotPerSecond * Time.time);
         float u = (Time.time - (birthTime + lifeTime)) / fadeTime;
 
+        //destroys the powerup if it is on screen too long
         if(u >= 1)
         {
             Destroy(this.gameObject);
             return;
         }
 
+        // deals with fading
         if(u > 0)
         {
             Color c = _cubeRend.material.color;
@@ -70,6 +72,7 @@ public class PowerUp : MonoBehaviour
             letter.color = c;
         }
 
+        // destroys the powerup if it goes off screen
         if (!_boundsCheck.onScreen)
         {
             Destroy(gameObject);
@@ -77,6 +80,7 @@ public class PowerUp : MonoBehaviour
         
     }
 
+    //sets the powerup type depending on what WeaponDefinition / WeaponType is associated with it.
     public void SetType(WeaponType wt)
     {
         WeaponDefinition def = Main_MainScene.GetWeaponDefinition(wt);
@@ -86,6 +90,7 @@ public class PowerUp : MonoBehaviour
         type = wt;
     }
 
+    //destroys the powerup when appropriate
     public void AbsorbedBy(GameObject target)
     {
         Destroy(this.gameObject);
