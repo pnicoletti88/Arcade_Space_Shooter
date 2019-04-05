@@ -282,6 +282,7 @@ GameObject:
   - component: {fileID: 401360602}
   - component: {fileID: 401360601}
   - component: {fileID: 401360603}
+  - component: {fileID: 401360604}
   m_Layer: 8
   m_Name: _Hero
   m_TagString: Hero
@@ -342,6 +343,7 @@ MonoBehaviour:
   projectilePreFab: {fileID: 6592021164037511616, guid: 125c28061a5b5d84f98877c75f68c723,
     type: 3}
   projectileSpeed: 40
+  pickedUpSound: {fileID: 8300000, guid: 699a21ca60012784c9805c6473120785, type: 3}
   _shieldLevel: 4
 --- !u!114 &401360603
 MonoBehaviour:
@@ -365,6 +367,102 @@ MonoBehaviour:
   offScreenUp: 0
   offScreenDown: 0
   boundsCheckActive: 0
+--- !u!82 &401360604
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401360599}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &506155971
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,20 +584,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eedf012df40f62f49941d696ff9f7b97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastPos: {x: 0, y: 0, z: 0}
   preFabEnemies:
   - {fileID: 8374717386294232483, guid: 0a250d7bab5087148bf789780bdf3c0b, type: 3}
   - {fileID: 5623438300949276108, guid: 4a91d07bbdbdf7843ae5601a7d252829, type: 3}
   - {fileID: 2541452477685604455, guid: d5c898caa7bf4aa4e85aff3278c486d8, type: 3}
   - {fileID: 2690714935153572809, guid: 11069b3583417324bba0dbec589f6232, type: 3}
   - {fileID: 3943664169245087171, guid: 9bef489f8f2a54467b85866370312cca, type: 3}
-  preFabPickUp: {fileID: 2947699988509494092, guid: 04bb22ddd4dc2b247b46f905291e517d,
-    type: 3}
   enemySpawnRate: 1
   enemyPadding: 1.5
   level: 1
   particleExplosion: {fileID: 4394925886506474579, guid: 302dd7321e6fe64438dab2dee7008bbc,
     type: 3}
-  pickUpAnimation: {fileID: 773374675519351435, guid: 017dc5d6c9dd4cf47b987ec4fc8dd51c,
+  prefabPowerUp: {fileID: 3312847175538074912, guid: 7d57dbc57e5000643bfb109de7bfde0a,
     type: 3}
   weaponDefn:
   - type: 1
@@ -509,6 +606,9 @@ MonoBehaviour:
     speed: 40
     delayBetweenShots: 0.3
     bulletNoise: {fileID: 8300000, guid: 01fd566401477da4d81a42c8f31b507e, type: 3}
+    letter: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    duration: 1000
   - type: 2
     projectilePreFab: {fileID: 6592021164037511616, guid: 125c28061a5b5d84f98877c75f68c723,
       type: 3}
@@ -516,6 +616,9 @@ MonoBehaviour:
     speed: 40
     delayBetweenShots: 0.4
     bulletNoise: {fileID: 8300000, guid: 01fd566401477da4d81a42c8f31b507e, type: 3}
+    letter: T
+    color: {r: 1, g: 0, b: 0.8999224, a: 1}
+    duration: 12
   - type: 3
     projectilePreFab: {fileID: 1785650694238834535, guid: b4a022cb990b1a64aaa99a9cc124c1b3,
       type: 3}
@@ -523,12 +626,18 @@ MonoBehaviour:
     speed: 40
     delayBetweenShots: 1
     bulletNoise: {fileID: 8300000, guid: c8f8bc5732302b245b178531922761f4, type: 3}
+    letter: H
+    color: {r: 1, g: 0.5865975, b: 0, a: 1}
+    duration: 10
   - type: 4
     projectilePreFab: {fileID: 0}
     damage: 60
     speed: 0
     delayBetweenShots: 0
     bulletNoise: {fileID: 8300000, guid: d182d334785020545b6d0940eada2733, type: 3}
+    letter: P
+    color: {r: 0, g: 0.97092485, b: 1, a: 1}
+    duration: 9
   - type: 5
     projectilePreFab: {fileID: 5653327881738021282, guid: 3d2423bc5dbcba643a0718eb2c9b4a17,
       type: 3}
@@ -536,6 +645,9 @@ MonoBehaviour:
     speed: 40
     delayBetweenShots: 0.3
     bulletNoise: {fileID: 8300000, guid: 45ac5533c9f2cf64c87b9a40a7525288, type: 3}
+    letter: F
+    color: {r: 0, g: 0.022976875, b: 1, a: 1}
+    duration: 9
   - type: 6
     projectilePreFab: {fileID: 5389508483514488938, guid: 02fbea2875097ef4dae633f06fd257b9,
       type: 3}
@@ -543,6 +655,9 @@ MonoBehaviour:
     speed: 10
     delayBetweenShots: 2
     bulletNoise: {fileID: 8300000, guid: 3812ec0ee2f17ef41b0c5ec2438d5c69, type: 3}
+    letter: B
+    color: {r: 1, g: 0, b: 0, a: 1}
+    duration: 4
   - type: 7
     projectilePreFab: {fileID: 6592021164037511616, guid: 129628e1f5e661c4da859734ac0b575b,
       type: 3}
@@ -550,6 +665,9 @@ MonoBehaviour:
     speed: 25
     delayBetweenShots: 2
     bulletNoise: {fileID: 0}
+    letter: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
   - type: 8
     projectilePreFab: {fileID: 6592021164037511616, guid: 129628e1f5e661c4da859734ac0b575b,
       type: 3}
@@ -557,6 +675,19 @@ MonoBehaviour:
     speed: 25
     delayBetweenShots: 0.75
     bulletNoise: {fileID: 0}
+    letter: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
+  - type: 9
+    projectilePreFab: {fileID: 6592021164037511616, guid: 129628e1f5e661c4da859734ac0b575b,
+      type: 3}
+    damage: 10
+    speed: 25
+    delayBetweenShots: 0.75
+    bulletNoise: {fileID: 0}
+    letter: S
+    color: {r: 0, g: 1, b: 0.07073355, a: 1}
+    duration: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1422,7 +1553,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 81dbf4a0d28a4a449a12a54fe6c3a4e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6374,6 +6505,9 @@ MonoBehaviour:
     speed: 0
     delayBetweenShots: 0
     bulletNoise: {fileID: 0}
+    letter: 
+    color: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
   collar: {fileID: 0}
   lastShotTime: 0
   audioSource: {fileID: 0}

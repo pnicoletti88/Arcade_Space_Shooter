@@ -11,6 +11,7 @@ public class Enemy_Boss_Movement : Enemy_Parent
     void Start()
     {
         _health = 200; // sets health from parent class to the appropriate value, depending on the enemy type.
+        powerUpDropChance = 0.5f;
     }
 
     //handles movement of the enemy

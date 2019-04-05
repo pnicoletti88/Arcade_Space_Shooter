@@ -7,6 +7,7 @@ public class Enemy_0_Movement : Enemy_Parent
     void Start()
     {
         _health = 50; // sets health from parent class to the appropriate value, depending on the enemy type.
+        powerUpDropChance = 0.225f;
     }
 
     protected override void Move()

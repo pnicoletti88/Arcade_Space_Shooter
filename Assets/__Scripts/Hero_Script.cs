@@ -13,8 +13,10 @@ public class Hero_Script : MonoBehaviour
     public float gameRestartDelay = 2f;
     public GameObject projectilePreFab;
     public float projectileSpeed = 40f;
-    
-    
+    public AudioClip pickedUpSound;
+
+
+
 
     [Header("Set in Dynamically")]
     [SerializeField]
@@ -27,6 +29,10 @@ public class Hero_Script : MonoBehaviour
     private GameObject _lastTriggerGo = null;
     private float _startTime = 0;
     private Weapon _weapon;
+    private float _weaponStartLife = 0;
+    private float _weaponDuration = int.MaxValue;
+    private bool _TurnPowerUpOff = true;
+    private AudioSource _audioSource;
 
     void Awake()
     {
@@ -44,17 +50,8 @@ public class Hero_Script : MonoBehaviour
     {
         _startTime = Time.time;
         _weapon = GetComponentInChildren<Weapon>();
+        _audioSource = GetComponent<AudioSource>();
 
-    }
-    private void PowerUp(WeaponType wT, float T, GameObject pU)
-    {
-        _weapon.type = wT;
-        Invoke("PowerDown", T);
-        Main_MainScene.scriptReference.DestroyPickup(pU);
-    }
-    private void PowerDown()
-    {
-        _weapon.type = WeaponType.single;
     }
 
 
@@ -64,7 +61,7 @@ public class Hero_Script : MonoBehaviour
         if ((Time.time - _startTime) <= 2.0f)
         {
 
-            float change = 50f / 5f * (2.0f - (Time.time - _startTime)) * Time.deltaTime;
+            float change = 10f * (2.0f - (Time.time - _startTime)) * Time.deltaTime;
             Vector3 pos = transform.position;
             pos.y += change;
             transform.position = pos;
@@ -89,7 +86,11 @@ public class Hero_Script : MonoBehaviour
                 else { _weapon.type = WeaponType.moab; }
             }
             */
-
+            if(Time.time - _weaponStartLife > _weaponDuration && _TurnPowerUpOff)
+            {
+                _TurnPowerUpOff = false;
+                _weapon.SetType(WeaponType.single);
+            }
 
             //these method used input based on the user defined axis and return a value between 1- and 1 depending on which direction is push
             //starts at 0 and builds to 1 the longer you hold it
@@ -131,32 +132,6 @@ public class Hero_Script : MonoBehaviour
         GameObject go = rootT.gameObject;
 
 
-        print(other.tag);
-        print(rootT.tag);
-        if(other.tag == "homing")
-        {
-            PowerUp(WeaponType.homing, Main_MainScene.scriptReference.Homing.duration, other.gameObject);
-        }
-        if (other.tag == "triple")
-        {
-            PowerUp(WeaponType.triple, Main_MainScene.scriptReference.Triple.duration, other.gameObject);
-        }
-        if (other.tag == "plasmaThrower")
-        {
-            PowerUp(WeaponType.plasmaThrower, Main_MainScene.scriptReference.Plasma.duration, other.gameObject);
-        }
-        if (other.tag == "freezeGun")
-        {
-            PowerUp(WeaponType.freezeGun, Main_MainScene.scriptReference.Freeze.duration, other.gameObject);
-        }
-        if (other.tag == "moab")
-        {
-            PowerUp(WeaponType.moab, Main_MainScene.scriptReference.Moab.duration, other.gameObject);
-        }
-        if (other.tag == "shield")
-        {
-            shieldLevel++;
-        }
         if (other.tag == "ProjectileEnemy")
         {
             Destroy(other.gameObject);
@@ -174,12 +149,37 @@ public class Hero_Script : MonoBehaviour
         //decreases shield level upon trigger with an enemy
         //destroys enemy
 
-        if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2" || go.tag == "Enemy4")
+        if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2" || go.tag == "Enemy4" || go.tag == "EnemyBoss")
         {
             shieldLevel--;
             Main_MainScene.scriptReference.DestroyEnemy(go); //destroy enemy function used as it removes the enemy from the list in main
+        } else if(go.tag == "PowerUp")
+        {
+            AbsorbPowerUp(go);
         }
-
+       
+    }
+    
+    public void AbsorbPowerUp(GameObject go)
+    {
+        PowerUp powerUp = go.GetComponent<PowerUp>();
+        switch (powerUp.type)
+        {
+            case WeaponType.shield:
+                shieldLevel++;
+                break;
+            default:
+                if(powerUp.type != _weapon.type)
+                {
+                    _TurnPowerUpOff = true;
+                    _weaponDuration = powerUp.duration;
+                    _weaponStartLife = Time.time;
+                    _weapon.SetType(powerUp.type);
+                }
+                break;
+        }
+        _audioSource.PlayOneShot(pickedUpSound);
+        powerUp.AbsorbedBy(this.gameObject);
     }
 
 
@@ -207,7 +207,6 @@ public class Hero_Script : MonoBehaviour
                 //Updates current score for death screen, regardless of score.
                 Score.scoreControllerReference.SavePlayerMostRecentScore();
                 Main_MainScene.scriptReference.spawnEnemies = false; //stops enemy spawning when ship is destroyed
-                Main_MainScene.scriptReference.spawnPickUps = false;
                 Destroy(this.gameObject); //destroy the ship
                 Main_MainScene.scriptReference.DelayedRestart(gameRestartDelay); //restart game
             }

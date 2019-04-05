@@ -12,19 +12,19 @@ public class Main_MainScene : MonoBehaviour
     [Header("Set in Inspector")]
     public Vector3 lastPos;
     public GameObject[] preFabEnemies = new GameObject[4];
-    public GameObject preFabPickUp;
     public float enemySpawnRate = 0.5f;
     public float enemyPadding = 1.5f;
     public int level = 1; //level field
 
     public GameObject particleExplosion;
+    public GameObject prefabPowerUp;
 
-    public GameObject pickUpAnimation;
+    private WeaponType[] _powerUpFrequency = new WeaponType[] { WeaponType.shield, WeaponType.shield, WeaponType.freezeGun, WeaponType.freezeGun, WeaponType.homing, WeaponType.homing, WeaponType.moab, WeaponType.plasmaThrower, WeaponType.plasmaThrower, WeaponType.triple, WeaponType.triple, WeaponType.triple };
+
 
     public WeaponDefinition[] weaponDefn;
 
     private bool _spawnEnemies = true; 
-    public bool spawnPickUps { get; set; } = true; //auto property used
     private BoundsCheck _boundM;
     private Level _level;
 
@@ -45,21 +45,8 @@ public class Main_MainScene : MonoBehaviour
         }
     }
 
-    //Create Pickups
-    public PickUp Homing = new PickUp(Color.red, WeaponType.homing, "H", 20, "homing");
-    public PickUp Moab = new PickUp(Color.blue, WeaponType.homing, "M", 20, "moab");
-    public PickUp Freeze = new PickUp(Color.yellow, WeaponType.homing, "F", 20, "freezeGun");
-    public PickUp Plasma = new PickUp(Color.cyan, WeaponType.homing, "P", 20, "plasmaThrower");
-    public PickUp Triple = new PickUp(Color.magenta, WeaponType.homing, "T", 20, "triple");
-    public PickUp Shield = new PickUp(Color.white, WeaponType.none, "S", 0, "shield");
-
-    
-
-
-
     //list of all active enemies - will be needed for more complex weapons so it was set up now to avoid large refactor later
     private List<GameObject> _allEnemiesList = new List<GameObject>();
-    private List<GameObject> _allPickUpList = new List<GameObject>();
     static private Dictionary<WeaponType, WeaponDefinition> _weaponDictionary = new Dictionary<WeaponType, WeaponDefinition>();
 
 
@@ -78,7 +65,7 @@ public class Main_MainScene : MonoBehaviour
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds chech component
         _level = GetComponent<Level>(); //gets the level component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
-        Invoke("SpawnPickUps", 10);
+       
         //adds the weapon definitions into the dictionary so they can be easily looked up later
         foreach (WeaponDefinition def in weaponDefn)
         {
@@ -86,77 +73,11 @@ public class Main_MainScene : MonoBehaviour
         }
 
     }
-    public void DropAPickUp(Vector3 pos)
-    {
-        PickUp[] pickUps = { Triple, Homing, Plasma, Freeze, Moab };
-        int loadRand = Random.Range(0, pickUps.Length);
-        PickUp tmp = pickUps[loadRand];
-        GameObject toSpawn = Instantiate<GameObject>(preFabPickUp);
-        Renderer rend = toSpawn.gameObject.GetComponent<Renderer>();
-        rend.material.color = tmp.color;
-        TextMesh label = toSpawn.GetComponentInChildren<TextMesh>();
-        label.text = tmp.text;
-        toSpawn.gameObject.tag = pickUps[loadRand].tag;
-        float pickUpPad = 1f;
+    
 
-
-        if (toSpawn.GetComponent<BoundsCheck>() != null)
-        {
-            pickUpPad = Mathf.Abs(toSpawn.GetComponent<BoundsCheck>().radius); //factors in the radius of the pickup for bounds check
-        }
-        Vector3 startPos = Vector3.zero;
-        float xMinimum = -_boundM.camWidth + pickUpPad;
-        float xMaximum = _boundM.camWidth - pickUpPad;
-
-        //set the pickup to start somewhere just above the left of the screen
-        startPos.x = Random.Range(xMinimum, xMaximum);
-        startPos.y = _boundM.camHeight + pickUpPad;
-        toSpawn.transform.position = pos;
-        _allPickUpList.Add(toSpawn);
-
-
-    }
-    public void SpawnPickUps()
-    {
-        PickUp[] pickUps = { Triple, Homing, Plasma, Freeze, Moab };
-        int loadRand = Random.Range(0, pickUps.Length);
-        PickUp tmp = pickUps[loadRand];
-        GameObject toSpawn = Instantiate<GameObject>(preFabPickUp);
-        Renderer rend = toSpawn.gameObject.GetComponent<Renderer>();
-        rend.material.color = tmp.color;
-        TextMesh label = toSpawn.GetComponentInChildren<TextMesh>();
-        label.text = tmp.text;
-        toSpawn.gameObject.tag = pickUps[loadRand].tag;
-        float pickUpPad = 1f;
-        
-
-        if (toSpawn.GetComponent<BoundsCheck>() != null)
-        {
-            pickUpPad = Mathf.Abs(toSpawn.GetComponent<BoundsCheck>().radius); //factors in the radius of the pickup for bounds check
-        }
-        Vector3 startPos = Vector3.zero;
-        float xMinimum = -_boundM.camWidth + pickUpPad;
-        float xMaximum = _boundM.camWidth - pickUpPad;
-
-        //set the pickup to start somewhere just above the left of the screen
-        startPos.x = Random.Range(xMinimum, xMaximum);
-        startPos.y = _boundM.camHeight + pickUpPad;
-        toSpawn.transform.position = startPos;
-        _allPickUpList.Add(toSpawn);
-        //this stop enemies from spawning
-        if (spawnPickUps)
-        {
-            Invoke("SpawnPickUps", 10); //invokes the function to run again
-        }
-        else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
-        {
-            DestroyPickup(toSpawn);
-        }
-    }
 
     public void SpawnEnemy()
     {
-        //int randEnemy = Random.Range(0, preFabEnemies.Length); //randomly find which enemy to generate
         int randEnemy = Random.Range(0, _level.randRange); //random find which enemy to generate within the range specified by level class
         
         bool boss = _level.boss;
@@ -164,7 +85,6 @@ public class Main_MainScene : MonoBehaviour
 
         if (boss)
         {
-
             spawned = Instantiate<GameObject>(preFabEnemies[4]);
         }
         else
@@ -201,7 +121,7 @@ public class Main_MainScene : MonoBehaviour
 
         if (boss)
         {
-            startPos.x = 10;
+            startPos.x = 0;
         }
 
         spawned.transform.position = startPos;
@@ -210,7 +130,9 @@ public class Main_MainScene : MonoBehaviour
         if (_spawnEnemies)
         {
             if (!boss)
+            {
                 Invoke("SpawnEnemy", 1f / enemySpawnRate); //invokes the function to run again
+            }
 
         }
         else //handles the asynchrous aspect kills an enenmy that was being construted if spawn is now fasle
@@ -223,6 +145,7 @@ public class Main_MainScene : MonoBehaviour
     {
         Invoke("Restart", delay);
     }
+
     //function loads the scene after DelayedRestart is called
     public void Restart()
     {
@@ -300,15 +223,23 @@ public class Main_MainScene : MonoBehaviour
         explos.transform.position = enemyToDestroy.transform.position;
         Destroy(enemyToDestroy);
         if (enemyToDestroy.tag == "EnemyBoss")
+        {
             Invoke("SpawnEnemy", 1 / enemySpawnRate);
+        }
+        
     }
 
-    public void DestroyPickup(GameObject pickUpToDestroy)
+    public void ShipDestroyed(Enemy_Parent e)
     {
-       
-        _allPickUpList.Remove(pickUpToDestroy);
-        GameObject explos = Instantiate(pickUpAnimation);
-        explos.transform.position = pickUpToDestroy.transform.position;
-        Destroy(pickUpToDestroy);
+        if(Random.value <= e.powerUpDropChance)
+        {
+            int ndx = Random.Range(0, _powerUpFrequency.Length);
+            WeaponType powerUpType = _powerUpFrequency[ndx];
+            GameObject go = Instantiate(prefabPowerUp) as GameObject;
+            PowerUp powerUp = go.GetComponent<PowerUp>();
+
+            powerUp.SetType(powerUpType);
+            powerUp.transform.position = e.transform.position;
+        }
     }
 }

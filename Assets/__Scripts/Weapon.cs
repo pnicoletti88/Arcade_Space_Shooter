@@ -16,7 +16,8 @@ public enum WeaponType
     freezeGun,
     moab,
     singleEnemy,
-    tripleEnemy
+    tripleEnemy,
+    shield
 }
 
 [System.Serializable]//this allows the system to serialize this class (convert it to a byte array and pass it easily)
@@ -28,6 +29,9 @@ public class WeaponDefinition
     public float speed;
     public float delayBetweenShots;
     public AudioClip bulletNoise;
+    public string letter;
+    public Color color = Color.white;
+    public float duration;
 }
 
 public class Weapon : MonoBehaviour
@@ -60,8 +64,6 @@ public class Weapon : MonoBehaviour
         _collarRend = collar.GetComponent<Renderer>(); //this will be used for colour changing to gun (phase 3)
         audioSource = GetComponent<AudioSource>();
 
-
-
         SetType(_type); //calls the set type function to initialize the nessesary parameters
 
         if (PROJECTILE_ANCHOR == null) //creates the parent for the projectiles
@@ -71,9 +73,6 @@ public class Weapon : MonoBehaviour
         }
 
     }
-
-
-
 
     //property for the weapon type
     public WeaponType type
@@ -117,7 +116,6 @@ public class Weapon : MonoBehaviour
         {
             rootGo.GetComponent<Enemy_Boss_Movement>().fireWeaponsDelegate += Fire;
         }
-
         def = Main_MainScene.GetWeaponDefinition(_type);
         lastShotTime = 0; //this means that weapon will be ready to fire right when it is switched to
     }

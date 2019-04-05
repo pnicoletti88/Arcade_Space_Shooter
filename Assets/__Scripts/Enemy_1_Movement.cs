@@ -10,7 +10,8 @@ public class Enemy_1_Movement : Enemy_Parent
     {
         //randomly set direction
         _health = 100; // sets health from parent class to the appropriate value, depending on the enemy type.
-        if(Random.Range(0, 2) == 0)
+        powerUpDropChance = 0.3f;
+        if (Random.Range(0, 2) == 0)
         {
             _directionFlag = -1;
         }

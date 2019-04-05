@@ -63,10 +63,14 @@ public abstract class Enemy_Parent : MonoBehaviour
     private float _frozenTime = 0;
     private float _timeToRemainFrozen = 2.5f;
     private bool _flyAway = false;
+    
 
     protected BoundsCheck _bound;
     protected float _health = 0; //set in child class
     protected float _speedFactor = 1f;
+    public float powerUpDropChance = 0.2f;
+    public bool _isAlive = true;
+
 
     //property to get and set the position of the enemy objects
     public Vector3 position
@@ -148,7 +152,6 @@ public abstract class Enemy_Parent : MonoBehaviour
                 CheckHealth();
             }
         }
-
         else if (_colourChangeTime != 0 && (Time.time - _colourChangeTime) > _timeToRemainColourChange)
         {
             ChangeColour(true);
@@ -193,7 +196,6 @@ public abstract class Enemy_Parent : MonoBehaviour
     //function for collision with a projectile
     void OnCollisionEnter(Collision coll)
     {
-        Debug.Log("COllide");
         GameObject otherColl = coll.gameObject;
         
         if (otherColl.tag == "ProjectileHero" || otherColl.tag == "homing")
@@ -228,11 +230,12 @@ public abstract class Enemy_Parent : MonoBehaviour
         if (_health <= 0)
         {
             UpdateScore(gameObject);
-            Main_MainScene.scriptReference.DestroyEnemy(gameObject);
-            if (Random.Range(0,2) == 0)
+            if (_isAlive)
             {
-                Main_MainScene.scriptReference.DropAPickUp(gameObject.transform.position);
+                Main_MainScene.scriptReference.ShipDestroyed(this);
             }
+            _isAlive = false;
+            Main_MainScene.scriptReference.DestroyEnemy(gameObject);
         }
     }
 
@@ -325,7 +328,7 @@ public abstract class Enemy_Parent : MonoBehaviour
                         newCol.b = Mathf.Max(0, (bValue * 255 + changeInB)) / 255;
                     }
 
-
+                    //updating the colour of the object
                     pair.GetGameObject().GetComponent<Renderer>().material.color = newCol;
                     
                 }
