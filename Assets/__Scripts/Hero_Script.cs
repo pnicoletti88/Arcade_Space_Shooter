@@ -14,7 +14,7 @@ public class Hero_Script : MonoBehaviour
     public GameObject projectilePreFab;
     public float projectileSpeed = 40f;
     public AudioClip pickedUpSound;
-
+    public bool allWeapons = false;
 
 
 
@@ -68,24 +68,26 @@ public class Hero_Script : MonoBehaviour
         }
         else
         {
-            /*
-            //Switch weapon when the key 'c' is clicked
-            if (Input.GetKeyDown("c"))
+            // bool field to allow all weapon functionality (put in place for demo)
+            if (allWeapons)
             {
-                if (_weapon.type == WeaponType.single) { _weapon.type = WeaponType.triple; }
-                else { _weapon.type = WeaponType.single; }
+                //Switch weapon when the key 'c' is clicked
+                if (Input.GetKeyDown("c"))
+                {
+                    if (_weapon.type == WeaponType.single) { _weapon.type = WeaponType.triple; }
+                    else { _weapon.type = WeaponType.single; }
+                }
+                if (Input.GetKeyDown("x"))
+                {
+                    if (_weapon.type != WeaponType.plasmaThrower) { _weapon.type = WeaponType.plasmaThrower; }
+                    else { _weapon.type = WeaponType.homing; }
+                }
+                if (Input.GetKeyDown("z"))
+                {
+                    if (_weapon.type != WeaponType.freezeGun) { _weapon.type = WeaponType.freezeGun; }
+                    else { _weapon.type = WeaponType.moab; }
+                }
             }
-            if (Input.GetKeyDown("x"))
-            {
-                if (_weapon.type != WeaponType.plasmaThrower) { _weapon.type = WeaponType.plasmaThrower; }
-                else { _weapon.type = WeaponType.homing; }
-            }
-            if (Input.GetKeyDown("z"))
-            {
-                if (_weapon.type != WeaponType.freezeGun) { _weapon.type = WeaponType.freezeGun; }
-                else { _weapon.type = WeaponType.moab; }
-            }
-            */
 
             //if powerUp has been active for its lifetime then you need 
             if(Time.time - _weaponStartLife > _weaponDuration && _TurnPowerUpOff)
