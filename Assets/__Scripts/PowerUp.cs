@@ -6,7 +6,7 @@ public class PowerUp : MonoBehaviour
 {
     [Header("Set in Inspector")]
     public Vector2 rotMinMax = new Vector2(15, 90);
-    public Vector2 driftMinMax = new Vector2(1f, 1.25f);
+    public Vector2 driftMinMax = new Vector2(0.3f, 1f);
     public float lifeTime = 1.5f;
     public float fadeTime = 1.5f;
 
@@ -21,7 +21,7 @@ public class PowerUp : MonoBehaviour
     public Vector3 rotPerSecond;
     public float birthTime;
     public float duration;
-    public float direction;
+    public int direction;
 
     private Rigidbody _rigidbody;
     private BoundsCheck _boundsCheck;
@@ -40,20 +40,22 @@ public class PowerUp : MonoBehaviour
         
 
         Vector3 vel = Random.onUnitSphere;
-        direction = Random.Range(0, 1);
-        if(direction <= 0.5)
+        direction = Random.Range(0, 2);
+        //Assigns a random x direction and velocity
+        if(direction == 0)
         {
-            direction = -1.5f;
+            direction = -2;
         }
         else
         {
-            direction = 1.5f;
+            direction = 2;
         }
 
         vel.z = 0;
         vel.Normalize();
+        //Assigns the x and y velocities depending on the result of all prior random events
         vel.x = direction*Random.Range(driftMinMax.x, driftMinMax.y);
-        vel.y = -17.5f*Random.Range(driftMinMax.x, driftMinMax.y);
+        vel.y = -15f*Random.Range(driftMinMax.x, driftMinMax.y);
         _rigidbody.velocity = vel;
 
         transform.rotation = Quaternion.identity;
@@ -69,8 +71,8 @@ public class PowerUp : MonoBehaviour
         cube.transform.rotation = Quaternion.Euler(rotPerSecond * Time.time);
         float timeColor = (Time.time - (birthTime + lifeTime)) / fadeTime;
 
-        //destroys the powerup if it is on screen too long
-        if(timeColor >= 1)
+        //destroys the powerup if it is on screen too long, or if it goes off screen
+        if(timeColor >= 1 || !_boundsCheck.onScreen)
         {
             if (_randCube)
             {
@@ -90,14 +92,7 @@ public class PowerUp : MonoBehaviour
             c = letter.color;
             c.a = 1f - (timeColor * 0.75f);
             letter.color = c;
-        }
-
-        // destroys the powerup if it goes off screen
-        if (!_boundsCheck.onScreen)
-        {
-            Destroy(gameObject);
-        }
-        
+        }        
     }
 
     //sets the powerup type depending on what WeaponDefinition / WeaponType is associated with it.
@@ -122,6 +117,7 @@ public class PowerUp : MonoBehaviour
         
     }
 
+    //Function that is invoked repeatedly to cycle through all other powerup colors, if the cube is 'Random'
     private void ColorChange()
     {
         float timeChange = (Time.time - (birthTime + lifeTime)) / fadeTime;

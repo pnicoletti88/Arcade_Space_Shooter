@@ -19,10 +19,4 @@ public class Main_TitleScreen : MonoBehaviour
             Debug.LogError("Attempted Creation of Second Main Script (Title Screen)");
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

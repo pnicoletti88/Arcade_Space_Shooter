@@ -284,7 +284,7 @@ public class Main_MainScene : MonoBehaviour
 
             float randVal = Random.Range(0.0f,1.0f);
 
-            if (randVal < 0.15f && powerUpType != WeaponType.shield) { rand = true; }
+            if (randVal < 0.2f && powerUpType != WeaponType.shield) { rand = true; }
             
             powerUp.SetType(powerUpType,rand);
             powerUp.transform.position = e.transform.position;

@@ -9,10 +9,8 @@ public class Shield : MonoBehaviour
 
     [Header("Set Dynamically")]
     public int levelShown = 0;
-
     private Material _mat;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         //get shield material

@@ -32,12 +32,6 @@ public class Level : MonoBehaviour
         UpdateLevel(1);
     }
 
-    private void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         // new levels occur every levelThreshold amount
@@ -51,7 +45,6 @@ public class Level : MonoBehaviour
             }
             UpdateLevel(level + numLevelsToUpdate);
         }
-
     }
 
     //this function is called to set the parameters for each new level
@@ -79,18 +72,18 @@ public class Level : MonoBehaviour
                 boss = false;
                 level = newLevel;
                 randRange = 4;
-                eSpawnRate += 0.1f;
+                eSpawnRate += 0.3f;
             }
         }
         if (newLevel != 1)
         {
             if (boss)
             {
-                newLevelText.text = "!!boss level!!";
+                newLevelText.text = "boss level";
             }
             else
             {
-                newLevelText.text = "!!new level!!";
+                newLevelText.text = "next level";
             }
             Invoke("ClearNewLevel", 2);
         }

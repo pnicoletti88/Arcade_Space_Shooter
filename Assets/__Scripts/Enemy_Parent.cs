@@ -241,15 +241,14 @@ public abstract class Enemy_Parent : MonoBehaviour
         {
             if (_isAlive)
             {
+                //Prevents the ShipDestroyed function from being called multiple times, and potentially spawning multiple powerups
+                //(e.g. if multiple gameobjects collide with the enemy before it is destroyed)
                 Main_MainScene.scriptReference.ShipDestroyed(this);
             }
             _isAlive = false;
             Main_MainScene.scriptReference.DestroyEnemy(gameObject,true);
         }
     }
-
-    //updates the user score according to the type of enemy
-    
 
     //use to show the enemy taking damage or being on plasma fire
     void ChangeColour(bool reset, float changeInR=0, float changeInG=0, float changeInB=0, bool useCurrentColor=false)

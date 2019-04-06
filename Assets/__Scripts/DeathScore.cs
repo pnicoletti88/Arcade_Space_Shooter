@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DeathScore : Score
 {
-    // Start is called before the first frame update
     void Start()
     {
         // DeathScore is inherited from Score, which acts as the score controller in the main game scene - minor differences here just account for text differences, and setting the initial score to the player's most recent final score instead of 0.

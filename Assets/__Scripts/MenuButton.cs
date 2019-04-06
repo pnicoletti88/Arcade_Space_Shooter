@@ -23,7 +23,7 @@ public class MenuButton : MonoBehaviour
 
     void Update()
     {
-        if (_framesWaited > _waitFor) // this waits 10 frames before doing anything - when loading in the scene again, there were slight jitters. This minimizes this.
+        if (_framesWaited > _waitFor) // this waits 9 frames before doing anything - when loading in the scene again, there were slight jitters. This minimizes this.
         {
             if (menuButtonController.index == thisIndex) // if the controller tells the script that it is selected, then run the animation (based on the boolean paramater)
             {
