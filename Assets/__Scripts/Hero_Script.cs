@@ -152,7 +152,7 @@ public class Hero_Script : MonoBehaviour
         //decreases shield level upon trigger with an enemy
         //destroys enemy
 
-        if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2" || go.tag == "Enemy4" || go.tag == "EnemyBoss")
+        if (go.tag == "Enemy0" || go.tag == "Enemy1" || go.tag == "Enemy2" || go.tag == "Enemy3" || go.tag == "EnemyBoss")
         {
             shieldLevel--;
             Main_MainScene.scriptReference.DestroyEnemy(go); //destroy enemy function used as it removes the enemy from the list in main

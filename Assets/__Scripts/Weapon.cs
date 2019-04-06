@@ -16,7 +16,7 @@ public enum WeaponType
     freezeGun,
     moab,
     singleEnemy,
-    tripleEnemy,
+    fiveEnemy,
     shield
 }
 
@@ -110,9 +110,9 @@ public class Weapon : MonoBehaviour
                 rootGo.GetComponent<Hero_Script>().StopWeaponsFire = StopPlasmaThrower;
             }
         }
-        else if (rootGo.GetComponent<Enemy_4_Movement>() != null)
+        else if (rootGo.GetComponent<Enemy_3_Movement>() != null)
         {
-            rootGo.GetComponent<Enemy_4_Movement>().FireWeaponsDelegate = Fire;
+            rootGo.GetComponent<Enemy_3_Movement>().FireWeaponsDelegate = Fire;
         }
         else if (rootGo.GetComponent<Enemy_Boss_Movement>() != null)
         {
@@ -144,6 +144,7 @@ public class Weapon : MonoBehaviour
             case WeaponType.moab:
             case WeaponType.freezeGun://creates the projectile and fires it forward
             case WeaponType.singleEnemy:
+            case WeaponType.homing:
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
                 break;
@@ -159,7 +160,7 @@ public class Weapon : MonoBehaviour
                 p.rigidBodyProjectile.velocity = p.transform.rotation * vel;
                 break;
 
-            case WeaponType.tripleEnemy:
+            case WeaponType.fiveEnemy:
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
                 p = MakeProjectile();
@@ -174,12 +175,6 @@ public class Weapon : MonoBehaviour
                 p = MakeProjectile();
                 p.transform.rotation = Quaternion.AngleAxis(-30, Vector3.back);
                 p.rigidBodyProjectile.velocity = p.transform.rotation * vel;
-                break;
-
-            //Please ignore this case - homing missle cannot be switched to in game - will be seen in phase 3!
-            case WeaponType.homing:
-                p = MakeProjectile();
-                p.rigidBodyProjectile.velocity = vel;
                 break;
         }
         if (def.bulletNoise != null)

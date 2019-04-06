@@ -58,16 +58,12 @@ public class Level : MonoBehaviour
     void UpdateLevel(int newLevel)
     {
         //If its a new level that is not level one, display new level in newLevelText UI element
-        if (newLevel != 1)
-        {
-            newLevelText.text = "NEW LEVEL!!";
-            Invoke("ClearNewLevel", 2);
-        }
+        
         //first four levels result in one more enemy dropping, randRange increases with every new level
         if (newLevel < 5) { 
-        level = newLevel;
-        randRange = newLevel;
-    }
+            level = newLevel;
+            randRange = newLevel;
+        }
         else if (newLevel >= 5)
         {
             //every 5 levels a boss is spawned at a rate of 1f
@@ -86,6 +82,19 @@ public class Level : MonoBehaviour
                 eSpawnRate += 0.1f;
             }
         }
+        if (newLevel != 1)
+        {
+            if (boss)
+            {
+                newLevelText.text = "!!boss level!!";
+            }
+            else
+            {
+                newLevelText.text = "!!new level!!";
+            }
+            Invoke("ClearNewLevel", 2);
+        }
+
         //text field is updated with new level
         levelText.text = "Level: " + newLevel;
     }

@@ -13,7 +13,6 @@ TagManager:
   - Enemy0
   - Enemy1
   - Enemy2
-  - Enemy4
   - EnemyBoss
   - triple
   - homing
@@ -22,6 +21,8 @@ TagManager:
   - moab
   - Music
   - BackGround
+  - Enemy3
+  - Enemy4
   layers:
   - Default
   - TransparentFX

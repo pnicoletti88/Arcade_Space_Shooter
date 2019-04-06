@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_4_Movement : Enemy_0_Movement
+public class Enemy_3_Movement : Enemy_0_Movement
 {
 
     public delegate void fireWeapons(); //creates delegate type
