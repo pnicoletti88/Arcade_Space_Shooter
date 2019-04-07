@@ -13,11 +13,11 @@ public class HomingProjectile : Projectile
     private float _damageToDeal = 50;
     private GameObject _targetEnemy;
     // Start is called before the first frame update
-    private float _degreePerFrame = 2.7f;
+    private float _degreePerFrame = 2.4f;
 
     protected override void Start()
     {
-        _targetEnemy = Main_MainScene.scriptReference.getClosestsEnemy();
+        _targetEnemy = Main_MainScene.scriptReference.GetClosestsEnemy();
         _bounds = GetComponent<BoundsCheck>();
     }
 
@@ -31,9 +31,9 @@ public class HomingProjectile : Projectile
         //first make sure that there is an enemy to target - if not find one
         if (_targetEnemy == null)
         {
-            _targetEnemy = Main_MainScene.scriptReference.getClosestsEnemy();
+            _targetEnemy = Main_MainScene.scriptReference.GetClosestsEnemy();
             //note after getting target missile will not target it until next frame
-            //this is done to keep frame rate high as getting a target and then aiming at it are both slow operations
+            //this is done to keep frame rate high as getting a target and then aiming at it are both slower operations
         }
         else //if missle has target make it aim towards it - updating aim each frame
         {

@@ -170,7 +170,7 @@ public class Main_MainScene : MonoBehaviour
 
 
     //get target for homing missile
-    public GameObject getClosestsEnemy()
+    public GameObject GetClosestsEnemy()
     {
         if (_allEnemiesList.Count == 0)
         {
@@ -186,9 +186,9 @@ public class Main_MainScene : MonoBehaviour
 
 
             /*Goal of this code is to find "best" enemy for homing missile to lock onto
-             * first tries to find an enemey within 30 degreee field of view
-             * then tries 60 degree
-             * then 90
+             * first tries to find an enemey within 60 degreee field of view
+             * then tries 120 degree
+             * then 180
              * then returns a random enemy if all enemies are below the ship
              */
             foreach (GameObject obj in _allEnemiesList)
