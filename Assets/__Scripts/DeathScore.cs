@@ -25,6 +25,7 @@ public class DeathScore : Score
         }
     }
 
+    //updates score
     public override void UpdateScore()
     {
         // function override to add the word "final"

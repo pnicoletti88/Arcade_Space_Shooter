@@ -8,8 +8,8 @@ public class Moab : Projectile
 
     public GameObject explosion;
 
-    private float _startTime;
-    private int _boomCount = 0;
+    private float _startTime; //time the game object is instantiated - used to control time to till boom
+    private int _boomCount = 0; //counts how many explosions have be triggered - used to stop update from triggering boom sequence multiple times
     protected override void Start()
     {
         _startTime = Time.time;
@@ -38,7 +38,9 @@ public class Moab : Projectile
     //SetActive to false to hide the game object after everything is destroyed
     protected override void Update()
     {
-        transform.Rotate(0, 5f, 0);
+        transform.Rotate(0, 5f, 0); //gives projectile nice looking spin
+
+        //after 1.5 seconds boom gets triggered
         if (Time.time - _startTime > 1.5f && _boomCount == 0) 
         {
             Main_MainScene.scriptReference.spawnEnemies = false;

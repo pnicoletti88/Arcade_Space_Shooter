@@ -81,7 +81,7 @@ public class Score : MonoBehaviour
         PlayerPrefs.Save();
     }
     //updates score with value based on which enemy has been destroyed
-    public void UpdateScore(string enemyTag)
+    public void UpdateScore(string enemyTag) //string pass instead of gameobject to avoid race conditions with destruction of gameobject
     {
         switch (enemyTag)
         {
@@ -99,8 +99,8 @@ public class Score : MonoBehaviour
                 break;
             case "EnemyBoss":
                 AddScore(bossScore);
-                Level.scriptRef.levelThreshold += 75;
-                bossScore += 75;
+                Level.scriptRef.levelThreshold += 75; //with each time a boss is beaten points per level is increasd
+                bossScore += 75; //boss is worth more so that it will still one complete level
                 break;
             default:
                 break;

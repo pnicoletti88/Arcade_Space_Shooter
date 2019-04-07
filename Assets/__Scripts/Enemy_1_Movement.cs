@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy_1_Movement : Enemy_Parent
 {
-    private int _directionFlag; //determine if it moves in negatie or positive x direction
+    private int _directionFlag; //determine if it moves in negative or positive x direction
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class Enemy_1_Movement : Enemy_Parent
     {
         Vector3 temporaryPosition = position;
         temporaryPosition.x += 10f * Time.deltaTime * _directionFlag * _speedFactor; //direction flag is either positive or negative
-        temporaryPosition.y -= 10f * Time.deltaTime * _speedFactor;
+        temporaryPosition.y -= 10f * Time.deltaTime * _speedFactor; //makes the ship have movement down
         position = temporaryPosition; //update position
     }
 

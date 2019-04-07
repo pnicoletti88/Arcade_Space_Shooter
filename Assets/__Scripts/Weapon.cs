@@ -102,19 +102,19 @@ public class Weapon : MonoBehaviour
             {
                 _plasmaThrowerParticles.enabled = false;//incase of switch while space is being held
                 rootGo.GetComponent<Hero_Script>().FireWeaponsDelegate = Fire; //assigning fire the the function delegate
-                rootGo.GetComponent<Hero_Script>().StopWeaponsFire = null;
+                rootGo.GetComponent<Hero_Script>().StopWeaponsFire = null; //when not using plasma thrower no need to stop weapons fire
             }
             else
             {
-                rootGo.GetComponent<Hero_Script>().FireWeaponsDelegate = FirePlasmaThrower;
-                rootGo.GetComponent<Hero_Script>().StopWeaponsFire = StopPlasmaThrower;
+                rootGo.GetComponent<Hero_Script>().FireWeaponsDelegate = FirePlasmaThrower; //different fire function for flame thrower
+                rootGo.GetComponent<Hero_Script>().StopWeaponsFire = StopPlasmaThrower; //there is a function to be triggered when space bar is lifted
             }
         }
-        else if (rootGo.GetComponent<Enemy_3_Movement>() != null)
+        else if (rootGo.GetComponent<Enemy_3_Movement>() != null) //attach fire to enemy 3
         {
             rootGo.GetComponent<Enemy_3_Movement>().FireWeaponsDelegate = Fire;
         }
-        else if (rootGo.GetComponent<Enemy_Boss_Movement>() != null)
+        else if (rootGo.GetComponent<Enemy_Boss_Movement>() != null) //attach multiple fire to boss
         {
             rootGo.GetComponent<Enemy_Boss_Movement>().FireWeaponsDelegate += Fire;
         }
@@ -140,9 +140,10 @@ public class Weapon : MonoBehaviour
 
         switch (type)
         {
+            //creates the projectile and fires it forward
             case WeaponType.single:
             case WeaponType.moab:
-            case WeaponType.freezeGun://creates the projectile and fires it forward
+            case WeaponType.freezeGun:
             case WeaponType.singleEnemy:
             case WeaponType.homing:
                 p = MakeProjectile();
@@ -160,6 +161,7 @@ public class Weapon : MonoBehaviour
                 p.rigidBodyProjectile.velocity = p.transform.rotation * vel;
                 break;
 
+            //creates 5 projectiles and angles them
             case WeaponType.fiveEnemy:
                 p = MakeProjectile();
                 p.rigidBodyProjectile.velocity = vel;
@@ -186,19 +188,19 @@ public class Weapon : MonoBehaviour
 
     public void FirePlasmaThrower()
     {
-       _plasmaThrowerParticles.enabled = true;      
+       _plasmaThrowerParticles.enabled = true;//start particle system  
     }
 
     public void StopPlasmaThrower()
     {
-        _plasmaThrowerParticles.enabled = false;    
+        _plasmaThrowerParticles.enabled = false;//stop particle system 
     }
 
     //this function creates a projectiles - returns a reference to script attached to the projectile
     public Projectile MakeProjectile()
     {
         GameObject go = Instantiate(def.projectilePreFab);
-        if (transform.parent.gameObject.tag == "Hero" && go.tag != "freezeGun" && go.tag != "homing") //sets up the porjectile as friendly
+        if (transform.parent.gameObject.tag == "Hero" && go.tag != "freezeGun" && go.tag != "homing") //sets up the porjectile as friendly - some projectiles have been set with specific tag in inspector
         {
             go.tag = "ProjectileHero";
             go.layer = LayerMask.NameToLayer("ProjectileHero");

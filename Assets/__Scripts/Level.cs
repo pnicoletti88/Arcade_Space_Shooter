@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class Level : MonoBehaviour
 {
-    static public Level scriptRef;
-    public Text levelText;
-    public Text newLevelText;
-    public int level = 1;
-    public int randRange = 1;
-    static public float eSpawnRate = 0.5f;
+    static public Level scriptRef; //singleton
+    public Text levelText; //shows current level on screen
+    public Text newLevelText; //pop up on screen for new level
+    public int level = 1; //current level
+    public int randRange = 1; //controls which enemies are spawned
+    static public float eSpawnRate = 0.5f; //enemy spawn rate
     public int levelThreshold=75; //threshold for each level
-    public bool rot = false;
     public bool boss = false; // field that tells main if a boss should spawn
     public int scoreToUpdate = 75; // field is the score needed for next level;
     // Start is called before the first frame update
@@ -29,7 +28,7 @@ public class Level : MonoBehaviour
         eSpawnRate = 1f;
         level = 1;
         randRange = 1;
-        UpdateLevel(1);
+        UpdateLevel(1); //set level 1 as first level
     }
 
     void Update()
@@ -68,14 +67,14 @@ public class Level : MonoBehaviour
             }
             else
             {
-                //if the level is not a multiple of 5, spawn rate is increased by .1% each time
+                //if the level is not a multiple of 5, spawn rate is increased each time
                 boss = false;
                 level = newLevel;
                 randRange = 4;
                 eSpawnRate += 0.3f;
             }
         }
-        if (newLevel != 1)
+        if (newLevel != 1) //no text on first level
         {
             if (boss)
             {

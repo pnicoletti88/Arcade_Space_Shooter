@@ -10,13 +10,12 @@ public class Main_MainScene : MonoBehaviour
     static public Main_MainScene scriptReference; //Singleton
 
     [Header("Set in Inspector")]
-    public Vector3 lastPos;
-    public GameObject[] preFabEnemies = new GameObject[4];
-    public float enemySpawnRate = 0.5f;
+    public GameObject[] preFabEnemies = new GameObject[4]; //holds enemy prefabs
+    public float enemySpawnRate = 0.5f; 
     public float enemyPadding = 1.5f;
     public int level = 1; //level field
 
-    public GameObject particleExplosion;
+    public GameObject particleExplosion; //explosion on enemy death
     public GameObject prefabPowerUp;
 
     //This Array holds the references to the different weapon types, and one is randomly assigned when a powerup object is created. The larger the
@@ -29,7 +28,7 @@ public class Main_MainScene : MonoBehaviour
         WeaponType.triple, WeaponType.triple, WeaponType.triple };
 
 
-    public WeaponDefinition[] weaponDefn;
+    public WeaponDefinition[] weaponDefn; //holds all weapons
 
     private bool _spawnEnemies = true; //should enmies be spawned
     private BoundsCheck _boundM;
@@ -42,9 +41,9 @@ public class Main_MainScene : MonoBehaviour
             _spawnEnemies = value;
             if (!_spawnEnemies)
             {
-                CancelInvoke("SpawnEnemy"); //sto spawn calls that are invoked
+                CancelInvoke("SpawnEnemy"); //stop spawn calls that are invoked
             }
-            else if (_spawnEnemies && !IsInvoking("SpawnEnemy"))
+            else if (_spawnEnemies && !IsInvoking("SpawnEnemy")) //setting to true when already true wont invoke more spawn calls
             {
                 Invoke("SpawnEnemy", 1f); //start up spawn calls
             }
@@ -71,7 +70,7 @@ public class Main_MainScene : MonoBehaviour
         _boundM = GetComponent<BoundsCheck>(); //gets the bounds check component
         Invoke("SpawnEnemy", 1f / enemySpawnRate); //this start the enemies spawning
        
-        
+        //since this is a static reference it only needs to be set once when it is null and the data will remain - see PowerUp class for more detail
         if (PowerUp.allPossibleColors == null)
         {
             PowerUp.allPossibleColors = new List<Color>();
@@ -81,7 +80,7 @@ public class Main_MainScene : MonoBehaviour
         foreach (WeaponDefinition def in weaponDefn)
         {
             _weaponDictionary.Add(def.type, def); //adds the definition for the weapons into the dictionary for easy look up later
-            PowerUp.allPossibleColors.Add(def.color);
+            PowerUp.allPossibleColors.Add(def.color); //add colours to beused for random cube
         }
 
     }
@@ -99,12 +98,12 @@ public class Main_MainScene : MonoBehaviour
         //get different pre fab if it is the boss level
         if (boss)
         {
-            Level.scriptRef.boss = false;
-            spawned = Instantiate<GameObject>(preFabEnemies[4]);
+            Level.scriptRef.boss = false; //stops multiple bosses from spawning
+            spawned = Instantiate<GameObject>(preFabEnemies[4]); //selected boss
         }
         else
         {
-            spawned = Instantiate<GameObject>(preFabEnemies[randEnemy]);
+            spawned = Instantiate<GameObject>(preFabEnemies[randEnemy]); //selected random enemy
         }
 
 
@@ -117,6 +116,7 @@ public class Main_MainScene : MonoBehaviour
             enemyPad = Mathf.Abs(spawned.GetComponent<BoundsCheck>().radius); //factors in the radius of the enemy for bounds check
         }
 
+        //find x bounds
         Vector3 startPos = Vector3.zero;
         float xMinimum = -_boundM.camWidth + enemyPad;
         float xMaximum = _boundM.camWidth - enemyPad;
@@ -178,8 +178,8 @@ public class Main_MainScene : MonoBehaviour
         }
         else
         {
-            GameObject SixtyDegree = null; //Ship within 60 degee view of hero
-            GameObject NintyDegree = null; //Ship within 90 degee view of hero
+            GameObject SixtyDegree = null; //Ship within 60 degee view of hero - not a list to avoid multiple iterations
+            GameObject NintyDegree = null; //Ship within 90 degee view of hero - not a list to avoid multiple iterations
 
             float ThirtyDegreeXOverY = 0.577f;
             float SixtyDegreeXOverY = 1.732f;
@@ -201,15 +201,15 @@ public class Main_MainScene : MonoBehaviour
                 {
                     if (deltaEnemyMissileY * ThirtyDegreeXOverY > deltaEnemyMissileX)
                     {
-                        return obj;
+                        return obj; //returns first object within 60 degree view
                     }
                     else if(SixtyDegree == null && deltaEnemyMissileY * SixtyDegreeXOverY > deltaEnemyMissileX)
                     {
-                        SixtyDegree = obj;
+                        SixtyDegree = obj; //holds objects in 120 degree view in case of 60 degree view object later on
                     }
                     else if (SixtyDegree == null && NintyDegree == null)
                     {
-                        NintyDegree = obj;
+                        NintyDegree = obj;//holds objects in 180 degree view in case of 60 or 120 degree view object later on
                     }
                 }
             }
@@ -222,7 +222,7 @@ public class Main_MainScene : MonoBehaviour
             {
                 return NintyDegree;
             }
-            return _allEnemiesList[_allEnemiesList.Count - 1];
+            return _allEnemiesList[_allEnemiesList.Count - 1]; //random is nothing found (last object in list will be closet to top and therefore hero as they re all below
         }
     }
 
@@ -236,7 +236,7 @@ public class Main_MainScene : MonoBehaviour
         _allEnemiesList = new List<GameObject>(); //C# garbage collection will remove of old list from memory
     }
 
-    //looks up weapon in dictionary
+    //looks up weapon in dictionary to get the definition
     static public WeaponDefinition GetWeaponDefinition(WeaponType weaponIn)
     {
         if (_weaponDictionary.ContainsKey(weaponIn))
@@ -250,23 +250,23 @@ public class Main_MainScene : MonoBehaviour
     //Destroys and removes enemies from the list of enemies
     public void DestroyEnemy(GameObject enemyToDestroy, bool updateScore = false, bool removeFromList = true)
     {
-        if (removeFromList)
+        if (removeFromList)//this is false for destroy all as you cant remove items from list as you iterate over it
         {  
             _allEnemiesList.Remove(enemyToDestroy);
         }
-        if (updateScore)
+        if (updateScore)//dont update score if not killed by hero
         {
             Score.scoreControllerReference.UpdateScore(enemyToDestroy.tag);
         }
         GameObject explos = Instantiate(particleExplosion);
         explos.transform.position = enemyToDestroy.transform.position;
-        Destroy(enemyToDestroy);
         //invokes SpawnEnemy function again after boss is destroyed
         if (enemyToDestroy.tag == "EnemyBoss")
         {
             Invoke("SpawnEnemy", 1 / enemySpawnRate);
         }
-        
+        Destroy(enemyToDestroy);
+
     }
     
     // this function is called when an enemy ship is destroyed - depending on the ship (weaker ones have less probability of dropping a powerup)
@@ -282,9 +282,9 @@ public class Main_MainScene : MonoBehaviour
 
             bool rand = false;
 
-            float randVal = Random.Range(0.0f,1.0f);
+            float randVal = Random.Range(0.0f,1.0f);//20% chance of getting a random cube
 
-            if (randVal < 0.2f && powerUpType != WeaponType.shield) { rand = true; }
+            if (randVal < 0.2f && powerUpType != WeaponType.shield) { rand = true; }//shield is never random as you can't tell that you got it if your sheild is full
             
             powerUp.SetType(powerUpType,rand);
             powerUp.transform.position = e.transform.position;

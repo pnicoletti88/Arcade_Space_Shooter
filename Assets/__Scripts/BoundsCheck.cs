@@ -14,9 +14,9 @@ public class BoundsCheck : MonoBehaviour
     public float camHeight;
 
     [HideInInspector]
-    public bool offScreenRight, offScreenLeft, offScreenUp, offScreenDown;
+    public bool offScreenRight, offScreenLeft, offScreenUp, offScreenDown; //indicates if connected game object is offscreen
 
-    public bool boundsCheckActive = true;
+    public bool boundsCheckActive = true; //if this is false then bounds check will not do anything - used to allow object to temporarily go off screen
 
     //determine cam width and height - used for bounds
     void Awake()

@@ -10,11 +10,11 @@ public class Hero_Script : MonoBehaviour
     public float speed = 30;
     public float rollMult = -45;
     public float pitchMult = 30;
-    public float gameRestartDelay = 2f;
+    public float gameRestartDelay = 2f; 
     public GameObject projectilePreFab;
     public float projectileSpeed = 40f;
     public AudioClip pickedUpSound;
-    public bool allWeapons = false;
+    public bool allWeapons = false; //controls if all weapons
 
 
 
@@ -28,9 +28,9 @@ public class Hero_Script : MonoBehaviour
 
     private GameObject _lastTriggerGo = null;
     private float _startTime = 0; //used for flying in - holds time object is created
-    private Weapon _weapon;
-    private float _weaponStartLife = 0; 
-    private float _weaponDuration = int.MaxValue;
+    private Weapon _weapon; //reference to attached weapon stript
+    private float _weaponStartLife = 0; //time that weapon is switched
+    private float _weaponDuration = int.MaxValue; //how long the weapon is alive
     private bool _TurnPowerUpOff = true;
     private AudioSource _audioSource;
 
@@ -213,8 +213,8 @@ public class Hero_Script : MonoBehaviour
                 //Updates current score for death screen, regardless of score.
                 Score.scoreControllerReference.SavePlayerMostRecentScore();
                 Main_MainScene.scriptReference.spawnEnemies = false; //stops enemy spawning when ship is destroyed
-                Destroy(this.gameObject); //destroy the ship
                 Main_MainScene.scriptReference.DelayedRestart(gameRestartDelay); //restart game
+                Destroy(this.gameObject); //destroy the ship
             }
         }
     }

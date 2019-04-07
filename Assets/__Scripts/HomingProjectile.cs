@@ -10,10 +10,8 @@ using UnityEngine;
 public class HomingProjectile : Projectile
 {
 
-    private float _damageToDeal = 50;
-    private GameObject _targetEnemy;
-    // Start is called before the first frame update
-    private float _degreePerFrame = 2.4f;
+    private GameObject _targetEnemy; //the enemy which the missile is targetting
+    private float _degreePerFrame = 2.4f; //degrees missile will rotate per frame update
 
     protected override void Start()
     {
@@ -38,8 +36,8 @@ public class HomingProjectile : Projectile
         else //if missle has target make it aim towards it - updating aim each frame
         {
             Vector3 enemyLocation = _targetEnemy.transform.position;
-            float deltaX = enemyLocation.x - transform.position.x;
-            float deltaY = enemyLocation.y - transform.position.y;
+            float deltaX = enemyLocation.x - transform.position.x; //delta enemy to projetile X
+            float deltaY = enemyLocation.y - transform.position.y; //delta enemy to projectile Y
 
             Vector2 targetDir = new Vector2(deltaX, deltaY); //calculating vector2 which points from missile enemy
 

@@ -15,19 +15,19 @@ public class PowerUp : MonoBehaviour
     [Header("Set Dynamically")]
     public static List<Color> allPossibleColors = null;
 
-    public WeaponType type;
-    public GameObject cube;
-    public TextMesh letter;
-    public Vector3 rotPerSecond;
-    public float birthTime;
-    public float duration;
+    public WeaponType type; //type of weapon
+    public GameObject cube; //power up cube
+    public TextMesh letter; //letter on cube
+    public Vector3 rotPerSecond; //cube rotation per second
+    public float birthTime; //time of birth
+    public float duration; //how long weapon will last for
     public int direction;
 
     private Rigidbody _rigidbody;
     private BoundsCheck _boundsCheck;
     private Renderer _cubeRend;
-    private int _randCurrentColourIndex;
-    private bool _randCube = false;
+    private int _randCurrentColourIndex; //if its a rand cube this is the index of its current color in the array
+    private bool _randCube = false; //is it a rand cube
 
 
     void Awake()
@@ -53,6 +53,7 @@ public class PowerUp : MonoBehaviour
 
         vel.z = 0;
         vel.Normalize();
+
         //Assigns the x and y velocities depending on the result of all prior random events
         vel.x = direction*Random.Range(driftMinMax.x, driftMinMax.y);
         vel.y = -15f*Random.Range(driftMinMax.x, driftMinMax.y);
@@ -60,7 +61,7 @@ public class PowerUp : MonoBehaviour
 
         transform.rotation = Quaternion.identity;
 
-        rotPerSecond = new Vector3(Random.Range(rotMinMax.x, rotMinMax.y), Random.Range(rotMinMax.x, rotMinMax.y), Random.Range(rotMinMax.x, rotMinMax.y));
+        rotPerSecond = new Vector3(Random.Range(rotMinMax.x, rotMinMax.y), Random.Range(rotMinMax.x, rotMinMax.y), Random.Range(rotMinMax.x, rotMinMax.y)); //rotation per second is constant throughout life
         birthTime = Time.time;
 
     }
@@ -76,7 +77,7 @@ public class PowerUp : MonoBehaviour
         {
             if (_randCube)
             {
-                CancelInvoke("ColorChange");
+                CancelInvoke("ColorChange"); //stops invoke of color change as object is destroyed 
             }
             Destroy(this.gameObject);
             return;
@@ -107,7 +108,7 @@ public class PowerUp : MonoBehaviour
             _cubeRend.material.color = allPossibleColors[_randCurrentColourIndex];
             letter.text = "?";
             _randCube = true;
-            Invoke("ColorChange", 0.1f);
+            Invoke("ColorChange", 0.1f); //invokes function to change color
         }
         else
         {
@@ -121,11 +122,11 @@ public class PowerUp : MonoBehaviour
     private void ColorChange()
     {
         float timeChange = (Time.time - (birthTime + lifeTime)) / fadeTime;
-        _randCurrentColourIndex = (_randCurrentColourIndex + 1) % allPossibleColors.Count;
+        _randCurrentColourIndex = (_randCurrentColourIndex + 1) % allPossibleColors.Count; //loop through the array of colors
         Color c = allPossibleColors[_randCurrentColourIndex];
-        c.a = 1f - timeChange;
+        c.a = 1f - timeChange; //fading color to keep look consistent as object dies
         _cubeRend.material.color = c;
-        Invoke("ColorChange", 0.1f);
+        Invoke("ColorChange", 0.1f); //invoke the method again
     }
 
     //destroys the powerup when appropriate

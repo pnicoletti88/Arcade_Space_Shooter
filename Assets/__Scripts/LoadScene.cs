@@ -9,6 +9,10 @@ public class LoadScene : MonoBehaviour
     [SerializeField] public MenuButtonController menuButtonController;
     public static LoadScene sceneLoader;
     public bool exitScene = false;
+
+    private const string _TWITTER_ADDRESS = "http://twitter.com/intent/tweet"; //link to twitter
+    private const string _TWEET_LANGUAGE = "en"; //twitter language
+
     void Awake()
     {
         if (sceneLoader == null)
@@ -63,10 +67,9 @@ public class LoadScene : MonoBehaviour
         }
     }
 
-    private const string _TWITTER_ADDRESS = "http://twitter.com/intent/tweet";
-    private const string _TWEET_LANGUAGE = "en";
 
-    //function that handles posting the final score to twitter
+
+    //function that handles posting the final score to twitter using URL
     void HandleClickPost()
     {
         string tweet;

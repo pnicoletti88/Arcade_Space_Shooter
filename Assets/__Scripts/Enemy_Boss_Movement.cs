@@ -18,11 +18,11 @@ public class Enemy_Boss_Movement : Enemy_Parent
     protected override void Move()
     {
         Vector3 temporaryPosition = position;
-        temporaryPosition.y -= 2.5f * Time.deltaTime * _speedFactor;
+        temporaryPosition.y -= 2.5f * Time.deltaTime * _speedFactor; //makes the boss move down the screen
         position = temporaryPosition;
     }
 
-    void Update()
+    new void Update()
     {
         //responsible for firing the weapon
         if (FireWeaponsDelegate != null)
